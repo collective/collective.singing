@@ -222,18 +222,18 @@ class ManageSubscriptions(utils.OverridableTemplate, form.Form):
     @property
     def fields(self):
         terms = []
-        secrets = []
+        seen = []
         for secret, subs in self.context.subscriptions.items():
             for sub in subs:
                 format = interfaces.ISubscriptionMetadata(sub)['format']
                 title = ', '.join(interfaces.IComposerData(sub).values())
                 value = '%s@@%s' % (secret, format)
 
-                # make sure we don't have duplicate subscribers
-                if secret in secrets:
+                # XXX: We don't want to check this here; the
+                # subscriptions should never contain duplicates
+                if value in seen:
                     continue
-                
-                secrets.append(secret)
+                seen.append(value)
                 
                 terms.append(
                     zope.schema.vocabulary.SimpleTerm(
