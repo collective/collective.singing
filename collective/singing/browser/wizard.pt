@@ -1,0 +1,54 @@
+<div class="form" tal:condition="view/finished">
+  <div class="portalMessage"
+       tal:condition="view/status" tal:content="view/status">
+  </div>
+</div>
+
+<div class="form" tal:condition="not:view/finished">
+
+  <h2 tal:condition="view/label"
+      tal:content="view/label">Form title</h2>
+  
+  <div class="description"
+       tal:condition="view/description"
+       tal:content="view/description">Form description</div>
+
+  <div class="portalMessage"
+       tal:condition="view/status" tal:content="view/status">
+  </div>
+
+  <tal:comment condition="nothing">
+    <ul tal:define="errors view/current_step/widgets/errors"
+        tal:condition="errors">
+      <li tal:repeat="error errors">
+        <tal:block replace="error/widget/label"/>:
+        <tal:block replace="structure error/render" />
+      </li>
+    </ul>
+  </tal:comment>
+
+  <form action="." method="post" tal:attributes="action request/getURL">
+    <input type="hidden"
+           tal:define="widget python:view.widgets.values()[0]"
+           tal:replace="structure widget/render" />
+
+    <tal:before_steps define="subforms view/before_steps"
+                      repeat="form subforms">
+      <tal:widgets define="widgets form/widgets/values"
+                   repeat="widget widgets">
+        <input type="hidden" tal:replace="structure widget/render" />
+      </tal:widgets>
+    </tal:before_steps>
+
+    <tal:form define="form nocall:view/current_step">
+      <h2 tal:condition="form/label" tal:content="form/label">
+        Subform title
+      </h2>
+      <div tal:replace="structure form/render" />
+    </tal:form>
+
+    <div class="action" tal:repeat="action view/actions/values">
+      <input type="submit" tal:replace="structure action/render" />
+    </div>
+  </form>
+</div>

@@ -1,0 +1,67 @@
+digraph Newsletter {
+
+fontname = "Bitstream Vera Sans"
+fontsize = 12
+
+node [
+    fontname = "Bitstream Vera Sans"
+    fontsize = 12
+    shape = "record"
+]
+
+edge [
+    fontname = "Bitstream Vera Sans"
+    fontsize = 10
+]
+
+Controller [
+    label = "{Controller|}"
+]
+
+Collector [
+    label = "{Collector|- get_items(cue=None, filter=None): (items, cue)}"
+]
+
+Channel [
+    label = "{Channel|- title\l- controller\l- collector\l- composers: dict\l- subscriptions: dict}"
+]
+
+Subscription [
+    label = "{Subscription|- key\l- format\l- filter}"
+]
+
+Composer [
+    label = "{Composer|- title\l- template}"
+]
+
+Message [
+    label = "{Message|- payload\l- subscription}"
+]
+
+Dispatcher [
+    label = "{Dispatcher|}"
+]
+
+
+edge [
+    label = "produces"
+]
+
+Composer -> Message
+
+edge [
+    label = "adapts"
+]
+
+Dispatcher -> Message
+
+edge [
+    arrowhead = "none"
+    taillabel = "1"
+    headlabel = "n"
+    label = ""
+]
+
+Channel -> Subscription
+
+}

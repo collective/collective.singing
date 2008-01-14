@@ -1,0 +1,216 @@
+from zope import interface
+from zope import schema
+
+from zope.interface.interfaces import IInterface
+from zope.interface.common.mapping import IMapping
+from zope.annotation.interfaces import IAnnotatable
+
+
+class IRequestBasedSecret(interface.Interface):
+    """A utility that provides a secret based on the request.
+    """
+    def __call__(request):
+        """Return an ASCII secret.
+        """
+
+
+class IComposerBasedSecret(interface.Interface):
+    """An adapter for composer that provides a secret based on the
+    user's data used for the composer (see also 'IComposerData').
+    """
+    
+    def secret(data):
+        """Return an ASCII secret.
+
+        'data' is a dict that corresponds to the IComposer's schema.
+        """
+
+
+class ISubscription(IAnnotatable):
+    """A subscription to a channel.
+    """
+    
+    channel = schema.Object(
+        title=u"The channel that we're subscribed to",
+        schema=IInterface, # should be really IChannel
+        )
+
+    secret = schema.ASCIILine(
+        title=u"The subscriber's secret, ideally unique across channels",
+        description=u"""\
+        Might be a hash of the subscriber's e-mail and a secret on the
+        server in case we're dealing with an anonymous subscription.
+        Used for unsubscription or for providing an overview of all of
+        a subscriber's subscriptions.
+        """,
+        )
+
+
+class IMessage(interface.Interface):
+    """Messages are objects ready to be published.
+    """
+
+    payload = schema.Field(
+        title=u"The message's payload, e.g. the e-mail message as a string.",
+        )
+
+    subscription = schema.Object(
+        title=u"Subscription, referenced for bookkeeping purposes only.",
+        schema=ISubscription,
+        )
+
+
+class IComposerData(IMapping):
+    """An adapter from the subscription to data used by the composer.
+
+    Entries correspond to the IComposer's schema.
+    """
+
+
+class ICollectorData(IMapping):
+    """An adapter from the subscription to data used by the collector.
+
+    Entries correspond to the ICollector's schema.    
+    """
+
+
+class ISubscriptionMetadata(IMapping):
+    """An adapter from the subscription to metadata.
+
+    Entries ``format`` and ``date`` are guaranteed to exist.
+    ``format`` is the format that's inherent to the composer, and
+    ``date`` is the subscription date of type ``datetime.datetime``.
+
+    May be used for application-specific data.
+
+    XXX: I don't like this.  :)
+    """
+
+
+class IComposer(interface.Interface):
+    """Composers will typically provide a user interface that lets you
+    modify the look of the message rendered through it.
+    """
+
+    
+    title = schema.TextLine(
+        title=u"The Composer's title, e.g. 'HTML E-Mail'",
+        )
+    
+    schema = schema.Object(
+        title=u"A schema for use in the subscription form",
+        description=u"Values are stored via the IComposerData adapter per "
+        "subscriber.",
+        schema=IInterface,
+        )
+
+    def render(subscription, items=()):
+        """Given a subscription and a list of items, I will return an
+        IMessage object suitable for delivery.
+        """
+
+    def render_confirmation(subscription):
+        """Given a subscription, I will return a message that the user
+        has to react to in order to confirm the subscription.
+        """
+
+
+class ICollector(interface.Interface):
+    """Controllers are useful for automatic newsletters.  They are
+    responsible for assembling a list of items for publishing.
+    """
+
+    schema = schema.Object(
+        title=u"A schema for use in the subscription form",
+        description=u"Values are stored via the ICollectorData adapter per "
+        "subscriber.",
+        required=False,
+        schema=IInterface,
+        )
+
+    def get_items(cue=None, subscription=None):
+        """Return a tuple '(items, cue)' where 'items' is the items
+        that'll be fed into the composer, and 'cue' is an object that
+        can be passed to this method again.
+
+        If 'cue' is passed, I will only return items that are newer
+        than the items that were returned when the cue was retrieved.
+
+        If 'subscription' is given, I will filter according to the
+        subscriber's ICollectorData.
+        """
+
+
+class IScheduler(interface.Interface):
+    """A scheduler triggers the sending of messages periodically.
+    
+    XXX: Underspecified
+    """
+
+
+class ISubscriptions(interface.Interface):
+    """An adapter on IChannel that stores subscriptions.
+
+    Maps secrets to lists of ISubscription objects.
+    """
+    def __getitem__(key):
+        """Return a list of subscriptions for a given key/secret.
+        Note that this never raises KeyError.  Instead, if a key is
+        not known to the storage, it will return a list.
+        """
+
+    def __contains__(key):
+        """True if a key/secret is known to the storage.
+        """
+
+
+class IChannel(interface.Interface):
+    """A Channel is what we can subscribe to.
+
+    A Channel is a hub of configuration.  It doesn't do anything by
+    itself.  Rather, it provides a number of components to configure
+    and work with.  It is also the container of subscriptions to it.
+    """
+
+    name = schema.ASCIILine(
+        title=u"Unique identifier for this channel across the site.",
+        )
+    
+    title = schema.TextLine(
+        title=u"The title of the channel",
+        )
+    
+    scheduler = schema.Object(
+        title=u"The channel's scheduler (when)",
+        required=False,
+        schema=IScheduler,
+        )
+
+    collector = schema.Object(
+        title=u"The channel's collector (what)",
+        required=False,
+        schema=ICollector,
+        )
+
+    composers = schema.Dict(
+        title=u"The channel's composers, keyed by format.",
+        key_type=schema.TextLine(title=u"Format"),
+        value_type=schema.Object(title=u"Composer", schema=IComposer),
+        )
+
+    subscriptions = schema.Object(
+        title=u"The channel's subscriptions",
+        schema=ISubscriptions,
+        )
+
+
+class MessageDispatchException(Exception):
+    pass
+
+
+class IDispatch(interface.Interface):
+    """Dispatchers adapt messages and send them."""
+
+    def __call__():
+        """Raises ``MessageDispatchException`` if delivery failed.
+        """

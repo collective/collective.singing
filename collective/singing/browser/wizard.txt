@@ -1,0 +1,215 @@
+Wizard
+======
+
+The ``wizard`` module contains a simple, non-session based
+implementation of a wizard.
+
+Set up the form machinery:
+
+  >>> from collective.singing.browser.tests import setup_defaults
+  >>> setup_defaults()
+
+Define a wizard with three steps
+--------------------------------
+
+To define a form that uses the wizard, we'll need to define steps.
+These steps represent individual forms that are processed
+sequentially.  Only when the last step is completed will the data be
+submitted through a user-defined method.
+
+  >>> from zope import schema
+  >>> from z3c.form import field, form
+  >>> from collective.singing.browser import wizard
+
+  >>> class StepOne(wizard.Step):
+  ...     prefix = 'one'
+  ...     fields = field.Fields(
+  ...         schema.Int(__name__='age', title=u"Age"))
+
+  >>> class StepTwo(wizard.Step):
+  ...     prefix = 'two'
+  ...     fields = field.Fields(
+  ...         schema.TextLine(__name__='name', title=u"Name", required=False))
+
+The second step is a more complicated beast.  It defines two subforms:
+
+  >>> from collective.singing.browser import utils
+  >>> class StepThree(wizard.Step):
+  ...     prefix = 'three'
+  ... 
+  ...     class SubOne(form.Form):
+  ...         ignoreContext = True
+  ...         prefix = 'subone'
+  ...         fields = field.Fields(
+  ...             schema.TextLine(__name__='sex', title=u"Sex"))
+  ...     
+  ...     class SubTwo(form.Form):
+  ...         ignoreContext = True
+  ...         prefix = 'subtwo'
+  ...         fields = field.Fields(
+  ...             schema.Int(__name__='frequency', title=u"Frequency"))
+  ...     
+  ...     def update(self):
+  ...         subforms = (self.SubOne(self.context, self.request),
+  ...                     self.SubTwo(self.context, self.request))
+  ...         self.subforms = subforms
+  ...         for form in subforms:
+  ...             form.update()
+  ...         super(StepThree, self).update()
+  ...     
+  ...     def extractData(self):
+  ...         return utils.extract_data_prefixed(self.subforms)
+
+We can now define our minimal wizard:
+
+  >>> from pprint import pprint
+  >>> from zope.app.pagetemplate import viewpagetemplatefile
+  >>> class Wizard(wizard.Wizard):
+  ...     label = u"My silly wizard"
+  ...     steps = StepOne, StepTwo, StepThree
+  ...     
+  ...     def finish(self, data):
+  ...         print "Finished, here's the data:"
+  ...         pprint(data)
+
+Render the form
+---------------
+
+Let's render the form for the first time now:
+
+  >>> from z3c.form.testing import TestRequest
+  >>> request = TestRequest()
+  >>> wizard = Wizard(None, request)
+  >>> print wizard() # doctest: +NORMALIZE_WHITESPACE
+  <div class="form">
+    <h2>My silly wizard</h2>
+    <form action="http://127.0.0.1" method="post">
+      <input type="hidden" id="form-widgets-step"
+         name="form.widgets.step" class="hidden-widget"
+         value="0" />
+    <div class="row">
+        <div class="field">
+          <label for="one-widgets-age">
+            <span>Age</span>
+          </label>
+          <span class="fieldRequired" title="Required">
+                (Required)
+          </span>
+          <div class="widget">
+            <input type="text" id="one-widgets-age"
+                   name="one.widgets.age"
+                   class="text-widget required int-field" value="" />
+          </div>  
+        </div>
+    </div>
+      <div class="action">
+        <input type="submit" id="form-buttons-proceed"
+               name="form.buttons.proceed"
+               class="submit-widget button-field" value="Proceed" />
+      </div>
+    </form>
+  </div>
+
+
+Submit with an error
+--------------------
+
+Remember that our first step requires the age.
+
+  >>> request = TestRequest(form={
+  ...     'form.widgets.step': u'0',
+  ...     'form.buttons.proceed': u'Proceed',
+  ... })
+  >>> wizard = Wizard(None, request)
+  >>> print wizard() # doctest: +ELLIPSIS +NORMALIZE_WHITESPACE
+  <div class="form">
+  ...There were errors...
+  <input type="hidden" id="form-widgets-step"
+         name="form.widgets.step" class="hidden-widget"
+         value="0" />...Required input is missing...
+
+Submit the first step successfully
+----------------------------------
+
+  >>> request.form['one.widgets.age'] = u'27'
+  >>> wizard = Wizard(None, request)
+  >>> print wizard() # doctest: +NORMALIZE_WHITESPACE
+  <div class="form">
+    <h2>My silly wizard</h2>
+    <form action="http://127.0.0.1" method="post">
+      <input type="hidden" id="form-widgets-step"
+         name="form.widgets.step" class="hidden-widget"
+         value="1" />
+      <input type="hidden" id="one-widgets-age"
+         name="one.widgets.age" class="hidden-widget"
+         value="27" />
+    <div class="row">
+        <div class="field">
+          <label for="two-widgets-name">
+            <span>Name</span>
+          </label>
+          <div class="widget">
+            <input type="text" id="two-widgets-name"
+                   name="two.widgets.name"
+                   class="text-widget textline-field" value="" />
+          </div>  
+        </div>
+    </div>
+      <div class="action">
+        <input type="submit" id="form-buttons-proceed"
+               name="form.buttons.proceed"
+               class="submit-widget button-field" value="Proceed" />
+      </div>
+    </form>
+  </div>
+
+Submitting step two
+-------------------
+
+Step two doesn't require any input.  After submitting with the current
+value of ``form.widgets.step``, we'll see step three immediately:
+
+  >>> request.form['form.widgets.step'] = u'1'
+  >>> wizard = Wizard(None, request)
+  >>> html = wizard()
+  >>> 'Sex' in html, 'Frequency' in html, 'Finish' in html
+  (True, True, True)
+  >>> 'subone.widgets.sex' in html, 'subtwo.widgets.frequency' in html
+  (True, True)
+
+Step three: Slaying the dragon
+------------------------------
+
+Submitting only one of the two required fields will yield an error.
+Note that we're clicking the ``Finish`` button now:
+
+  >>> request.form['form.buttons.finish'] = u'Finish'
+  >>> request.form['form.widgets.step'] = u'2'
+  >>> request.form['subone.widgets.sex'] = u'Male'
+  >>> wizard = Wizard(None, request)
+  >>> html = wizard()
+  >>> print html # doctest: +NORMALIZE_WHITESPACE +ELLIPSIS
+  <div class="form">
+  ...
+    <input type="hidden" id="form-widgets-step"
+           name="form.widgets.step" class="hidden-widget"
+           value="2" />
+  ...
+  >>> 'Required input is missing' in html
+  True
+
+Remembering that in our wizard, we implemented ``finish`` to print out
+the data that it receives.  Here's the finishing move:
+
+  >>> request.form['subtwo.widgets.frequency'] = u'3'
+  >>> wizard = Wizard(None, request)
+  >>> html = wizard()
+  Finished, here's the data:
+  {'one.age': 27,
+   'three.subone.sex': u'Male',
+   'three.subtwo.frequency': 3,
+   'two.name': None}
+  >>> print html # doctest: +NORMALIZE_WHITESPACE
+  <div class="form">
+    <div class="portalMessage">Information submitted successfully.</div>
+  </div>

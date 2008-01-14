@@ -1,0 +1,35 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:metal="http://xml.zope.org/namespaces/metal"
+      xmlns:tal="http://xml.zope.org/namespaces/tal"
+      xmlns:i18n="http://xml.zope.org/namespaces/i18n"
+      i18n:domain="collective.singing"
+      tal:omit-tag="">
+  
+<tal:widgets repeat="widget view/widgets/values">
+  <div class="row"
+       tal:define="hidden python:widget.mode == 'hidden'"
+       tal:omit-tag="hidden">
+
+    <metal:field use-macro="context/@@singing-macros/field" />
+    
+  </div>
+</tal:widgets>
+
+<tal:subforms define="subforms nocall:view/subforms"
+              repeat="view subforms">
+
+  <div class="subform"
+       tal:condition="view/widgets">
+
+    <div class="form-title"
+         tal:condition="view/label"
+         tal:content="view/label">
+      Form title
+    </div>
+        
+    <metal:use use-macro="context/@@singing-macros/fields" />
+  </div>
+
+</tal:subforms>
+
+</html>

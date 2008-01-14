@@ -1,0 +1,9 @@
+Changelog for collective.singing
+
+    (name of developer listed in brackets)
+
+collective.singing - 0.1 Unreleased
+
+    - Initial package structure.
+      [zopeskel]
+
