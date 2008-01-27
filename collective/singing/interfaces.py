@@ -214,3 +214,12 @@ class IDispatch(interface.Interface):
     def __call__():
         """Raises ``MessageDispatchException`` if delivery failed.
         """
+
+class IChannelLookup(interface.Interface):
+    """A utility that looks up all channels in a site.
+    """
+
+    def __call__():
+        """Return a list of ``IChannel`` objects.
+        """
+
