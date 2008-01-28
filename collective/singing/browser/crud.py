@@ -141,6 +141,8 @@ class EditForm(form.Form):
     template = viewpagetemplatefile.ViewPageTemplateFile('crud-edit.pt')
     prefix = 'crud-edit.'
 
+    render_form_tag = True
+
     def update(self):
         self.subforms = []
         for id, item in self.context.get_items():
