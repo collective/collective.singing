@@ -38,6 +38,11 @@ def test_suite():
     return unittest.TestSuite([
 
         doctest.DocFileSuite(
+           'crud.txt',
+           setUp=testing.setUp, tearDown=testing.tearDown,
+           ),
+
+        doctest.DocFileSuite(
            'wizard.txt',
            setUp=testing.setUp, tearDown=testing.tearDown,
            ),
@@ -52,4 +57,8 @@ def test_suite():
            setUp=testing.setUp, tearDown=testing.tearDown,
            ),
 
+        doctest.DocTestSuite(
+           'collective.singing.browser.crud',
+           setUp=testing.setUp, tearDown=testing.tearDown,
+           ),
         ])

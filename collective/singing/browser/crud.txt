@@ -1,0 +1,165 @@
+Crud
+====
+
+This module gives you an abstract base class to make CRUD forms with.
+These forms give you by default a tabular view of the objects, where
+attributes of the object can be edited in-place.  Please refer to the
+``ICrudForm`` interface for more details.
+
+  >>> from collective.singing.browser import crud
+
+Setup
+-----
+
+  >>> from collective.singing.browser.tests import setup_defaults
+  >>> setup_defaults()
+
+A simple form
+-------------
+
+First, let's define an interface and a class to play with:
+
+  >>> from zope import interface, schema
+  >>> class IPerson(interface.Interface) :
+  ...     name = schema.TextLine()
+  ...     age = schema.Int()
+
+  >>> class Person(object):
+  ...     interface.implements(IPerson)
+  ...     def __init__(self, name=None, age=None):
+  ...         self.name, self.age = name, age
+  ...     def __repr__(self):
+  ...         return "<Person with name=%r, age=%r>" % (self.name, self.age)
+
+For this test, we take the the name of our persons as keys in our
+storage:
+
+  >>> storage = {'Peter': Person(u'Peter', 16),
+  ...            'Martha': Person(u'Martha', 32)}
+
+Our simple form looks like this:
+
+  >>> class MyForm(crud.CrudForm):
+  ...     update_schema = IPerson
+  ... 
+  ...     def get_items(self):
+  ...         return sorted(storage.items(), key=lambda x: x[1].name)
+  ... 
+  ...     def add(self, data):
+  ...         person = Person(**data)
+  ...         storage[str(person.name)] = person
+  ...         return person
+  ... 
+  ...     def remove(self, (id, item)):
+  ...         del storage[id]
+
+This is all that we need to render a combined edit add form containing
+all our items:
+
+  >>> from z3c.form.testing import TestRequest
+  >>> print MyForm(None, TestRequest())() \
+  ... # doctest: +ELLIPSIS +NORMALIZE_WHITESPACE
+  <div class="form">...Martha...Peter...</div>
+
+Editing items with our form
+---------------------------
+
+Before we start with editing objects, let's log all events that the
+form fires for us:
+
+  >>> from zope.lifecycleevent.interfaces import IObjectModifiedEvent
+  >>> from collective.singing.tests import create_eventlog
+  >>> log = create_eventlog(IObjectModifiedEvent)
+
+  >>> request = TestRequest()
+  >>> request.form['crud-edit.Martha.widgets.name'] = u'Martha'
+  >>> request.form['crud-edit.Martha.widgets.age'] = 55
+  >>> request.form['crud-edit.Peter.widgets.name'] = u'Franz'
+  >>> request.form['crud-edit.Peter.widgets.age'] = 16
+  >>> request.form['crud-edit.buttons.edit'] = u'Edit'
+  >>> html = MyForm(None, request)()
+  >>> "Successfully updated" in html
+  True
+
+Two modified events should have been fired:
+
+  >>> event1, event2 = log.pop(), log.pop()
+  >>> storage['Peter'] in (event1.object, event2.object)
+  True
+  >>> storage['Martha'] in (event1.object, event2.object)
+  True
+  >>> log
+  []
+
+If we don't make any changes, we'll get a message that says so:
+
+  >>> html = MyForm(None, request)()
+  >>> "No changes made" in html
+  True
+  >>> log
+  []
+
+Now that we renamed Peter to Franz, it would be also nice to have
+Franz use 'Franz' as the id in the storage, wouldn't it?
+
+  >>> storage['Peter']
+  <Person with name=u'Franz', age=16>
+
+We can override the CrudForm's ``before_update`` method to perform a
+rename whenever the name of a person is changed:
+
+  >>> class MyRenamingForm(MyForm):
+  ...     def before_update(self, item, data):
+  ...         if data['name'] != item.name:
+  ...             del storage[item.name]
+  ...             storage[str(data['name'])] = item
+
+Let's rename Martha to Maria.  This will give her another key in our
+storage:
+
+  >>> request.form['crud-edit.Martha.widgets.name'] = u'Maria'
+  >>> html = MyRenamingForm(None, request)()
+  >>> "Successfully updated" in html
+  True
+  >>> log.pop().object == storage['Maria']
+  True
+  >>> log
+  []
+  >>> sorted(storage.keys())
+  ['Maria', 'Peter']
+
+Delete an item with our form
+----------------------------
+
+We can delete an item by checking the according checkbox:
+
+  >>> request = TestRequest()
+  >>> request.form['crud-edit.Peter.widgets.delete'] = ['selected']
+  >>> request.form['crud-edit.buttons.delete'] = u'Delete'
+  >>> html = MyForm(None, request)()
+  >>> "Successfully deleted items" in html
+  True
+  >>> storage
+  {'Maria': <Person with name=u'Maria', age=55>}
+
+Add an item with our form
+-------------------------
+
+  >>> from zope.lifecycleevent.interfaces import IObjectCreatedEvent
+  >>> from collective.singing.tests import create_eventlog
+  >>> log = create_eventlog(IObjectCreatedEvent)
+
+  >>> request = TestRequest()
+  >>> request.form['crud-add.widgets.name'] = u'Daniel'
+  >>> request.form['crud-add.widgets.age'] = 28
+  >>> request.form['crud-add.buttons.add'] = u'Add'
+  >>> html = MyForm(None, request)()
+  >>> "Item added successfully" in html
+  True
+  >>> storage['Daniel']
+  <Person with name=u'Daniel', age=28>
+  >>> log.pop().object == storage['Daniel']
+  True
+  >>> log
+  []
+
