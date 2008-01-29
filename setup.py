@@ -29,10 +29,9 @@ setup(name='collective.singing',
       # 2 environment, try the `fakezope2eggs` recipe
       install_requires=[
           'setuptools',
-          'z3c.form==1.7.1dev',
+          'z3c.form',
       ],
       dependency_links=[
-          'http://svn.zope.de/zope.org/z3c.form/trunk#egg=z3c.form-1.7.1dev',
       ],
       
       entry_points="""
