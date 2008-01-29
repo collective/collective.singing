@@ -3,7 +3,8 @@
       xmlns:tal="http://xml.zope.org/namespaces/tal"
       xmlns:i18n="http://xml.zope.org/namespaces/i18n"
       i18n:domain="collective.singing"
-      tal:omit-tag="">
+      tal:omit-tag=""
+      tal:condition="view/subforms">
 
   <div class="portalMessage"
        tal:condition="view/status" tal:content="view/status">
