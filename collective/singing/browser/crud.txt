@@ -156,6 +156,12 @@ Add an item with our form
   >>> html = MyForm(None, request)()
   >>> "Item added successfully" in html
   True
+
+Added items should show up right away:
+
+  >>> "Daniel" in html
+  True
+
   >>> storage['Daniel']
   <Person with name=u'Daniel', age=28>
   >>> log.pop().object == storage['Daniel']

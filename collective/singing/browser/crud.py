@@ -195,6 +195,7 @@ class AddForm(form.Form):
     template = viewpagetemplatefile.ViewPageTemplateFile('form.pt')
     prefix = 'crud-add.'
     ignoreContext = True
+    ignoreRequest = True
 
     @property
     def fields(self):
@@ -221,5 +222,5 @@ class CrudForm(AbstractCrudForm, form.Form):
         editform = self.editform_factory(self, self.request)
         addform = self.addform_factory(self, self.request)
         self.subforms = [editform, addform]
-        editform.update()
         addform.update()
+        editform.update()
