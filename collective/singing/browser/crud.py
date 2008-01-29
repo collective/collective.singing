@@ -1,9 +1,11 @@
 from zope import interface
 import zope.event
 import zope.lifecycleevent
+from zope.schema import vocabulary
 from z3c.form import button
 from z3c.form import field
 from z3c.form import form
+from z3c.form import term
 from z3c.form.interfaces import DISPLAY_MODE, INPUT_MODE, NOVALUE
 import z3c.form.browser.checkbox
 from zope.app.pagetemplate import viewpagetemplatefile
@@ -13,7 +15,7 @@ from collective.singing import MessageFactory as _
 class ICrudForm(interface.Interface):
 
     update_schema = interface.Attribute(
-        "Editable part of the schema for use in the update form")
+        "Editable part of the schema for use in the update form.")
 
     view_schema = interface.Attribute(
         "Viewable (only) part of the schema for use in the update form.")
@@ -91,12 +93,20 @@ class IgnorantCheckboxWidget(z3c.form.browser.checkbox.SingleCheckBoxWidget):
         self.ignoreContext = True
         super(IgnorantCheckboxWidget, self).update()
 
+    def updateTerms(self):
+        if self.terms is None:
+            self.terms = term.Terms()
+            self.terms.terms = vocabulary.SimpleVocabulary((
+                vocabulary.SimpleTerm(True, 'selected', self.field.title),
+                ))
+        return self.terms
+
     @classmethod
     def field_widget(cls, field, request):
         return cls(field, request)
 
 class EditSubForm(form.EditForm):
-    template = viewpagetemplatefile.ViewPageTemplateFile('sub-edit.pt')
+    template = viewpagetemplatefile.ViewPageTemplateFile('crud-row.pt')
 
     @property
     def prefix(self):
@@ -108,17 +118,19 @@ class EditSubForm(form.EditForm):
 
     @property
     def fields(self):
-        fields = []
-        update_schema = self.context.context.update_schema
+        fields = field.Fields(self._delete_field())
+        update_fields = field.Fields(self.context.context.update_schema)
         view_schema = self.context.context.view_schema
 
         if view_schema:
-            fields.extend([field.Field(view_schema[f], mode=DISPLAY_MODE)
-                           for f in view_schema])
-        fields.extend([field.Field(update_schema[f]) for f in update_schema])
-        fields.insert(0, self._delete_field())
+            view_fields = field.Fields(view_schema)
+            for f in view_fields.values():
+                f.mode = DISPLAY_MODE
+            fields += view_fields
+            
+        fields += update_fields
 
-        return field.Fields(*fields)
+        return fields
 
     def getContent(self):
         return self.content
@@ -126,22 +138,21 @@ class EditSubForm(form.EditForm):
     def _delete_field(self):
         def delete_widget_factory(field, request):
             widget = IgnorantCheckboxWidget(request)
-            widget.value = (False,)
+            #widget.value = (False,)
             widget.field = field
             return widget
 
         delete_field = field.Field(
             zope.schema.Bool(__name__='delete',
                              required=False,
+                             default=False,
                              title=_(u'Delete')))
         delete_field.widgetFactory[INPUT_MODE] = delete_widget_factory
         return delete_field
 
 class EditForm(form.Form):
-    template = viewpagetemplatefile.ViewPageTemplateFile('crud-edit.pt')
+    template = viewpagetemplatefile.ViewPageTemplateFile('crud-table.pt')
     prefix = 'crud-edit.'
-
-    render_form_tag = True
 
     def update(self):
         self.subforms = []
@@ -193,14 +204,14 @@ class AddForm(form.Form):
     def handle_add(self, action):
         data, errors = self.extractData()
         if errors:
-            self.status = subform.formErrorsMessage
+            self.status = form.AddForm.formErrorsMessage
             return
         item = self.context.add(data)
         zope.event.notify(zope.lifecycleevent.ObjectCreatedEvent(item))
         self.status = _(u"Item added successfully.")
 
 class CrudForm(AbstractCrudForm, form.Form):
-    template = viewpagetemplatefile.ViewPageTemplateFile('crud-edit.pt')
+    template = viewpagetemplatefile.ViewPageTemplateFile('form-master.pt')
 
     editform_factory = EditForm
     addform_factory = AddForm

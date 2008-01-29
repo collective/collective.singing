@@ -9,19 +9,10 @@
        tal:condition="view/status" tal:content="view/status">
   </div>
 
-  <tal:block repeat="form view/subforms">
-    <div class="form" 
-         tal:define="render_form python:getattr(form, 'render_form_tag', None)"
-         tal:attributes="class python:render_form and 'form' or None">
-
-      <form action="." method="post"
-            tal:attributes="action request/getURL"
-            tal:content="structure form/render"
-            tal:omit-tag="not:render_form">
-      </form>
-
-    </div>
-  </tal:block>
+  <div tal:repeat="form view/subforms"
+       tal:content="structure form/render"
+       class="crud-form">
+  </div>
 
   <div class="action" tal:repeat="action view/actions/values">
     <input type="submit" tal:replace="structure action/render" />

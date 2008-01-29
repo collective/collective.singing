@@ -59,7 +59,7 @@ all our items:
   >>> from z3c.form.testing import TestRequest
   >>> print MyForm(None, TestRequest())() \
   ... # doctest: +ELLIPSIS +NORMALIZE_WHITESPACE
-  <div class="form">...Martha...Peter...</div>
+  <div class="crud-form">...Martha...Peter...</div>
 
 Editing items with our form
 ---------------------------
@@ -163,3 +163,62 @@ Add an item with our form
   >>> log
   []
 
+Viewing information in our form
+-------------------------------
+
+We can implement in our form a ``view_schema`` attribute, which will
+then be used to view information in our form's table.  Let's say we
+wanted the name of our persons to be viewable only in the table:
+
+  >>> from z3c.form import field
+  >>> class MyAdvancedForm(MyForm):
+  ...     update_schema = field.Fields(IPerson).select('age')
+  ...     view_schema = field.Fields(IPerson).select('name')
+  ...     add_schema = IPerson
+
+  >>> print MyAdvancedForm(None, TestRequest())() \
+  ... # doctest: +ELLIPSIS +NORMALIZE_WHITESPACE
+  <div class="crud-form">...Daniel...Maria...</div>
+
+We can still edit the age of our Persons:
+
+  >>> request = TestRequest()
+  >>> request.form['crud-edit.Maria.widgets.age'] = 40
+  >>> request.form['crud-edit.Daniel.widgets.age'] = 35
+  >>> request.form['crud-edit.buttons.edit'] = u'Edit'
+  >>> html = MyAdvancedForm(None, request)()
+  >>> "Successfully updated" in html
+  True
+
+  >>> storage['Maria'].age
+  40
+  >>> storage['Daniel'].age
+  35
+
+We can add a Person using both name and age:
+
+  >>> request = TestRequest()
+  >>> request.form['crud-add.widgets.name'] = u'Thomas'
+  >>> request.form['crud-add.widgets.age'] = 28
+  >>> request.form['crud-add.buttons.add'] = u'Add'
+  >>> html = MyAdvancedForm(None, request)()
+  >>> "Item added successfully" in html
+  True
+  >>> len(storage)
+  3
+  >>> storage['Thomas']
+  <Person with name=u'Thomas', age=28>
+
+Our form can also contain links to our items:
+
+  >>> class MyAdvancedLinkingForm(MyAdvancedForm):
+  ...     def link(self, item):
+  ...         return 'http://en.wikipedia.org/wiki/%s' % item.name
+
+  >>> print MyAdvancedLinkingForm(None, TestRequest())() \
+  ... # doctest: +ELLIPSIS +NORMALIZE_WHITESPACE
+  <div class="crud-form">...
+  ...<a href="http://en.wikipedia.org/wiki/Daniel"...
+  ...<a href="http://en.wikipedia.org/wiki/Maria"...
+  ...<a href="http://en.wikipedia.org/wiki/Thomas"...
+  </div>

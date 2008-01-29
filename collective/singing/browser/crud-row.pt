@@ -1,0 +1,10 @@
+<tal:block repeat="widget view/widgets/values">
+  <td tal:define="link python:view.context.context.link(view.getContent())"
+      tal:attributes="class python:widget.error and 'error' or None">
+    <a href=""
+       tal:omit-tag="python:not (repeat['widget'].index() == 1  and link and widget.mode == 'display')"
+       tal:attributes="href link">
+      <input type="text" tal:replace="structure widget/render" />
+    </a>
+  </td>
+</tal:block>

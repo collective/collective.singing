@@ -1,0 +1,32 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:metal="http://xml.zope.org/namespaces/metal"
+      xmlns:tal="http://xml.zope.org/namespaces/tal"
+      xmlns:i18n="http://xml.zope.org/namespaces/i18n"
+      i18n:domain="collective.singing"
+      tal:omit-tag="">
+
+  <div class="portalMessage"
+       tal:condition="view/status" tal:content="view/status">
+  </div>
+
+  <form action="." method="post" tal:attributes="action request/getURL">
+
+    <table tal:define="rows view/subforms">
+        <thead tal:define="row1 python:len(rows) and rows[0] or None"
+               tal:condition="row1">
+          <th tal:repeat="field python:row1.fields.values()"
+              tal:content="field/field/title">
+          </th>
+        </thead>
+        <tr tal:repeat="row view/subforms"
+            tal:content="structure row"
+            tal:attributes="class python:repeat['row'].odd() and 'odd' or 'even'" />
+    </table>
+
+    <div class="action" tal:repeat="action view/actions/values">
+      <input type="submit" tal:replace="structure action/render" />
+    </div>
+
+  </form>
+
+</html>
