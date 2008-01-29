@@ -155,14 +155,17 @@ class EditForm(form.Form):
     prefix = 'crud-edit.'
 
     def update(self):
+        self._update_subforms()
+        super(EditForm, self).update()
+
+    def _update_subforms(self):
         self.subforms = []
         for id, item in self.context.get_items():
             subform = EditSubForm(self, self.request)
             subform.content = item
             subform.content_id = id
-            self.subforms.append(subform)
             subform.update()
-        super(EditForm, self).update()
+            self.subforms.append(subform)
 
     @button.buttonAndHandler(_('Delete'), name='delete')
     def handle_delete(self, action):
@@ -175,6 +178,9 @@ class EditForm(form.Form):
             else:
                 self.context.remove((subform.content_id, subform.content))
                 self.status = _(u"Successfully deleted items.")
+
+        # We changed the amount of entries, so we update the subforms again.
+        self._update_subforms()
 
     @button.buttonAndHandler(_('Edit'), name='edit')
     def handle_edit(self, action):

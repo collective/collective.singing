@@ -139,6 +139,8 @@ We can delete an item by checking the according checkbox:
   >>> html = MyForm(None, request)()
   >>> "Successfully deleted items" in html
   True
+  >>> 'Franz' in html
+  False
   >>> storage
   {'Maria': <Person with name=u'Maria', age=55>}
 
