@@ -173,7 +173,7 @@ class EditForm(form.Form):
 
         for subform in self.subforms:
             data = subform.widgets['delete'].extract()
-            if data == NOVALUE:
+            if not data or data is NOVALUE:
                 continue
             else:
                 self.context.remove((subform.content_id, subform.content))
