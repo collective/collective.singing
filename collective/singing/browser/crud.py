@@ -219,8 +219,9 @@ class CrudForm(AbstractCrudForm, form.Form):
 
     def update(self):
         super(CrudForm, self).update()
-        editform = self.editform_factory(self, self.request)
+
         addform = self.addform_factory(self, self.request)
-        self.subforms = [editform, addform]
+        editform = self.editform_factory(self, self.request)
         addform.update()
         editform.update()
+        self.subforms = [editform, addform]
