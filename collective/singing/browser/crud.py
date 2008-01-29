@@ -89,6 +89,10 @@ class AbstractCrudForm(object):
         return None
 
 class IgnorantCheckboxWidget(z3c.form.browser.checkbox.SingleCheckBoxWidget):
+    """XXX: We need to refactor this and patch z3c.form where
+    it makes sense.
+    """
+
     def update(self):
         self.ignoreContext = True
         super(IgnorantCheckboxWidget, self).update()
@@ -100,6 +104,14 @@ class IgnorantCheckboxWidget(z3c.form.browser.checkbox.SingleCheckBoxWidget):
                 vocabulary.SimpleTerm(True, 'selected', self.field.title),
                 ))
         return self.terms
+
+    def extract(self, default=NOVALUE):
+        """See z3c.form.interfaces.IWidget."""
+        if (self.name not in self.request and
+            self.name+'-empty-marker' in self.request):
+            return default
+        else:
+            return super(IgnorantCheckboxWidget, self).extract(default)
 
     @classmethod
     def field_widget(cls, field, request):

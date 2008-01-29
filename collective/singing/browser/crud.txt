@@ -115,9 +115,12 @@ rename whenever the name of a person is changed:
   ...             storage[str(data['name'])] = item
 
 Let's rename Martha to Maria.  This will give her another key in our
-storage:
+storage.  (To slightly complicate the test, we'll also add an "empty
+marker" for the delete checkbox, just because this turned out to
+trigger a bug in the past.)
 
   >>> request.form['crud-edit.Martha.widgets.name'] = u'Maria'
+  >>> request.form['crud-edit.Martha.widgets.delete-empty-marker'] = '1'
   >>> html = MyRenamingForm(None, request)()
   >>> "Successfully updated" in html
   True
