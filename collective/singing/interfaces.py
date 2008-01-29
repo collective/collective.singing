@@ -177,7 +177,7 @@ class IChannel(interface.Interface):
         )
     
     title = schema.TextLine(
-        title=u"The title of the channel",
+        title=u"Title",
         )
     
     scheduler = schema.Object(
