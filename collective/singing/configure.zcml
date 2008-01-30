@@ -3,15 +3,15 @@
    xmlns:i18n="http://namespaces.zope.org/i18n"
    i18n_domain="collective.singing">
 
+  <include package="z3c.form" file="meta.zcml" />
+  <include package="z3c.form" />
+  
   <include package=".browser" />
 
   <adapter factory=".subscribe.SimpleComposerData" />
   <adapter factory=".subscribe.SimpleCollectorData" />
   <adapter factory=".subscribe.SimpleMetadata" />
 
-  <include package="z3c.form" file="meta.zcml" />
-  <include package="z3c.form" />
-  
   <i18n:registerTranslations directory="locales"/>
   
 </configure>

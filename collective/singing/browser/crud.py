@@ -1,16 +1,15 @@
 from zope import interface
 import zope.event
 import zope.lifecycleevent
-from zope.schema import vocabulary
 from z3c.form import button
 from z3c.form import field
 from z3c.form import form
-from z3c.form import term
+import z3c.form.widget
 from z3c.form.interfaces import DISPLAY_MODE, INPUT_MODE, NOVALUE
-import z3c.form.browser.checkbox
 from zope.app.pagetemplate import viewpagetemplatefile
 
 from collective.singing import MessageFactory as _
+from collective.singing.browser.widget import IgnorantCheckboxWidget
 
 class ICrudForm(interface.Interface):
 
@@ -88,35 +87,6 @@ class AbstractCrudForm(object):
     def link(self, item):
         return None
 
-class IgnorantCheckboxWidget(z3c.form.browser.checkbox.SingleCheckBoxWidget):
-    """XXX: We need to refactor this and patch z3c.form where
-    it makes sense.
-    """
-
-    def update(self):
-        self.ignoreContext = True
-        super(IgnorantCheckboxWidget, self).update()
-
-    def updateTerms(self):
-        if self.terms is None:
-            self.terms = term.Terms()
-            self.terms.terms = vocabulary.SimpleVocabulary((
-                vocabulary.SimpleTerm(True, 'selected', self.field.title),
-                ))
-        return self.terms
-
-    def extract(self, default=NOVALUE):
-        """See z3c.form.interfaces.IWidget."""
-        if (self.name not in self.request and
-            self.name+'-empty-marker' in self.request):
-            return default
-        else:
-            return super(IgnorantCheckboxWidget, self).extract(default)
-
-    @classmethod
-    def field_widget(cls, field, request):
-        return cls(field, request)
-
 class EditSubForm(form.EditForm):
     template = viewpagetemplatefile.ViewPageTemplateFile('crud-row.pt')
 
@@ -148,16 +118,14 @@ class EditSubForm(form.EditForm):
         return self.content
 
     def _delete_field(self):
+        @zope.interface.implementer(z3c.form.interfaces.IDataConverter)
         def delete_widget_factory(field, request):
             widget = IgnorantCheckboxWidget(request)
-            #widget.value = (False,)
-            widget.field = field
-            return widget
+            return z3c.form.widget.FieldWidget(field, widget)
 
         delete_field = field.Field(
             zope.schema.Bool(__name__='delete',
                              required=False,
-                             default=False,
                              title=_(u'Delete')))
         delete_field.widgetFactory[INPUT_MODE] = delete_widget_factory
         return delete_field

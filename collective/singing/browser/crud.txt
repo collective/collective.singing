@@ -72,6 +72,8 @@ form fires for us:
   >>> log = create_eventlog(IObjectModifiedEvent)
 
   >>> request = TestRequest()
+  >>> request.form['crud-edit.Martha.widgets.delete-empty-marker'] = u'1'
+  >>> request.form['crud-edit.Peter.widgets.delete-empty-marker'] = u'1'
   >>> request.form['crud-edit.Martha.widgets.name'] = u'Martha'
   >>> request.form['crud-edit.Martha.widgets.age'] = 55
   >>> request.form['crud-edit.Peter.widgets.name'] = u'Franz'
@@ -115,12 +117,9 @@ rename whenever the name of a person is changed:
   ...             storage[str(data['name'])] = item
 
 Let's rename Martha to Maria.  This will give her another key in our
-storage.  (To slightly complicate the test, we'll also add an "empty
-marker" for the delete checkbox, just because this turned out to
-trigger a bug in the past.)
+storage:
 
   >>> request.form['crud-edit.Martha.widgets.name'] = u'Maria'
-  >>> request.form['crud-edit.Martha.widgets.delete-empty-marker'] = '1'
   >>> html = MyRenamingForm(None, request)()
   >>> "Successfully updated" in html
   True
@@ -130,6 +129,31 @@ trigger a bug in the past.)
   []
   >>> sorted(storage.keys())
   ['Maria', 'Peter']
+
+Next, we'll submit the form for edit, but we'll make no changes.
+Instead, we'll select a delete checkbox.  This shouldn't do anything,
+since we clicked the 'Edit' button:
+
+  >>> request.form['crud-edit.Maria.widgets.name'] = u'Maria'
+  >>> request.form['crud-edit.Maria.widgets.age'] = 55
+  >>> request.form['crud-edit.Maria.widgets.delete'] = [u'selected']
+  >>> html = MyRenamingForm(None, request)()
+  >>> "No changes" in html
+  True
+  >>> log
+  []
+
+And what if we do have changes *and* click the checkbox?
+
+  >>> request.form['crud-edit.Maria.widgets.age'] = 50
+  >>> html = MyRenamingForm(None, request)()
+  >>> "Successfully updated" in html
+  True
+  >>> log.pop().object == storage['Maria']
+  True
+  >>> log
+  []
+
 
 Delete an item with our form
 ----------------------------
@@ -145,7 +169,7 @@ We can delete an item by checking the according checkbox:
   >>> 'Franz' in html
   False
   >>> storage
-  {'Maria': <Person with name=u'Maria', age=55>}
+  {'Maria': <Person with name=u'Maria', age=50>}
 
 Add an item with our form
 -------------------------
@@ -174,8 +198,8 @@ Added items should show up right away:
   >>> log
   []
 
-Viewing information in our form
--------------------------------
+Render some of the fields in view mode
+--------------------------------------
 
 We can implement in our form a ``view_schema`` attribute, which will
 then be used to view information in our form's table.  Let's say we
