@@ -78,7 +78,7 @@ form fires for us:
   >>> request.form['crud-edit.Martha.widgets.age'] = 55
   >>> request.form['crud-edit.Peter.widgets.name'] = u'Franz'
   >>> request.form['crud-edit.Peter.widgets.age'] = 16
-  >>> request.form['crud-edit.buttons.edit'] = u'Edit'
+  >>> request.form['crud-edit.buttons.edit'] = u'Apply changes'
   >>> html = MyForm(None, request)()
   >>> "Successfully updated" in html
   True
@@ -132,7 +132,7 @@ storage:
 
 Next, we'll submit the form for edit, but we'll make no changes.
 Instead, we'll select a delete checkbox.  This shouldn't do anything,
-since we clicked the 'Edit' button:
+since we clicked the 'Apply changes' button:
 
   >>> request.form['crud-edit.Maria.widgets.name'] = u'Maria'
   >>> request.form['crud-edit.Maria.widgets.age'] = 55
@@ -154,6 +154,18 @@ And what if we do have changes *and* click the checkbox?
   >>> log
   []
 
+If we omit the name, we'll get an error:
+
+  >>> request.form['crud-edit.Maria.widgets.name'] = u''
+  >>> html = MyRenamingForm(None, request)()
+  >>> "There were some errors" in html
+  True
+
+We expect an error message in the title cell of Maria:
+
+  >>> checkbox_pos = html.index('crud-edit.Maria.widgets.delete-empty-marker')
+  >>> "Required input is missing" in html[checkbox_pos:]
+  True
 
 Delete an item with our form
 ----------------------------
@@ -220,7 +232,7 @@ We can still edit the age of our Persons:
   >>> request = TestRequest()
   >>> request.form['crud-edit.Maria.widgets.age'] = 40
   >>> request.form['crud-edit.Daniel.widgets.age'] = 35
-  >>> request.form['crud-edit.buttons.edit'] = u'Edit'
+  >>> request.form['crud-edit.buttons.edit'] = u'Apply Changes'
   >>> html = MyAdvancedForm(None, request)()
   >>> "Successfully updated" in html
   True

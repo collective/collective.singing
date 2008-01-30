@@ -6,6 +6,9 @@
       tal:omit-tag=""
       tal:condition="view/subforms">
 
+  <h2 tal:condition="view/label | nothing"
+      tal:content="view/label">Form title</h2>
+
   <div class="portalMessage"
        tal:condition="view/status" tal:content="view/status">
   </div>
@@ -15,13 +18,25 @@
     <table tal:define="rows view/subforms">
         <thead tal:define="row1 python:len(rows) and rows[0] or None"
                tal:condition="row1">
-          <th tal:repeat="field python:row1.fields.values()"
-              tal:content="field/field/title">
+          <th tal:repeat="widget python:row1.widgets.values()">
+            
+            <span tal:content="widget/field/title">
+              Field
+            </span>
+
+            <span class="fieldRequired"
+                  tal:condition="widget/required"
+                  i18n:attributes="title">
+              *
+            </span>
+
           </th>
         </thead>
-        <tr tal:repeat="row view/subforms"
-            tal:content="structure row"
-            tal:attributes="class python:repeat['row'].odd() and 'odd' or 'even'" />
+        <tbody>
+          <tr tal:repeat="row view/subforms"
+              tal:content="structure row/render"
+              tal:attributes="class python:repeat['row'].odd() and 'odd' or 'even'" />
+        </tbody>
     </table>
 
     <div class="action" tal:repeat="action view/actions/values">

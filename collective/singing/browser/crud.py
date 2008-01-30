@@ -94,7 +94,7 @@ class EditSubForm(form.EditForm):
     def prefix(self):
         return 'crud-edit.%s.' % self.content_id
 
-    # Must be set
+    # These are set by the parent form
     content = None
     content_id = None
 
@@ -131,9 +131,10 @@ class EditSubForm(form.EditForm):
         return delete_field
 
 class EditForm(form.Form):
+    label = _(u"Edit")
     template = viewpagetemplatefile.ViewPageTemplateFile('crud-table.pt')
     prefix = 'crud-edit.'
-
+    
     def update(self):
         self._update_subforms()
         super(EditForm, self).update()
@@ -146,6 +147,20 @@ class EditForm(form.Form):
             subform.content_id = id
             subform.update()
             self.subforms.append(subform)
+
+    @button.buttonAndHandler(_('Apply changes'), name='edit')
+    def handle_edit(self, action):
+        self.status = _(u"No changes made.")
+        for subform in self.subforms:
+            data, errors = subform.extractData()
+            if errors:
+                self.status = subform.formErrorsMessage
+                continue
+            del data['delete']
+            self.context.before_update(subform.content, data)
+            changes = subform.applyChanges(data)
+            if changes:
+                self.status = _(u"Successfully updated.")
 
     @button.buttonAndHandler(_('Delete'), name='delete')
     def handle_delete(self, action):
@@ -162,22 +177,8 @@ class EditForm(form.Form):
         # We changed the amount of entries, so we update the subforms again.
         self._update_subforms()
 
-    @button.buttonAndHandler(_('Edit'), name='edit')
-    def handle_edit(self, action):
-        self.status = _(u"No changes made.")
-        
-        for subform in self.subforms:
-            data, errors = subform.extractData()
-            if errors:
-                self.status = subform.formErrorsMessage
-                return
-            del data['delete']
-            self.context.before_update(subform.content, data)
-            changes = subform.applyChanges(data)
-            if changes:
-                self.status = _(u"Successfully updated.")
-
 class AddForm(form.Form):
+    label = _(u"Add")
     template = viewpagetemplatefile.ViewPageTemplateFile('form.pt')
     prefix = 'crud-add.'
     ignoreContext = True
