@@ -242,7 +242,7 @@ We can still edit the age of our Persons:
   >>> storage['Daniel'].age
   35
 
-We can add a Person using both name and age:
+We can still add a Person using both name and age:
 
   >>> request = TestRequest()
   >>> request.form['crud-add.widgets.name'] = u'Thomas'
@@ -268,4 +268,18 @@ Our form can also contain links to our items:
   ...<a href="http://en.wikipedia.org/wiki/Daniel"...
   ...<a href="http://en.wikipedia.org/wiki/Maria"...
   ...<a href="http://en.wikipedia.org/wiki/Thomas"...
+  </div>
+
+What if we wanted the name to be both used for linking to the item
+*and* for edit?  We can just include the title field twice:
+
+  >>> class MyAdvancedLinkingForm(MyAdvancedLinkingForm):
+  ...     update_schema = IPerson
+  ...     view_schema = field.Fields(IPerson).select('name')
+  ...     add_schema = IPerson
+
+  >>> print MyAdvancedLinkingForm(None, TestRequest())() \
+  ... # doctest: +ELLIPSIS +NORMALIZE_WHITESPACE
+  <div class="crud-form">...
+  ...<a href="http://en.wikipedia.org/wiki/Thomas"...Thomas...</a>...
   </div>

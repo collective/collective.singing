@@ -108,6 +108,10 @@ class EditSubForm(form.EditForm):
             view_fields = field.Fields(view_schema)
             for f in view_fields.values():
                 f.mode = DISPLAY_MODE
+                # This is to allow a field to appear in both view
+                # and edit mode at the same time:
+                f.__name__ = 'view_' + f.__name__
+
             fields += view_fields
             
         fields += update_fields
