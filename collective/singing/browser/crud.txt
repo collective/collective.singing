@@ -72,8 +72,8 @@ form fires for us:
   >>> log = create_eventlog(IObjectModifiedEvent)
 
   >>> request = TestRequest()
-  >>> request.form['crud-edit.Martha.widgets.delete-empty-marker'] = u'1'
-  >>> request.form['crud-edit.Peter.widgets.delete-empty-marker'] = u'1'
+  >>> request.form['crud-edit.Martha.widgets.select-empty-marker'] = u'1'
+  >>> request.form['crud-edit.Peter.widgets.select-empty-marker'] = u'1'
   >>> request.form['crud-edit.Martha.widgets.name'] = u'Martha'
   >>> request.form['crud-edit.Martha.widgets.age'] = 55
   >>> request.form['crud-edit.Peter.widgets.name'] = u'Franz'
@@ -131,12 +131,12 @@ storage:
   ['Maria', 'Peter']
 
 Next, we'll submit the form for edit, but we'll make no changes.
-Instead, we'll select a delete checkbox.  This shouldn't do anything,
-since we clicked the 'Apply changes' button:
+Instead, we'll select one time.  This shouldn't do anything, since we
+clicked the 'Apply changes' button:
 
   >>> request.form['crud-edit.Maria.widgets.name'] = u'Maria'
   >>> request.form['crud-edit.Maria.widgets.age'] = 55
-  >>> request.form['crud-edit.Maria.widgets.delete'] = [u'selected']
+  >>> request.form['crud-edit.Maria.widgets.select'] = [u'selected']
   >>> html = MyRenamingForm(None, request)()
   >>> "No changes" in html
   True
@@ -163,17 +163,18 @@ If we omit the name, we'll get an error:
 
 We expect an error message in the title cell of Maria:
 
-  >>> checkbox_pos = html.index('crud-edit.Maria.widgets.delete-empty-marker')
+  >>> checkbox_pos = html.index('crud-edit.Maria.widgets.select-empty-marker')
   >>> "Required input is missing" in html[checkbox_pos:]
   True
 
 Delete an item with our form
 ----------------------------
 
-We can delete an item by checking the according checkbox:
+We can delete an item by selecting the item we want to delete and
+clicking the "Delete" button:
 
   >>> request = TestRequest()
-  >>> request.form['crud-edit.Peter.widgets.delete'] = ['selected']
+  >>> request.form['crud-edit.Peter.widgets.select'] = ['selected']
   >>> request.form['crud-edit.buttons.delete'] = u'Delete'
   >>> html = MyForm(None, request)()
   >>> "Successfully deleted items" in html

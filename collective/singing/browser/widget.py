@@ -4,23 +4,22 @@ from zope.schema import vocabulary
 import z3c.form.browser.checkbox
 import z3c.form.interfaces
 
-class IgnorantCheckboxWidget(z3c.form.browser.checkbox.SingleCheckBoxWidget):
+class SingleCheckboxWidget(z3c.form.browser.checkbox.SingleCheckBoxWidget):
     """XXX: We need to refactor this and patch z3c.form where
     it makes sense.
     """
 
     def update(self):
         self.ignoreContext = True
-        super(IgnorantCheckboxWidget, self).update()
+        super(SingleCheckboxWidget, self).update()
 
     def updateTerms(self):
         # The default implementation would render "selected" as a
-        # lebel for the single checkbox.  We use the field's title
-        # instead.
+        # lebel for the single checkbox.  We use no label instead.
         if self.terms is None:
             self.terms = term.Terms()
             self.terms.terms = vocabulary.SimpleVocabulary((
-                vocabulary.SimpleTerm(True, 'selected', self.field.title),
+                vocabulary.SimpleTerm(True, 'selected', u''),
                 ))
         return self.terms
 
@@ -30,5 +29,4 @@ class IgnorantCheckboxWidget(z3c.form.browser.checkbox.SingleCheckBoxWidget):
             self.name+'-empty-marker' in self.request):
             return default
         else:
-            return super(IgnorantCheckboxWidget, self).extract(default)
-
+            return super(SingleCheckboxWidget, self).extract(default)

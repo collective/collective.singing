@@ -9,7 +9,7 @@ from z3c.form.interfaces import DISPLAY_MODE, INPUT_MODE, NOVALUE
 from zope.app.pagetemplate import viewpagetemplatefile
 
 from collective.singing import MessageFactory as _
-from collective.singing.browser.widget import IgnorantCheckboxWidget
+from collective.singing.browser.widget import SingleCheckboxWidget
 
 class ICrudForm(interface.Interface):
 
@@ -100,7 +100,7 @@ class EditSubForm(form.EditForm):
 
     @property
     def fields(self):
-        fields = field.Fields(self._delete_field())
+        fields = field.Fields(self._select_field())
         update_fields = field.Fields(self.context.context.update_schema)
         view_schema = self.context.context.view_schema
 
@@ -121,18 +121,18 @@ class EditSubForm(form.EditForm):
     def getContent(self):
         return self.content
 
-    def _delete_field(self):
+    def _select_field(self):
         @zope.interface.implementer(z3c.form.interfaces.IDataConverter)
-        def delete_widget_factory(field, request):
-            widget = IgnorantCheckboxWidget(request)
+        def select_widget_factory(field, request):
+            widget = SingleCheckboxWidget(request)
             return z3c.form.widget.FieldWidget(field, widget)
 
-        delete_field = field.Field(
-            zope.schema.Bool(__name__='delete',
+        select_field = field.Field(
+            zope.schema.Bool(__name__='select',
                              required=False,
-                             title=_(u'Delete')))
-        delete_field.widgetFactory[INPUT_MODE] = delete_widget_factory
-        return delete_field
+                             title=_(u'select')))
+        select_field.widgetFactory[INPUT_MODE] = select_widget_factory
+        return select_field
 
 class EditForm(form.Form):
     label = _(u"Edit")
@@ -160,7 +160,7 @@ class EditForm(form.Form):
             if errors:
                 self.status = subform.formErrorsMessage
                 continue
-            del data['delete']
+            del data['select']
             self.context.before_update(subform.content, data)
             changes = subform.applyChanges(data)
             if changes:
@@ -171,7 +171,7 @@ class EditForm(form.Form):
         self.status = _(u"Please select items to delete.")
 
         for subform in self.subforms:
-            data = subform.widgets['delete'].extract()
+            data = subform.widgets['select'].extract()
             if not data or data is NOVALUE:
                 continue
             else:
