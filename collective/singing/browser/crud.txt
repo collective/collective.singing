@@ -284,3 +284,25 @@ What if we wanted the name to be both used for linking to the item
   <div class="crud-form">...
   ...<a href="http://en.wikipedia.org/wiki/Thomas"...Thomas...</a>...
   </div>
+
+
+Don't render one part
+---------------------
+
+What if we wanted our form to display only one part, that is, only the
+add *or* the edit form.  Our CrudForm can implement
+``editform_factory`` and ``addform_factory`` to override one or both
+forms.  Seeting one of these to ``crud.NullForm`` will make them
+disappear:
+
+  >>> class OnlyEditForm(MyForm):
+  ...     addform_factory = crud.NullForm
+  >>> html = OnlyEditForm(None, TestRequest())()
+  >>> 'Edit' in html, 'Add' in html
+  (True, False)
+
+  >>> class OnlyAddForm(MyForm):
+  ...     editform_factory = crud.NullForm
+  >>> html = OnlyAddForm(None, TestRequest())()
+  >>> 'Edit' in html, 'Add' in html
+  (False, True)

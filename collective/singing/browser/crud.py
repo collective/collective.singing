@@ -202,6 +202,18 @@ class AddForm(form.Form):
         zope.event.notify(zope.lifecycleevent.ObjectCreatedEvent(item))
         self.status = _(u"Item added successfully.")
 
+class NullForm(object):
+    def __init__(self, context, request):
+        self.context = context
+        self.request = request
+
+    def update(self):
+        pass
+
+    def render(self):
+        return ''
+    __call__ = render
+
 class CrudForm(AbstractCrudForm, form.Form):
     template = viewpagetemplatefile.ViewPageTemplateFile('form-master.pt')
 
