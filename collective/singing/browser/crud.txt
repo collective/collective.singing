@@ -260,8 +260,9 @@ We can still add a Person using both name and age:
 Our form can also contain links to our items:
 
   >>> class MyAdvancedLinkingForm(MyAdvancedForm):
-  ...     def link(self, item):
-  ...         return 'http://en.wikipedia.org/wiki/%s' % item.name
+  ...     def link(self, item, field, value):
+  ...         if field == 'name':
+  ...             return 'http://en.wikipedia.org/wiki/%s' % value
 
   >>> print MyAdvancedLinkingForm(None, TestRequest())() \
   ... # doctest: +ELLIPSIS +NORMALIZE_WHITESPACE

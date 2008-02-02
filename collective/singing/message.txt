@@ -84,9 +84,11 @@ We can ask the queue to process messages by calling its ``dispatch``
 method.  The ``dispatch`` method will try and look up an IDispatch
 component for each message in its active queues and call it.
 
-Right now nothing happens because no message is queued:
+Right now nothing happens because no message is queued.  Note that the
+number of messages sent is returned by the ``dispatch`` method:
 
   >>> queue.dispatch()
+  0
 
 Messages in both 'error' and 'sent' states will be ignored:
 
@@ -105,6 +107,7 @@ Messages in both 'error' and 'sent' states will be ignored:
 Nothing happens when we dispatch:
 
   >>> queue.dispatch()
+  0
 
   >>> queue['error'].pull() is err_msg
   True
@@ -149,6 +152,7 @@ the status was changed the last time:
   >>> before = msg.status_changed
   >>> queue.dispatch()
   'Hello, Aliens!' sent.
+  1
   >>> count()
   sent: 1 messages
   >>> msg.status_changed > before
@@ -164,8 +168,15 @@ Messages in the 'retry' queue will also be tried:
   sent: 1 messages
   >>> queue.dispatch()
   'A do yi yi we a?' sent.
+  1
   >>> count()
   sent: 2 messages
+
+The ``messages_sent`` attribute on the queue will also tell us how
+many messages were sent:
+
+  >>> queue.messages_sent
+  2
 
 Errors while processing
 -----------------------
@@ -192,6 +203,7 @@ into the 'error' queue:
   new: 1 messages
   sent: 2 messages
   >>> queue.dispatch()
+  0
   >>> count()
   error: 1 messages
   sent: 2 messages
@@ -216,13 +228,31 @@ Our dispatcher can also return 'error' as a status to the same effect:
   sent: 2 messages
   >>> before = msg.status_changed
   >>> queue.dispatch()
+  0
   >>> count()
   error: 1 messages
   sent: 2 messages
-  >>> queue['error'].pull() is msg
-  True
   >>> msg.status_message
   'Not enough mana'
   >>> msg.status_changed > before
   True
+
+We can reset the 'error' and 'sent' queues by calling the ``flush``
+method on the queue object:
+
+  >>> msg = message.Message(payload="Zao sin",
+  ...                       subscription=subscription,
+  ...                       status=u"retry")
+  >>> count()
+  error: 1 messages
+  retry: 1 messages
+  sent: 2 messages
+  >>> queue.flush()
+  >>> count()
+  retry: 1 messages
+
+The number of messages sent is not reset through a ``flush``:
+
+  >>> queue.messages_sent
+  2
 

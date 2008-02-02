@@ -20,7 +20,8 @@
                tal:condition="row1">
           <th tal:repeat="widget python:row1.widgets.values()">
             
-            <span tal:content="widget/field/title">
+            <span tal:content="widget/field/title"
+                  tal:attributes="title widget/field/description">
               Field
             </span>
 

@@ -1,12 +1,11 @@
 <tal:block repeat="widget view/widgets/values">
 
-  <td tal:define="link python:view.context.context.link(view.getContent());
-                  error widget/error"
+  <td tal:define="error widget/error"
       tal:attributes="class python:'field' + (error and ' error' or '')">
 
     <a href=""
-       tal:omit-tag="python:not (repeat['widget'].index() == 1 and
-                     link and widget.mode == 'display')"
+       tal:define="link python:view.context.context.link(view.getContent(), widget.field.__name__, widget.value)"
+       tal:omit-tag="python:widget.mode == 'input' or link is None"
        tal:attributes="href link">
 
       <span class="error" tal:omit-tag="not:error">

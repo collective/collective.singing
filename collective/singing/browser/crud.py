@@ -51,8 +51,8 @@ class ICrudForm(interface.Interface):
         """A hook that gets called before an item is updated.
         """
 
-    def link(item):
-        """Return a URL for the item or None.
+    def link(item, field, value):
+        """Return a URL for this item's field or None.
         """
 
 class AbstractCrudForm(object):
@@ -84,7 +84,7 @@ class AbstractCrudForm(object):
     def before_update(self, item, data):
         pass
 
-    def link(self, item):
+    def link(self, item, field, value):
         return None
 
 class EditSubForm(form.EditForm):
@@ -168,18 +168,25 @@ class EditForm(form.Form):
 
     @button.buttonAndHandler(_('Delete'), name='delete')
     def handle_delete(self, action):
-        self.status = _(u"Please select items to delete.")
+        selected = self.selected_items()
+        if selected:
+            self.status = _(u"Successfully deleted items.")
+            for id, item in selected:
+                self.context.remove((id, item))
+            # We changed the amount of entries, so we update the subforms again.
+            self._update_subforms()
+        else:
+            self.status = _(u"Please select items to delete.")
 
+    def selected_items(self):
+        tuples = []
         for subform in self.subforms:
             data = subform.widgets['select'].extract()
             if not data or data is NOVALUE:
                 continue
             else:
-                self.context.remove((subform.content_id, subform.content))
-                self.status = _(u"Successfully deleted items.")
-
-        # We changed the amount of entries, so we update the subforms again.
-        self._update_subforms()
+                tuples.append((subform.content_id, subform.content))
+        return tuples
 
 class AddForm(form.Form):
     label = _(u"Add")

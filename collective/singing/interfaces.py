@@ -190,6 +190,10 @@ class IMessageQueues(IMapping):
     """A dict that contains one ``zc.queue.interfaces.IQueue`` per
     message status.
     """
+    messages_sent = schema.Int(
+        title=u"Total number of messages sent through this queue",
+        )
+
 
 class IChannel(interface.Interface):
     """A Channel is what we can subscribe to.
