@@ -286,7 +286,6 @@ What if we wanted the name to be both used for linking to the item
   ...<a href="http://en.wikipedia.org/wiki/Thomas"...Thomas...</a>...
   </div>
 
-
 Don't render one part
 ---------------------
 
@@ -307,3 +306,66 @@ disappear:
   >>> html = OnlyAddForm(None, TestRequest())()
   >>> 'Edit' in html, 'Add' in html
   (False, True)
+
+Render only in view, and define own actions
+-------------------------------------------
+
+Sometimes you want to present a list of items, possibly in view mode
+only, and have the user select one or more of the items to perform
+some action with them.  We'll present a minimal example that does this
+here.
+
+We can simply leave the ``update_schema`` class attribute out (it
+defaults to ``None``).  Furthermore, we'll need to override the
+ediform_factory with our custom version that provides other buttons
+than the 'edit' and 'delete' ones:
+
+  >>> from pprint import pprint
+  >>> from z3c.form import button
+
+  >>> class MyEditForm(crud.EditForm):
+  ...     @button.buttonAndHandler(u'Capitalize', name='capitalize')
+  ...     def handle_capitalize(self, action):
+  ...         self.status = u"Please select items to capitalize first."
+  ...         selected = self.selected_items()
+  ...         if selected:
+  ...             self.status = u"Capitalized items"
+  ...             for id, item in selected:
+  ...                 item.name = item.name.upper()
+
+  >>> class MyCustomForm(crud.CrudForm):
+  ...     view_schema = IPerson
+  ...     editform_factory = MyEditForm
+  ...     addform_factory = crud.NullForm     # We don't want an add part.
+  ... 
+  ...     def get_items(self):
+  ...         return sorted(storage.items(), key=lambda x: x[1].name)
+
+  >>> request = TestRequest()
+  >>> html = MyCustomForm(None, TestRequest())()
+  >>> "Delete" in html, "Apply changes" in html, "Capitalize" in html
+  (False, False, True)
+  >>> pprint(storage)
+  {'Daniel': <Person with name=u'Daniel', age=35>,
+   'Maria': <Person with name=u'Maria', age=40>,
+   'Thomas': <Person with name=u'Thomas', age=28>}
+
+  >>> request.form['crud-edit.Thomas.widgets.select'] = ['selected']
+  >>> request.form['crud-edit.buttons.capitalize'] = u'Capitalize'
+  >>> html = MyCustomForm(None, request)()
+  >>> "Capitalized items" in html
+  True
+  >>> pprint(storage)
+  {'Daniel': <Person with name=u'Daniel', age=35>,
+   'Maria': <Person with name=u'Maria', age=40>,
+   'Thomas': <Person with name=u'THOMAS', age=28>}
+
+We *cannot* use any of the other buttons:
+
+  >>> del request.form['crud-edit.buttons.capitalize']
+  >>> request.form['crud-edit.buttons.delete'] = u'Delete'
+  >>> html = MyCustomForm(None, request)()
+  >>> "Successfully deleted items" in html
+  False
+  >>> 'Thomas' in storage
+  True

@@ -65,7 +65,7 @@ class AbstractCrudForm(object):
     """
     interface.implements(ICrudForm)
 
-    update_schema = None # subclasses must implement this
+    update_schema = None
     view_schema = None
 
     @property
@@ -101,9 +101,8 @@ class EditSubForm(form.EditForm):
     @property
     def fields(self):
         fields = field.Fields(self._select_field())
-        update_fields = field.Fields(self.context.context.update_schema)
-        view_schema = self.context.context.view_schema
 
+        view_schema = self.context.context.view_schema
         if view_schema:
             view_fields = field.Fields(view_schema)
             for f in view_fields.values():
@@ -111,10 +110,11 @@ class EditSubForm(form.EditForm):
                 # This is to allow a field to appear in both view
                 # and edit mode at the same time:
                 f.__name__ = 'view_' + f.__name__
-
             fields += view_fields
             
-        fields += update_fields
+        update_schema = self.context.context.update_schema
+        if update_schema:
+            fields += field.Fields(update_schema)
 
         return fields
 
