@@ -1,0 +1,228 @@
+Messages and queues
+===================
+
+A queue for messages
+--------------------
+
+The message queue is a component that contains queues for every
+possible message status.  A message queue is usually an attribute on a
+channel.
+
+  >>> from collective.singing import message
+  >>> queue = message.MessageQueues()
+  >>> def count(queue=queue):
+  ...     for status in sorted(queue.keys()):
+  ...         count = len(queue[status])
+  ...         if count:
+  ...             print '%s: %s messages' % (status, len(queue[status]))
+  >>> count()
+
+New messages that change their status are automatically managed in the
+channel's queue.  What defines what's a given message's queue?
+There's the ``subscription`` attribute that every message implements,
+and the ``channel`` attribute on subscriptions.  With these, an event
+subscriber can find the right queue and manage it for us.
+
+Let's define our own subscription and channel classes:
+
+  >>> class Subscription(object):
+  ...     def __init__(self, channel):
+  ...         self.channel = channel
+
+  >>> class Channel(object):
+  ...     queue = queue
+  ...     def __init__(self, name):
+  ...         self.name = name
+
+  >>> subscription = Subscription(Channel('my channel'))
+
+Before we create our message, we'll need to subscribe the event
+subscribers that implement the automatic management of queues:
+
+  >>> from zope import component
+  >>> import zope.component.event
+  >>> component.provideHandler(zope.component.event.objectEventNotify)
+  >>> component.provideHandler(message.queue_message)
+
+Now we can create a message.  We'll immediately see that it's added to
+our queue.
+
+  >>> msg = message.Message(payload=u"Hello, World!", subscription=subscription)
+  >>> msg.payload, msg.subscription, msg.status # doctest: +ELLIPSIS
+  (u'Hello, World!', <Subscription object at ...>, u'new')
+  >>> len(queue['new'])
+  1
+  >>> queue['new'][0] is msg
+  True
+
+When we pull the message from the queue now and set its status, it
+will be put into the according queue automatically:
+
+  >>> msg = queue['new'].pull()
+  >>> count()
+  >>> msg.status = u'error'
+  >>> count()
+  error: 1 messages
+  >>> queue['error'][0] is msg
+  True
+
+We can set the same status more than once without problems:
+
+  >>> msg = queue['error'].pull()
+  >>> msg.status = u'error'
+  >>> count()
+  error: 1 messages
+  >>> queue['error'][0] is msg
+  True
+  >>> queue['error'].pull() # doctest: +ELLIPSIS
+  <collective.singing.message.Message object at ...>
+
+Dispatching  messages through the queue
+---------------------------------------
+
+We can ask the queue to process messages by calling its ``dispatch``
+method.  The ``dispatch`` method will try and look up an IDispatch
+component for each message in its active queues and call it.
+
+Right now nothing happens because no message is queued:
+
+  >>> queue.dispatch()
+
+Messages in both 'error' and 'sent' states will be ignored:
+
+  >>> err_msg = message.Message(payload="Hello, World!",
+  ...                           subscription=subscription,
+  ...                           status=u'error')
+  
+  >>> sent_msg = message.Message(payload="Hello, World!",
+  ...                            subscription=subscription,
+  ...                            status=u'sent')
+
+  >>> count()
+  error: 1 messages
+  sent: 1 messages
+
+Nothing happens when we dispatch:
+
+  >>> queue.dispatch()
+
+  >>> queue['error'].pull() is err_msg
+  True
+  >>> queue['sent'].pull() is sent_msg
+  True
+
+After we put a message into the 'new' queue, we can see how the queue
+tries to look up a dispatcher for it:
+
+  >>> msg = message.Message(payload=u"Hello, Aliens!",
+  ...                       subscription=subscription)
+  >>> queue.dispatch() # doctest: +ELLIPSIS
+  Traceback (most recent call last):
+  ...
+  TypeError: ('Could not adapt', u'Hello, Aliens!', <InterfaceClass collective.singing.interfaces.IDispatch>)
+
+We'll be so kind and provide a minimalistic dispatcher:
+
+  >>> from zope import interface
+  >>> from collective.singing import interfaces
+
+  >>> class Dispatch(object):
+  ...     interface.implements(interfaces.IDispatch)
+  ...     component.adapts(str)
+  ...     
+  ...     def __init__(self, payload):
+  ...         self.payload = payload
+  ... 
+  ...     def __call__(self):
+  ...         print "%r sent." % (self.payload,)
+  ...         return 'sent', None
+
+  >>> component.provideAdapter(Dispatch)
+
+The ``status_changed`` datetime object on the message tells us when
+the status was changed the last time:
+
+  >>> msg = message.Message(payload="Hello, Aliens!",
+  ...                       subscription=subscription)
+  >>> count()
+  new: 1 messages
+  >>> before = msg.status_changed
+  >>> queue.dispatch()
+  'Hello, Aliens!' sent.
+  >>> count()
+  sent: 1 messages
+  >>> msg.status_changed > before
+  True
+
+Messages in the 'retry' queue will also be tried:
+
+  >>> msg = message.Message(payload="A do yi yi we a?",
+  ...                       subscription=subscription,
+  ...                       status=u'retry')
+  >>> count()
+  retry: 1 messages
+  sent: 1 messages
+  >>> queue.dispatch()
+  'A do yi yi we a?' sent.
+  >>> count()
+  sent: 2 messages
+
+Errors while processing
+-----------------------
+
+The message will land in the 'error' queue if the dispatcher raises an
+error:
+
+  >>> class BrokenDispatch(Dispatch):
+  ...     def __call__(self):
+  ...         raise ValueError("I'm sorry!")
+  >>> msg = message.Message(payload="Zao sin",
+  ...                       subscription=subscription)
+  >>> BrokenDispatch(msg)() # doctest: +ELLIPSIS
+  Traceback (most recent call last):
+  ...
+  ValueError: I'm sorry!
+  >>> component.provideAdapter(BrokenDispatch)
+
+Let's now use the ``dispatch`` method of the queue to send the
+message.  Sure enough, we can see that the message goes from the 'new'
+into the 'error' queue:
+
+  >>> count()
+  new: 1 messages
+  sent: 2 messages
+  >>> queue.dispatch()
+  >>> count()
+  error: 1 messages
+  sent: 2 messages
+  >>> queue['error'].pull() is msg
+  True
+  >>> msg.status
+  u'error'
+  >>> print msg.status_message # doctest: +NORMALIZE_WHITESPACE
+  Traceback (most recent call last):
+  ValueError: I'm sorry!
+
+Our dispatcher can also return 'error' as a status to the same effect:
+
+  >>> class BrokenDispatch(Dispatch):
+  ...     def __call__(self):
+  ...         return u'error', "Not enough mana"
+  >>> component.provideAdapter(BrokenDispatch)
+  >>> msg = message.Message(payload="Zao sin",
+  ...                       subscription=subscription)
+  >>> count()
+  new: 1 messages
+  sent: 2 messages
+  >>> before = msg.status_changed
+  >>> queue.dispatch()
+  >>> count()
+  error: 1 messages
+  sent: 2 messages
+  >>> queue['error'].pull() is msg
+  True
+  >>> msg.status_message
+  'Not enough mana'
+  >>> msg.status_changed > before
+  True
+

@@ -1,10 +1,9 @@
 from zope import interface
 from zope import schema
-
+import zope.component.interfaces
 from zope.interface.interfaces import IInterface
 from zope.interface.common.mapping import IMapping
 from zope.annotation.interfaces import IAnnotatable
-
 
 class IRequestBasedSecret(interface.Interface):
     """A utility that provides a secret based on the request.
@@ -45,19 +44,42 @@ class ISubscription(IAnnotatable):
         """,
         )
 
+MESSAGE_STATES = [u'new',   # just added
+                  u'sent',  # sent successfully
+                  u'error', # error while sending
+                  u'retry', # error while sending, but retrying
+                  ]
 
 class IMessage(interface.Interface):
-    """Messages are objects ready to be published.
+    """Messages are objects ready for sending.
     """
-
     payload = schema.Field(
-        title=u"The message's payload, e.g. the e-mail message as a string.",
+        title=u"The message's payload, e.g. the e-mail message.",
         )
 
     subscription = schema.Object(
         title=u"Subscription, referenced for bookkeeping purposes only.",
         schema=ISubscription,
         )
+
+    status = schema.Choice(
+        title=u"State",
+        description=u"IMessageChanged is fired automatically when this is set",
+        values=MESSAGE_STATES)
+
+    status_message = schema.Text(
+        title=u"Status details",
+        required=False)
+
+    status_changed = schema.Datetime(
+        title=u"Last time this message changed its status",
+        )
+
+class IMessageChanged(zope.lifecycleevent.interfaces.IObjectModifiedEvent):
+    """An object event on the message that signals that the status has
+    changed.
+    """
+    old_status = schema.TextLine(title=u"Old status of message")
 
 
 class IComposerData(IMapping):
@@ -105,8 +127,9 @@ class IComposer(interface.Interface):
         )
 
     def render(subscription, items=()):
-        """Given a subscription and a list of items, I will return an
-        IMessage object suitable for delivery.
+        """Given a subscription and a list of items, I will create an
+        IMessage and fire
+        zope.lifecycleevent.interfaces.IObjectCreatedEvent.
         """
 
     def render_confirmation(subscription):
@@ -163,6 +186,10 @@ class ISubscriptions(interface.Interface):
         """True if a key/secret is known to the storage.
         """
 
+class IMessageQueues(IMapping):
+    """A dict that contains one ``zc.queue.interfaces.IQueue`` per
+    message status.
+    """
 
 class IChannel(interface.Interface):
     """A Channel is what we can subscribe to.
@@ -203,16 +230,24 @@ class IChannel(interface.Interface):
         schema=ISubscriptions,
         )
 
-
-class MessageDispatchException(Exception):
-    pass
+    queue = schema.Object(
+        title=u"This channel's message queues, keyed by message status",
+        schema=IMessageQueues,
+        )
 
 
 class IDispatch(interface.Interface):
-    """Dispatchers adapt messages and send them."""
+    """Dispatchers adapt message *payloads* and send them."""
 
     def __call__():
-        """Raises ``MessageDispatchException`` if delivery failed.
+        """Attempt to send message.
+
+        Must return a tuple ``(status, status_message)``.  See
+        ``MESSAGE_STATES`` for possible choices for the status.  The
+        status message may be None or a text containing details about
+        the status, e.g. why it failed.
+
+        If this method raises an exception, an 'error' is assumed.
         """
 
 class IChannelLookup(interface.Interface):

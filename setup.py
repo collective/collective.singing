@@ -30,6 +30,7 @@ setup(name='collective.singing',
       install_requires=[
           'setuptools',
           'z3c.form',
+          'zc.queue',
       ],
       dependency_links=[
       ],

@@ -1,4 +1,3 @@
-import StringIO
 import email.Message
 import email.Parser
 import formatter
@@ -6,6 +5,8 @@ import htmllib
 import mimetools
 import MimeWriter
 import quopri
+import StringIO
+import traceback
 
 from zope import interface
 from zope import component
@@ -93,7 +94,7 @@ class Dispatch(object):
       >>> message['To'] = 'plone-users@lists.sourceforge.net'
       >>> message.set_payload('Hello, Plone users!')
 
-    ``Dispatch`` is an adapter on the message:
+    ``Dispatch`` adapts ``email.Message.Message``:
      
       >>> dispatcher = Dispatch(message)
      
@@ -124,8 +125,12 @@ class Dispatch(object):
       To: plone-users@lists.sourceforge.net
       <BLANKLINE>
       Hello, Plone users!
+      (u'sent', None)
 
-    If the delivery fails, we'll get a ``MessageDispatchException``:
+    Note that the last line is the return value.
+
+    If the delivery fails, we'll get a return value with u'error' as
+    the first element.
 
       >>> class MyException(Exception):
       ...     pass
@@ -135,11 +140,12 @@ class Dispatch(object):
       ...     def send(self, from_, to, message):
       ...         raise MyException('This is a test')
       >>> component.provideUtility(MyFailingMailDelivery())
-      >>> try:
-      ...     dispatcher()
-      ... except interfaces.MessageDispatchException, e:
-      ...     print e.args # doctest: +ELLIPSIS
-      (<collective.singing.mail.MyException instance ...>,)
+      >>> status, message = dispatcher()
+      >>> status
+      u'error'
+      >>> print message # doctest: +NORMALIZE_WHITESPACE
+      Traceback (most recent call last):
+      MyException: This is a test
     """
     
     interface.implements(interfaces.IDispatch)
@@ -154,4 +160,7 @@ class Dispatch(object):
         try:
             delivery.send(msg['From'], msg['To'], msg.as_string())
         except Exception, e:
-            raise interfaces.MessageDispatchException(e)
+            # TODO: log
+            return u'error', traceback.format_exc(e)
+        else:
+            return u'sent', None

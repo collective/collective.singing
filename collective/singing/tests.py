@@ -18,6 +18,11 @@ def test_suite():
         doctest.DocFileSuite(
            'README.txt'),
 
+        doctest.DocFileSuite(
+           'message.txt',
+           setUp=testing.setUp, tearDown=testing.tearDown,
+           ),
+
         doctest.DocTestSuite(
            'collective.singing.mail',
            setUp=testing.setUp, tearDown=testing.tearDown,
