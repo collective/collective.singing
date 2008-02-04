@@ -143,6 +143,10 @@ class ICollector(interface.Interface):
     responsible for assembling a list of items for publishing.
     """
 
+    title = schema.TextLine(
+        title=u"Title",
+        )
+
     schema = schema.Object(
         title=u"A schema for use in the subscription form",
         description=u"Values are stored via the ICollectorData adapter per "
