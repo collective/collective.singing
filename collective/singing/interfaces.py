@@ -190,6 +190,12 @@ class ISubscriptions(interface.Interface):
         """True if a key/secret is known to the storage.
         """
 
+    def items():
+        """Returns an iterator of tuples of the form
+        ``(secret, subscriptions)``, where ``subscriptions`` is a
+        list of ISubscription objects.
+        """
+
 class IMessageQueues(IMapping):
     """A dict that contains one ``zc.queue.interfaces.IQueue`` per
     message status.
