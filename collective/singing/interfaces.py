@@ -128,13 +128,13 @@ class IComposer(interface.Interface):
 
     def render(subscription, items=()):
         """Given a subscription and a list of items, I will create an
-        IMessage and fire
-        zope.lifecycleevent.interfaces.IObjectCreatedEvent.
+        IMessage and return it.
         """
 
     def render_confirmation(subscription):
-        """Given a subscription, I will return a message that the user
-        has to react to in order to confirm the subscription.
+        """Given a subscription, I will create an IMessage that the
+        user has to react to in order to confirm the subscription, and
+        return it.
         """
 
 
