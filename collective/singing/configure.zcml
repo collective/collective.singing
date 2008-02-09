@@ -8,6 +8,8 @@
   
   <include package=".browser" />
 
+  <subscriber handler=".message.queue_message" />
+
   <adapter factory=".subscribe.SimpleComposerData" />
   <adapter factory=".subscribe.SimpleCollectorData" />
   <adapter factory=".subscribe.SimpleMetadata" />
