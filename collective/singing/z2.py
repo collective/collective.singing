@@ -4,6 +4,8 @@ from zope.i18n.locales import locales, LoadLocaleError
 from Products.Five.browser import decode
 import z3c.form.interfaces
 
+from collective.singing import interfaces
+
 # XXX This is ripped from zope.publisher.http.HTTPRequest; we should
 # move this into Five
 def setup_locale(request):
@@ -32,9 +34,9 @@ def add_getURL(request):
         return request['ACTUAL_URL']
     request.getURL = getURL
 
-def switch_on(view):
+def switch_on(view, request_layer=interfaces.IFormLayer):
     request = view.request
-    interface.alsoProvides(request, z3c.form.interfaces.IFormLayer)
+    interface.alsoProvides(request, request_layer)
     request.locale = setup_locale(request)
     add_getURL(request)
     decode.processInputs(request)

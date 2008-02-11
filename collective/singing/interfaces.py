@@ -4,6 +4,7 @@ import zope.component.interfaces
 from zope.interface.interfaces import IInterface
 from zope.interface.common.mapping import IMapping
 from zope.annotation.interfaces import IAnnotatable
+import z3c.form.interfaces
 
 class IRequestBasedSecret(interface.Interface):
     """A utility that provides a secret based on the request.
@@ -222,13 +223,13 @@ class IChannel(interface.Interface):
         )
     
     scheduler = schema.Object(
-        title=u"The channel's scheduler (when)",
+        title=u"Scheduler (when)",
         required=False,
         schema=IScheduler,
         )
 
     collector = schema.Object(
-        title=u"The channel's collector (what)",
+        title=u"Collector (what)",
         required=False,
         schema=ICollector,
         )
@@ -272,3 +273,5 @@ class IChannelLookup(interface.Interface):
         """Return a list of ``IChannel`` objects.
         """
 
+class IFormLayer(z3c.form.interfaces.IFormLayer):
+    pass
