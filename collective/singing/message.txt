@@ -85,10 +85,11 @@ method.  The ``dispatch`` method will try and look up an IDispatch
 component for each message in its active queues and call it.
 
 Right now nothing happens because no message is queued.  Note that the
-number of messages sent is returned by the ``dispatch`` method:
+number of messages sent and failed is returned by the ``dispatch``
+method:
 
   >>> queue.dispatch()
-  0
+  (0, 0)
 
 Messages in both 'error' and 'sent' states will be ignored:
 
@@ -107,7 +108,7 @@ Messages in both 'error' and 'sent' states will be ignored:
 Nothing happens when we dispatch:
 
   >>> queue.dispatch()
-  0
+  (0, 0)
 
   >>> queue['error'].pull() is err_msg
   True
@@ -152,7 +153,7 @@ the status was changed the last time:
   >>> before = msg.status_changed
   >>> queue.dispatch()
   'Hello, Aliens!' sent.
-  1
+  (1, 0)
   >>> count()
   sent: 1 messages
   >>> msg.status_changed > before
@@ -168,7 +169,7 @@ Messages in the 'retry' queue will also be tried:
   sent: 1 messages
   >>> queue.dispatch()
   'A do yi yi we a?' sent.
-  1
+  (1, 0)
   >>> count()
   sent: 2 messages
 
@@ -203,7 +204,7 @@ into the 'error' queue:
   new: 1 messages
   sent: 2 messages
   >>> queue.dispatch()
-  0
+  (0, 1)
   >>> count()
   error: 1 messages
   sent: 2 messages

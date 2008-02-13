@@ -53,6 +53,8 @@ class MessageQueues(persistent.dict.PersistentDict):
 
     def dispatch(self):
         sent = 0
+        failed = 0
+        
         for name in 'new', 'retry':
             queue = self[name]
             while True:
@@ -73,11 +75,13 @@ class MessageQueues(persistent.dict.PersistentDict):
 
                     if status == 'sent':
                         sent += 1
+                    else:
+                        failed += 1
                     message.status_message = msg
                     message.status = status
 
         self._messages_sent.change(sent)
-        return sent
+        return sent, failed
 
     def flush(self):
         for name in 'error', 'sent':
