@@ -264,35 +264,6 @@ pending:
    'format': 'html',
    'pending': True}
 
-Managing subscriptions
-----------------------
-
-We can manage subscriptions through the ``ManageSubscriptions`` view.
-This view provides a listing of all subscriptions with the possibility
-of removing them individually.
-
-  >>> from collective.singing.browser.subscribe import ManageSubscriptions
-  >>> request = TestRequest()
-  >>> manage = ManageSubscriptions(channel, request)
-  >>> html = manage()
-  >>> "Remove selected subscriptions" in html
-  True
-  >>> "daniel@testingunderground.com@@html" in html
-  True
-  >>> "daniel@testingunderground.com@@plaintext" in html
-  True
-
-  >>> request.form['form.widgets.subscribers'] = [
-  ...     u'daniel@testingunderground.com@@html']
-  >>> request.form['form.buttons.remove'] = u'Remove selected subscriptions'
-  >>> html = manage()
-  >>> "Data successfully updated." in html
-  True
-  >>> "daniel@testingunderground.com@@html" in html
-  False
-  >>> "daniel@testingunderground.com@@plaintext" in html
-  True
-
 Unsubscribe
 -----------
 

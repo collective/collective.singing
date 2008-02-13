@@ -1,12 +1,10 @@
 import datetime
 
-from zope import component
 import zope.schema.interfaces
 import zope.schema.vocabulary
 import zope.publisher.browser
 from zope.app.pagetemplate import viewpagetemplatefile
 import z3c.form.interfaces
-from z3c.form import button
 from z3c.form import field
 from z3c.form import form
 import z3c.form.browser.checkbox
@@ -210,82 +208,3 @@ class Unsubscribe(utils.OverridableTemplate,
         secret = self.request.form['secret']
         del self.context.subscriptions[secret]
         return self.template()
-
-class ManageSubscriptions(utils.OverridableTemplate, form.Form):
-    """A way to manage subscriptions.
-
-    ``context`` is required to be of type ``IChannel``.
-    """
-    index = viewpagetemplatefile.ViewPageTemplateFile('form.pt')
-    ignoreContext = True
-
-    @property
-    def fields(self):
-        terms = []
-        seen = []
-        for secret, subs in self.context.subscriptions.items():
-            for sub in subs:
-                format = interfaces.ISubscriptionMetadata(sub)['format']
-                title = ', '.join(interfaces.IComposerData(sub).values())
-                value = '%s@@%s' % (secret, format)
-
-                # XXX: We don't want to check this here; the
-                # subscriptions should never contain duplicates
-                if value in seen:
-                    continue
-                seen.append(value)
-                
-                terms.append(
-                    zope.schema.vocabulary.SimpleTerm(
-                        value, title=title))
-                           
-        subscribers = zope.schema.List(
-            __name__='subscribers',
-            title=_(u'Subscribers'),
-            required=False,
-            value_type=zope.schema.Choice(vocabulary=Terms(terms)),
-            )
-
-        # We provide our own widget factory for the ``subscribers``
-        # field for two reasons.  Firstly, we'll assign the ``terms``
-        # attribute to the widget; the terms would otherwise be looked
-        # up via adapters (and fail).  Secondly, we'll choose a
-        # CheckboxWidget manually, instead of the RadioWidget that
-        # would otherwise be chosen.
-        def terms_assigning_widget_factory(field, request):
-            widget = z3c.form.browser.checkbox.CheckBoxFieldWidget(
-                field, request)
-            widget.terms = field.value_type.vocabulary
-            return widget
-        
-        fields = field.Fields(subscribers)
-        fields['subscribers'].widgetFactory[
-            z3c.form.interfaces.INPUT_MODE] = terms_assigning_widget_factory
-
-        return fields
-
-    @button.buttonAndHandler(_('Remove selected subscriptions'), name='remove')
-    def handle_remove(self, action):
-        data, errors = self.extractData()
-        if errors:
-            self.status = form.EditForm.formErrorsMessage
-            return
-
-        subscriptions = self.context.subscriptions
-        for token in data['subscribers']:
-            secret, format = token.split('@@')
-            # We'll be careful to preserve the list that's already
-            # there; we'll remove items only
-            for sub in list(subscriptions[secret]):
-                metadata = interfaces.ISubscriptionMetadata(sub)
-                if metadata['format'] == format:
-                    index = subscriptions[secret].index(sub)
-                    del subscriptions[secret][index]
-
-            if len(subscriptions[secret]) == 0:
-                del subscriptions[secret]
-
-        self.status = form.EditForm.successMessage
-
-        # Update the widgets again, because we might have changed them.
-        self.updateWidgets()
