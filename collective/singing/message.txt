@@ -229,7 +229,7 @@ Our dispatcher can also return 'error' as a status to the same effect:
   sent: 2 messages
   >>> before = msg.status_changed
   >>> queue.dispatch()
-  0
+  (0, 1)
   >>> count()
   error: 1 messages
   sent: 2 messages

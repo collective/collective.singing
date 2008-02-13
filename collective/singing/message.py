@@ -65,7 +65,11 @@ class MessageQueues(persistent.dict.PersistentDict):
                 else:
                     dispatcher = interfaces.IDispatch(message.payload)
                     try:
-                        status, msg = dispatcher()
+                        value = dispatcher()
+                        assert len(value) == 2, (
+                            "Invalid return value from %r: %r" %
+                            (dispatcher, value))
+                        status, msg = value
                     except ConflictError:
                         raise
                     except Exception, e:
