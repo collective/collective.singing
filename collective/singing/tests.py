@@ -22,7 +22,10 @@ def test_suite():
            setUp=testing.setUp, tearDown=testing.tearDown,
            ),
 
-        doctest.DocFileSuite('scheduler.txt'),
+        doctest.DocFileSuite(
+            'scheduler.txt',
+            setUp=testing.setUp, tearDown=testing.tearDown,
+        ),
 
         doctest.DocTestSuite(
            'collective.singing.mail',

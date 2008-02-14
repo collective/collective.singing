@@ -2,9 +2,27 @@ import datetime
 
 import persistent
 from zope import interface
+from zope import component
 
 from collective.singing import interfaces
 from collective.singing import MessageFactory as _
+
+class UnicodeFormatter(object):
+    interface.implements(interfaces.IFormatItem)
+
+    def __init__(self, item):
+        self.item = item
+
+    def __call__(self):
+        return unicode(self.item)
+
+def getIFormatAdapter(obj, format):
+    format = component.queryAdapter(
+        obj, interfaces.IFormatItem, name=format)
+    if format is None:
+        return component.getAdapter(obj, interfaces.IFormatItem)
+    else:
+        return format
 
 def assemble_messages(channel):
     collector = channel.collector
@@ -34,7 +52,9 @@ def assemble_messages(channel):
 
             # Use the right composer to render the message.  Note
             # that the message is already queued when we render it.
-            composer = composers[subscription_metadata['format']]
+            format = subscription_metadata['format']
+            composer = composers[format]
+            items = [getIFormatAdapter(item, format)() for item in items]
             message = composer.render(sub, items)
 
 class AbstractPeriodicScheduler(object):

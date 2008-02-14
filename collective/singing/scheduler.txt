@@ -72,7 +72,8 @@ does the right thing:
 
   >>> class Composer(object):
   ...     def render(self, subscription, items=()):
-  ...         print "Rendering message with %r for %r" % (items, subscription)
+  ...         print "Rendering message with %r for %r" % (tuple(items),
+  ...                                                     subscription)
 
   >>> from zope import interface, component
   >>> @component.adapter(Subscription)
@@ -120,16 +121,31 @@ message with:
   ...         return items, 'somecue'
 
   >>> channel.collector = Collector()
+
+Before we can render messages now, we need to tell scheduler how to
+convert the items retrieved by the collector into something that the
+composer can work with.
+
+A ``UnicodeFormatter`` defined in the ``scheduler`` module returns
+``unicode(item)`` for any given item.  We'll use that one specifically
+for our ``my-format`` composer to render both strings and Subscription
+objects to unicode:
+
+  >>> component.provideAdapter(scheduler.UnicodeFormatter,
+  ...                          adapts=(str,))
+  >>> component.provideAdapter(scheduler.UnicodeFormatter,
+  ...                          adapts=(Subscription,))
+
   >>> scheduler.assemble_messages(channel)
   Collecting items for <Subscription 'daniel'> with cue None
-  Rendering message with ('some', 'items', 'for', <Subscription 'daniel'>) for <Subscription 'daniel'>
+  Rendering message with (u'some', u'items', u'for', u"<Subscription 'daniel'>") for <Subscription 'daniel'>
 
 Note that the second we call this, the cue we returned in the previous
 call to ``get_items`` will be passed to the collector:
 
   >>> scheduler.assemble_messages(channel)
   Collecting items for <Subscription 'daniel'> with cue 'somecue'
-  Rendering message with ('some', 'items', 'for', <Subscription 'daniel'>) for <Subscription 'daniel'>
+  Rendering message with (u'some', u'items', u'for', u"<Subscription 'daniel'>") for <Subscription 'daniel'>
 
 If the collector decides to return no items, no messages will be
 rendered:

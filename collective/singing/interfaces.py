@@ -168,7 +168,6 @@ class ICollector(interface.Interface):
         subscriber's ICollectorData.
         """
 
-
 class IScheduler(interface.Interface):
     """A scheduler triggers the sending of messages periodically.
     """
@@ -264,6 +263,14 @@ class IChannel(interface.Interface):
         title=u"This channel's message queues, keyed by message status",
         schema=IMessageQueues,
         )
+
+
+class IFormatItem(interface.Interface):
+    """Given an item as retrieved from a collector, this interface
+    defines a method that returns a representation of given item ready
+    for inclusion in the message via the ``IComposer.render`` method.
+    This representation is typically text.
+    """
 
 
 class IDispatch(interface.Interface):

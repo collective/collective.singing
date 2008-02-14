@@ -10,6 +10,12 @@
 
   <subscriber handler=".message.queue_message" />
 
+  <adapter factory=".scheduler.UnicodeFormatter"
+           for="unicode" />
+
+  <adapter factory=".scheduler.UnicodeFormatter"
+           for="str" />
+
   <adapter factory=".subscribe.SimpleComposerData" />
   <adapter factory=".subscribe.SimpleCollectorData" />
   <adapter factory=".subscribe.SimpleMetadata" />
