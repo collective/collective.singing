@@ -1,0 +1,127 @@
+Scheduler
+=========
+
+The ``scheduler`` module defines a couple of ``IScheduler``
+implementations:
+
+  >>> from collective.singing import scheduler
+  >>> from collective.singing import interfaces
+  >>> from zope.interface import verify
+  >>> verify.verifyClass(interfaces.IScheduler, scheduler.DailyScheduler)
+  True
+  >>> verify.verifyClass(interfaces.IScheduler, scheduler.WeeklyScheduler)
+  True
+
+Schedulers implement a ``tick`` method that'll call
+``assemble_messages`` when it needs to:
+
+  >>> daily = scheduler.DailyScheduler()
+  >>> daily.tick(None) # doctest: +ELLIPSIS
+  Traceback (innermost last):
+  ...
+  AttributeError: ...
+
+Daily won't need to trigger that function when its ``triggered_last``
+attribute is set to now:
+
+  >>> import datetime
+  >>> daily.triggered_last = datetime.datetime.now()
+  >>> daily.tick(None)
+
+If it's set to one day ago, it'll go off:
+
+  >>> daily.triggered_last = (
+  ...     datetime.datetime.now() - datetime.timedelta(days=1))
+  >>> daily.tick(None) # doctest: +ELLIPSIS
+  Traceback (innermost last):
+  ...
+  AttributeError: ...
+
+``assemble_messages`` takes an ``IChannel`` as its first argument;
+it'll look up the channel's collector (if any) and the composer and
+render messages.
+
+At this point, we'll provide our own ``IChannel``, ``IComposer`` and
+``ISubscription`` implementations to test that ``assemble_messages``
+does the right thing:
+
+  >>> class Channel(object):
+  ...     def __init__(self, composers, subscriptions, collector=None):
+  ...         self.composers = composers
+  ...         self.subscriptions = subscriptions
+  ...         self.collector = collector
+
+  >>> class Subscription(object):
+  ...     def __init__(self, name, metadata):
+  ...         self.name = name
+  ...         self.metadata = metadata
+  ...     def __repr__(self):
+  ...         return '<Subscription %r>' % self.name
+
+  >>> class Composer(object):
+  ...     def render(self, subscription, items=()):
+  ...         print "Rendering message with %r for %r" % (items, subscription)
+
+  >>> from zope import interface, component
+  >>> @component.adapter(Subscription)
+  ... @interface.implementer(interfaces.ISubscriptionMetadata)
+  ... def subscription_metadata(subscription):
+  ...     return subscription.metadata
+  >>> component.provideAdapter(subscription_metadata)
+
+  >>> subscription = Subscription('daniel', dict(format='my-format'))
+  >>> channel = Channel(
+  ...     composers={'my-format': Composer()},
+  ...     subscriptions={'my-secret': [subscription]})
+
+  >>> scheduler.assemble_messages(channel)
+  Rendering message with () for <Subscription 'daniel'>
+
+If our subscription were in pending state, nothing would happen:
+
+  >>> subscription.metadata['pending'] = True
+  >>> scheduler.assemble_messages(channel)
+  >>> subscription.metadata['pending'] = False
+
+If our subscription were for a format that's unknown, an error is
+raised:
+
+  >>> subscription.metadata['format'] = 'bar'
+  >>> scheduler.assemble_messages(channel) # doctest: +ELLIPSIS
+  Traceback (innermost last):
+  ...
+  KeyError: 'bar'
+  >>> subscription.metadata['format'] = 'my-format'
+
+Note that our channel lacks a collector; that's perfectly fine.  If
+there is a collector however, it'll be asked for items to render the
+message with:
+
+  >>> class Collector(object):
+  ...     items = ('some', 'items')
+  ...     def get_items(self, cue=None, subscription=None):
+  ...         print "Collecting items for %r with cue %r" % (subscription, cue)
+  ...         if self.items:
+  ...             items = self.items + ('for', subscription)
+  ...         else:
+  ...             items = ()
+  ...         return items, 'somecue'
+
+  >>> channel.collector = Collector()
+  >>> scheduler.assemble_messages(channel)
+  Collecting items for <Subscription 'daniel'> with cue None
+  Rendering message with ('some', 'items', 'for', <Subscription 'daniel'>) for <Subscription 'daniel'>
+
+Note that the second we call this, the cue we returned in the previous
+call to ``get_items`` will be passed to the collector:
+
+  >>> scheduler.assemble_messages(channel)
+  Collecting items for <Subscription 'daniel'> with cue 'somecue'
+  Rendering message with ('some', 'items', 'for', <Subscription 'daniel'>) for <Subscription 'daniel'>
+
+If the collector decides to return no items, no messages will be
+rendered:
+
+  >>> channel.collector.items = ()
+  >>> scheduler.assemble_messages(channel)
+  Collecting items for <Subscription 'daniel'> with cue 'somecue'

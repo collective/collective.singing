@@ -15,13 +15,14 @@ def create_eventlog(event=interface.Interface):
 def test_suite():
     return unittest.TestSuite([
 
-        doctest.DocFileSuite(
-           'README.txt'),
+        doctest.DocFileSuite('README.txt'),
 
         doctest.DocFileSuite(
            'message.txt',
            setUp=testing.setUp, tearDown=testing.tearDown,
            ),
+
+        doctest.DocFileSuite('scheduler.txt'),
 
         doctest.DocTestSuite(
            'collective.singing.mail',

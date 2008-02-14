@@ -171,9 +171,17 @@ class ICollector(interface.Interface):
 
 class IScheduler(interface.Interface):
     """A scheduler triggers the sending of messages periodically.
-    
-    XXX: Underspecified
     """
+
+    triggered_last = schema.Datetime(
+        title=u"Triggered the last time",
+        )
+
+    def tick(channel):
+        """Check if messages need to be assembled and sent.
+        
+        This method is guaranteed to be called periodically.
+        """
 
 
 class ISubscriptions(interface.Interface):
