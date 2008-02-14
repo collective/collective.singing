@@ -172,9 +172,16 @@ class ICollector(interface.Interface):
 class IScheduler(interface.Interface):
     """A scheduler triggers the sending of messages periodically.
     """
+    title = schema.TextLine(
+        title=u"Title",
+        )
 
     triggered_last = schema.Datetime(
         title=u"Triggered the last time",
+        )
+
+    active = schema.Bool(
+        title=u"Active",
         )
 
     def tick(channel):

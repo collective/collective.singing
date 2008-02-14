@@ -4,6 +4,7 @@ import persistent
 from zope import interface
 
 from collective.singing import interfaces
+from collective.singing import MessageFactory as _
 
 def assemble_messages(channel):
     collector = channel.collector
@@ -40,16 +41,19 @@ class AbstractPeriodicScheduler(object):
     interface.implements(interfaces.IScheduler)
 
     triggered_last = datetime.datetime(1, 1, 1, 0, 0)
+    active = False
     delta = None
 
     def tick(self, channel):
         now = datetime.datetime.now()
-        if now - self.triggered_last >= self.delta:
+        if self.active and now - self.triggered_last >= self.delta:
             assemble_messages(channel)
             self.triggered_last = now
 
 class DailyScheduler(persistent.Persistent, AbstractPeriodicScheduler):
+    title = _(u"Daily scheduler")
     delta = datetime.timedelta(days=1)
 
 class WeeklyScheduler(persistent.Persistent, AbstractPeriodicScheduler):
+    title = _(u"Weekly scheduler")
     delta = datetime.timedelta(weeks=1)

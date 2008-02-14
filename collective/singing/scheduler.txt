@@ -16,6 +16,11 @@ Schedulers implement a ``tick`` method that'll call
 ``assemble_messages`` when it needs to:
 
   >>> daily = scheduler.DailyScheduler()
+  >>> daily.tick(None)
+
+Nothing happened because our scheduler is inactive by default:
+
+  >>> daily.active = True
   >>> daily.tick(None) # doctest: +ELLIPSIS
   Traceback (innermost last):
   ...
