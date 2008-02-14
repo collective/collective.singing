@@ -50,6 +50,12 @@ class AbstractPeriodicScheduler(object):
             assemble_messages(channel)
             self.triggered_last = now
 
+    def __eq__(self, other):
+        if isinstance(other, AbstractPeriodicScheduler):
+            return (other.triggered_last == self.triggered_last and
+                    other.active == self.active and
+                    other.delta == self.delta)
+
 class DailyScheduler(persistent.Persistent, AbstractPeriodicScheduler):
     title = _(u"Daily scheduler")
     delta = datetime.timedelta(days=1)
@@ -57,3 +63,5 @@ class DailyScheduler(persistent.Persistent, AbstractPeriodicScheduler):
 class WeeklyScheduler(persistent.Persistent, AbstractPeriodicScheduler):
     title = _(u"Weekly scheduler")
     delta = datetime.timedelta(weeks=1)
+
+schedulers = (WeeklyScheduler, DailyScheduler)

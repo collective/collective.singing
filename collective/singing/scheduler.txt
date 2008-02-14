@@ -12,6 +12,13 @@ implementations:
   >>> verify.verifyClass(interfaces.IScheduler, scheduler.WeeklyScheduler)
   True
 
+Schedulers have an overwritten ``__eq__`` special method for comparison:
+
+  >>> scheduler.DailyScheduler() == scheduler.DailyScheduler()
+  True
+  >>> scheduler.WeeklyScheduler() == scheduler.DailyScheduler()
+  False
+
 Schedulers implement a ``tick`` method that'll call
 ``assemble_messages`` when it needs to:
 
