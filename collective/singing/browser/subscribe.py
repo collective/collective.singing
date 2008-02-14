@@ -12,6 +12,7 @@ import z3c.form.browser.checkbox
 from collective.singing import interfaces
 from collective.singing import subscribe
 from collective.singing import MessageFactory as _
+from collective.singing import message
 from collective.singing.browser import utils
 from collective.singing.browser import wizard
 
@@ -120,8 +121,13 @@ class Subscribe(wizard.Wizard):
 
         # Ask the composer to render a confirmation message
         composer = self.context.composers[self.format()]
-        message = composer.render_confirmation(subscription)
-        interfaces.IDispatch(message)()
+        msg = composer.render_confirmation(subscription)
+        status, status_msg = message.dispatch(msg)
+        if status != u'sent':
+            self.status = _(u"We're sorry, but there seems to be an error. "
+                            u"Please try again later.\n"
+                            u"(${error})",
+                            mapping=dict(error=status_msg))
 
     def create(self, comp_data, coll_data):
         """Create a subscription corresponding to data.

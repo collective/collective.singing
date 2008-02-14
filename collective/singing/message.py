@@ -13,6 +13,25 @@ import zc.queue.interfaces
 
 from collective.singing import interfaces
 
+def dispatch(message):
+    dispatcher = interfaces.IDispatch(message.payload)
+    try:
+        value = dispatcher()
+        assert value is not None and len(value) == 2, (
+            "Invalid return value from %r: %r" %
+            (dispatcher, value))
+        status, msg = value
+    except ConflictError:
+        raise
+    except Exception, e:
+        # TODO: log
+        status = u'error'
+        msg = traceback.format_exc(e)
+
+    message.status_message = msg
+    message.status = status
+    return message.status, message.status_message
+
 class Message(object):
     interface.implements(interfaces.IMessage)
 
@@ -63,26 +82,11 @@ class MessageQueues(persistent.dict.PersistentDict):
                 except IndexError:
                     break
                 else:
-                    dispatcher = interfaces.IDispatch(message.payload)
-                    try:
-                        value = dispatcher()
-                        assert len(value) == 2, (
-                            "Invalid return value from %r: %r" %
-                            (dispatcher, value))
-                        status, msg = value
-                    except ConflictError:
-                        raise
-                    except Exception, e:
-                        # TODO: log
-                        status = u'error'
-                        msg = traceback.format_exc(e)
-
+                    status, message = dispatch(message)
                     if status == 'sent':
                         sent += 1
                     else:
                         failed += 1
-                    message.status_message = msg
-                    message.status = status
 
         self._messages_sent.change(sent)
         return sent, failed
