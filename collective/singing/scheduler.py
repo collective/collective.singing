@@ -60,7 +60,7 @@ def assemble_messages(channel):
 class AbstractPeriodicScheduler(object):
     interface.implements(interfaces.IScheduler)
 
-    triggered_last = datetime.datetime(1, 1, 1, 0, 0)
+    triggered_last = datetime.datetime(1970, 1, 1)
     active = False
     delta = None
 
