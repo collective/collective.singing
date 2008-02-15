@@ -288,6 +288,23 @@ What if we wanted the name to be both used for linking to the item
   ...<a href="http://en.wikipedia.org/wiki/Thomas"...Thomas...</a>...
   </div>
 
+We can now change Thomas's name and see the change reflected in the
+Wikipedia link immediately:
+
+  >>> request = TestRequest()
+  >>> for name in 'Daniel', 'Maria', 'Thomas':
+  ...     request.form['crud-edit.%s.widgets.name' % name] = storage[name].name
+  ...     request.form['crud-edit.%s.widgets.age' % name] = storage[name].age
+  >>> request.form['crud-edit.Thomas.widgets.name'] = u'Dracula'
+  >>> request.form['crud-edit.buttons.edit'] = u'Apply Changes'
+
+  >>> print MyAdvancedLinkingForm(None, request)() \
+  ... # doctest: +ELLIPSIS +NORMALIZE_WHITESPACE
+  <div class="crud-form">...
+  ...<a href="http://en.wikipedia.org/wiki/Dracula"...Dracula...</a>...
+  </div>
+  >>> storage['Thomas'].name = u'Thomas'
+
 Don't render one part
 ---------------------
 

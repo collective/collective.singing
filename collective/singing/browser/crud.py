@@ -102,6 +102,10 @@ class EditSubForm(form.EditForm):
     def fields(self):
         fields = field.Fields(self._select_field())
 
+        update_schema = self.context.context.update_schema
+        if update_schema:
+            fields += field.Fields(update_schema)
+
         view_schema = self.context.context.view_schema
         if view_schema:
             view_fields = field.Fields(view_schema)
@@ -109,13 +113,10 @@ class EditSubForm(form.EditForm):
                 f.mode = DISPLAY_MODE
                 # This is to allow a field to appear in both view
                 # and edit mode at the same time:
-                f.__name__ = 'view_' + f.__name__
+                if not f.__name__.startswith('view_'):
+                    f.__name__ = 'view_' + f.__name__
             fields += view_fields
             
-        update_schema = self.context.context.update_schema
-        if update_schema:
-            fields += field.Fields(update_schema)
-
         return fields
 
     def getContent(self):
@@ -176,6 +177,11 @@ class EditForm(form.Form):
                     status = _(u"Successfully updated.")
                 elif status is subform.formErrorsMessage:
                     status = _(u"Some of your changes could not be applied.")
+
+                # If there were changes, we'll update the view widgets
+                # again, so that they'll actually display the changes
+                [w.update() for w in subform.widgets.values()
+                 if w.mode == DISPLAY_MODE]
         self.status = status
 
     @button.buttonAndHandler(_('Delete'), name='delete')
