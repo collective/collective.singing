@@ -189,7 +189,12 @@ We're now subscribed to the channel:
   1
   >>> channel.subscriptions # doctest: +NORMALIZE_WHITESPACE +ELLIPSIS
   {u'daniel@testingunderground.com':
-   [<collective.singing.subscribe.SimpleSubscription object at ...>]}
+   [<SimpleSubscription to <Channel object at ...>
+     with composerdata: {'email': u'daniel@testingunderground.com'},
+     collectordata: {'colour': 'red'},
+     and metadata: {'date': datetime.datetime(...),
+                    'format': 'html',
+                    'pending': True}>]}
 
   >>> 'Thanks for your subscription' in html
   True
@@ -242,8 +247,7 @@ Our two subscriptions are keyed with the same key:
   1
   >>> channel.subscriptions # doctest: +NORMALIZE_WHITESPACE +ELLIPSIS
   {u'daniel@testingunderground.com':
-   [<collective.singing.subscribe.SimpleSubscription object at ...>,
-    <collective.singing.subscribe.SimpleSubscription object at ...>]}
+   [<SimpleSubscription to ...>, <SimpleSubscription to ...>]}
 
   >>> html = channel.subscriptions['daniel@testingunderground.com'][0]
   >>> plaintext = channel.subscriptions['daniel@testingunderground.com'][1]

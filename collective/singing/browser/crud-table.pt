@@ -17,7 +17,7 @@
 
     <table tal:define="rows view/subforms">
         <thead tal:define="row1 python:len(rows) and rows[0] or None"
-               tal:condition="row1">
+               tal:condition="python:row1 is not None">
           <th tal:repeat="widget python:row1.widgets.values()">
             
             <span tal:content="widget/field/title"

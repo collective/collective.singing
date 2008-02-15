@@ -154,17 +154,29 @@ class EditForm(form.Form):
 
     @button.buttonAndHandler(_('Apply changes'), name='edit')
     def handle_edit(self, action):
-        self.status = _(u"No changes made.")
+        status = no_changes = _(u"No changes made.")
         for subform in self.subforms:
+            # With the ``extractData()`` call, validation will occur,
+            # and errors will be stored on the widgets amongst other
+            # places.  After this we have to be extra careful not to
+            # call (as in ``__call__``) the subform again, since
+            # that'll remove the errors again.  With the results that
+            # no changes are applied but also no validation error is
+            # shown.
             data, errors = subform.extractData()
             if errors:
-                self.status = subform.formErrorsMessage
+                if status is no_changes:
+                    status = subform.formErrorsMessage
                 continue
             del data['select']
             self.context.before_update(subform.content, data)
             changes = subform.applyChanges(data)
             if changes:
-                self.status = _(u"Successfully updated.")
+                if status is no_changes:
+                    status = _(u"Successfully updated.")
+                elif status is subform.formErrorsMessage:
+                    status = _(u"Some of your changes could not be applied.")
+        self.status = status
 
     @button.buttonAndHandler(_('Delete'), name='delete')
     def handle_delete(self, action):

@@ -160,6 +160,8 @@ If we omit the name, we'll get an error:
   >>> html = MyRenamingForm(None, request)()
   >>> "There were some errors" in html
   True
+  >>> "Required input is missing" in html
+  True
 
 We expect an error message in the title cell of Maria:
 

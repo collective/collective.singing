@@ -1,3 +1,5 @@
+import pprint
+
 import persistent
 import persistent.dict
 import persistent.list
@@ -77,9 +79,32 @@ class SimpleSubscription(persistent.Persistent):
                  composer_data, collector_data, metadata):
         self.channel = channel
         self.secret = secret
-        interfaces.IComposerData(self).update(composer_data)
-        interfaces.ICollectorData(self).update(collector_data)
-        interfaces.ISubscriptionMetadata(self).update(metadata)
+        self.composer_data.update(composer_data)
+        self.collector_data.update(collector_data)
+        self.metadata.update(metadata)
+
+    @property
+    def composer_data(self):
+        return interfaces.IComposerData(self)
+
+    @property
+    def collector_data(self):
+        return interfaces.ICollectorData(self)
+
+    @property
+    def metadata(self):
+        return interfaces.ISubscriptionMetadata(self)
+        
+    def __repr__(self):
+        def dict_format(data):
+            return pprint.pformat(dict(data)).replace('\n', '')
+
+        data = dict(channel=self.channel)
+        for attr in ('composer_data', 'collector_data', 'metadata'):
+            data[attr] = dict_format(getattr(self, attr))
+
+        fmt_str = "<SimpleSubscription to %(channel)r with composerdata: %(composer_data)s, collectordata: %(collector_data)s, and metadata: %(metadata)s>"
+        return fmt_str % data
 
 def _data_dict(subscription, name):
     data = getattr(subscription, name, None)
