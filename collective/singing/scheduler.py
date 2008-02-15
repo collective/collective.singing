@@ -66,15 +66,16 @@ class AbstractPeriodicScheduler(object):
 
     def tick(self, channel):
         now = datetime.datetime.now()
-        if self.active and now - self.triggered_last >= self.delta:
+        if self.active and (now - self.triggered_last >= self.delta):
             assemble_messages(channel)
             self.triggered_last = now
 
     def __eq__(self, other):
-        if isinstance(other, AbstractPeriodicScheduler):
-            return (other.triggered_last == self.triggered_last and
-                    other.active == self.active and
-                    other.delta == self.delta)
+        return (isinstance(other, AbstractPeriodicScheduler) and
+                other.delta == self.delta)
+
+    def __ne__(self, other):
+        return not self == other
 
 class DailyScheduler(persistent.Persistent, AbstractPeriodicScheduler):
     title = _(u"Daily scheduler")
