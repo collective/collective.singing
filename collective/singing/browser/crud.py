@@ -51,7 +51,7 @@ class ICrudForm(interface.Interface):
         """A hook that gets called before an item is updated.
         """
 
-    def link(item, field, value):
+    def link(item, field):
         """Return a URL for this item's field or None.
         """
 
@@ -84,7 +84,7 @@ class AbstractCrudForm(object):
     def before_update(self, item, data):
         pass
 
-    def link(self, item, field, value):
+    def link(self, item, field):
         return None
 
 class EditSubForm(form.EditForm):

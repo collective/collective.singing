@@ -4,7 +4,7 @@
       tal:attributes="class python:'field' + (error and ' error' or '')">
 
     <a href=""
-       tal:define="link python:view.context.context.link(view.getContent(), widget.field.__name__, widget.value)"
+       tal:define="link python:view.context.context.link(view.getContent(), widget.field.__name__)"
        tal:omit-tag="python:widget.mode == 'input' or link is None"
        tal:attributes="href link">
 
