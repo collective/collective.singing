@@ -189,6 +189,11 @@ class IScheduler(interface.Interface):
         This method is guaranteed to be called periodically.
         """
 
+    def trigger(channel):
+        """Assemble and queue messages.
+
+        A manual override.
+        """
 
 class ISubscriptions(interface.Interface):
     """An adapter on IChannel that stores subscriptions.

@@ -67,8 +67,11 @@ class AbstractPeriodicScheduler(object):
     def tick(self, channel):
         now = datetime.datetime.now()
         if self.active and (now - self.triggered_last >= self.delta):
-            assemble_messages(channel)
-            self.triggered_last = now
+            self.trigger(channel)
+
+    def trigger(self, channel):
+        assemble_messages(channel)
+        self.triggered_last = now
 
     def __eq__(self, other):
         return (isinstance(other, AbstractPeriodicScheduler) and

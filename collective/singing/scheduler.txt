@@ -40,7 +40,15 @@ attribute is set to now:
   >>> daily.triggered_last = datetime.datetime.now()
   >>> daily.tick(None)
 
-If it's set to one day ago, it'll go off:
+We can override the check by calling ``trigger``:
+
+  >>> daily.trigger(None) # doctest: +ELLIPSIS
+  Traceback (innermost last):
+  ...
+  AttributeError: ...
+
+If the ``triggered_last`` time is set to one day ago, the alarm will
+go off:
 
   >>> daily.triggered_last = (
   ...     datetime.datetime.now() - datetime.timedelta(days=1))
