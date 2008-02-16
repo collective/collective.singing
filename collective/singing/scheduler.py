@@ -28,6 +28,7 @@ def assemble_messages(channel):
     collector = channel.collector
     composers = channel.composers
 
+    queued_messages = 0
     for secret, subscriptions in channel.subscriptions.items():
         for sub in subscriptions:
             subscription_metadata = interfaces.ISubscriptionMetadata(sub)
@@ -56,6 +57,9 @@ def assemble_messages(channel):
             composer = composers[format]
             items = [getIFormatAdapter(item, format)() for item in items]
             message = composer.render(sub, items)
+            queued_messages +=1
+
+    return queued_messages
 
 class AbstractPeriodicScheduler(object):
     interface.implements(interfaces.IScheduler)
@@ -67,11 +71,11 @@ class AbstractPeriodicScheduler(object):
     def tick(self, channel):
         now = datetime.datetime.now()
         if self.active and (now - self.triggered_last >= self.delta):
-            self.trigger(channel)
+            return self.trigger(channel)
 
     def trigger(self, channel):
-        assemble_messages(channel)
-        self.triggered_last = now
+        self.triggered_last = datetime.datetime.now()
+        return assemble_messages(channel)
 
     def __eq__(self, other):
         return (isinstance(other, AbstractPeriodicScheduler) and
