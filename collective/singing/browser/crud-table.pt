@@ -15,7 +15,7 @@
 
   <form action="." method="post" tal:attributes="action request/getURL">
 
-    <table tal:define="rows view/subforms">
+    <table class="crud-table" tal:define="rows view/subforms">
         <thead tal:define="row1 python:len(rows) and rows[0] or None"
                tal:condition="python:row1 is not None">
           <th tal:repeat="widget python:row1.widgets.values()">

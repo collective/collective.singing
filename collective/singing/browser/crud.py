@@ -1,4 +1,5 @@
 from zope import interface
+from zope import component
 import zope.event
 import zope.lifecycleevent
 from z3c.form import button
@@ -55,6 +56,18 @@ class ICrudForm(interface.Interface):
         """Return a URL for this item's field or None.
         """
 
+class IUpdateSchema(interface.Interface):
+    """Fields for use in the edit part of an individual record.
+
+    Use this to override the update schema *per record*.
+    """
+
+class IViewSchema(interface.Interface):
+    """Fields for use in the view of an individual record.
+
+    Use this to override the view schema *per record*.
+    """
+
 class AbstractCrudForm(object):
     """The AbstractCrudForm is not a form but implements methods
     necessary to comply with the ``ICrudForm`` interface:
@@ -102,11 +115,23 @@ class EditSubForm(form.EditForm):
     def fields(self):
         fields = field.Fields(self._select_field())
 
-        update_schema = self.context.context.update_schema
+        update_schema = component.queryMultiAdapter(
+            (self.context.context, self.content),
+            IUpdateSchema)
+
+        if update_schema is None:
+            self.context.heterogeneous_schemas = True
+            update_schema = self.context.context.update_schema
         if update_schema:
             fields += field.Fields(update_schema)
 
-        view_schema = self.context.context.view_schema
+        view_schema = component.queryMultiAdapter(
+            (self.context.context, self.content),
+            IViewSchema)
+
+        if view_schema is None:
+            self.context.heterogeneous_schemas = True
+            view_schema = self.context.context.view_schema
         if view_schema:
             view_fields = field.Fields(view_schema)
             for f in view_fields.values():
@@ -139,6 +164,7 @@ class EditForm(form.Form):
     label = _(u"Edit")
     template = viewpagetemplatefile.ViewPageTemplateFile('crud-table.pt')
     prefix = 'crud-edit.'
+    heterogeneous_schemas = False
     
     def update(self):
         self._update_subforms()

@@ -388,3 +388,47 @@ We *cannot* use any of the other buttons:
   False
   >>> 'Thomas' in storage
   True
+
+Providing per record schema
+---------------------------
+
+If we want a different set of fields for individual records, we can
+provide IUpdateSchema and IViewSchema adapters to do this.
+
+  >>> MyForm.update_schema is IPerson
+  True
+  >>> class IWoman(interface.Interface): pass
+  >>> interface.directlyProvides(storage['Maria'], IWoman)
+
+  >>> from zope import component
+  >>> @component.adapter(MyForm, IWoman)
+  ... @interface.implementer(crud.IUpdateSchema)
+  ... def no_age_field(form, person):
+  ...     return field.Fields(IPerson).omit('age')
+  >>> component.provideAdapter(no_age_field)
+
+At this point, Maria's age won't be visible in the form anymore:
+
+  >>> request = TestRequest()
+  >>> html = MyForm(None, TestRequest())()
+  >>> str(storage['Maria'].age) in html
+  False
+  >>> str(storage['Daniel'].age) in html, str(storage['Thomas'].age) in html
+  (True, True)
+
+We can still change Daniel's and Thomas' age, but not Maria's:
+
+  >>> for name in 'Daniel', 'Maria', 'Thomas':
+  ...     request.form['crud-edit.%s.widgets.name' % name] = storage[name].name
+  ...     request.form['crud-edit.%s.widgets.age' % name] = storage[name].age
+  >>> request.form['crud-edit.Thomas.widgets.age'] = 55
+  >>> request.form['crud-edit.Daniel.widgets.age'] = 66
+  >>> request.form['crud-edit.Maria.widgets.age'] = 77
+  >>> request.form['crud-edit.buttons.edit'] = u'Apply Changes'
+  >>> html = MyForm(None, request)()
+  >>> "Successfully updated" in html
+  True
+  >>> pprint(storage)
+  {'Daniel': <Person with name=u'Daniel', age=66>,
+   'Maria': <Person with name=u'Maria', age=40>,
+   'Thomas': <Person with name=u'THOMAS', age=55>}
