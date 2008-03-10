@@ -141,7 +141,6 @@ class EditForm(form.Form):
     label = _(u"Edit")
     template = viewpagetemplatefile.ViewPageTemplateFile('crud-table.pt')
     prefix = 'crud-edit.'
-    heterogeneous_schemas = False
     
     def update(self):
         self._update_subforms()
