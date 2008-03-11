@@ -79,6 +79,8 @@ class MessageQueues(persistent.dict.PersistentDict):
             while True:
                 try:
                     message = queue.pull()
+                    # XXX: I think we shold commit immediately after we
+                    # pull from the queue.
                 except IndexError:
                     break
                 else:
