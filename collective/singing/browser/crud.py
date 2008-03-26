@@ -243,6 +243,7 @@ class NullForm(object):
 
 class CrudForm(AbstractCrudForm, form.Form):
     template = viewpagetemplatefile.ViewPageTemplateFile('form-master.pt')
+    description = u''
 
     editform_factory = EditForm
     addform_factory = AddForm
