@@ -140,7 +140,7 @@ class IComposer(interface.Interface):
 
 
 class ICollector(interface.Interface):
-    """Controllers are useful for automatic newsletters.  They are
+    """Collectors are useful for automatic newsletters.  They are
     responsible for assembling a list of items for publishing.
     """
 
