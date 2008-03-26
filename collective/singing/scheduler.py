@@ -51,12 +51,24 @@ def assemble_messages(channel):
                 # items list:
                 items = ()
 
-            # Use the right composer to render the message.  Note
-            # that the message is already queued when we render it.
+            # First format all items...
             format = subscription_metadata['format']
-            composer = composers[format]
             items = [getIFormatAdapter(item, format)() for item in items]
-            message = composer.render(sub, items)
+            transforms = component.getAllUtilitiesRegisteredFor(
+                interfaces.ITransform)
+
+            # ... then transform them ...
+            transformed_items = []
+            for item in items:
+                for transform in transforms:
+                    item = transform(item, sub)
+                transformed_items.append(item)
+
+            # ... and finally render using the right composer. Note
+            # that the message is already queued when we render it.
+            composer = composers[format]
+
+            message = composer.render(sub, transformed_items)
             queued_messages +=1
 
     return queued_messages

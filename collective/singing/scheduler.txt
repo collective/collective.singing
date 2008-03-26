@@ -169,3 +169,23 @@ rendered:
   >>> scheduler.assemble_messages(channel)
   Collecting items for <Subscription 'daniel'> with cue 'somecue'
   0
+
+We can register an ``ITransform`` utility to rewrite text that's sent
+out:
+
+  >>> class SimpleTransform(object):
+  ...     interface.implements(interfaces.ITransform)
+  ... 
+  ...     def __init__(self, sub, stitue):
+  ...         self.sub = sub
+  ...         self.stitute = stitue
+  ... 
+  ...     def __call__(self, text, subscription):
+  ...         return text.replace(self.sub, self.stitute)
+
+  >>> channel.collector.items = ('We', 'love', 'life')
+  >>> component.provideUtility(SimpleTransform(u'life', u'Grappa'))
+  >>> scheduler.assemble_messages(channel)
+  Collecting items for <Subscription 'daniel'> with cue 'somecue'
+  Rendering message with (u'We', u'love', u'Grappa', u'for', u"<Subscription 'daniel'>") for <Subscription 'daniel'>
+  1

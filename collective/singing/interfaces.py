@@ -276,9 +276,15 @@ class IFormatItem(interface.Interface):
     """Given an item as retrieved from a collector, this interface
     defines a method that returns a representation of given item ready
     for inclusion in the message via the ``IComposer.render`` method.
-    This representation is typically text.
+    This representation must be of type unicode.
     """
 
+class ITransform(interface.Interface):
+    """Allows to rewrite links and the like.
+    """
+    def __call__(text, subscription):
+        """Return transformed text
+        """
 
 class IDispatch(interface.Interface):
     """Dispatchers adapt message *payloads* and send them."""
