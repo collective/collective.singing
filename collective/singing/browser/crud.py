@@ -196,6 +196,8 @@ class EditForm(form.Form):
 
     @button.buttonAndHandler(_('Apply changes'), name='edit')
     def handle_edit(self, action):
+        success = _(u"Successfully updated")
+        partly_success = _(u"Some of your changes could not be applied.")
         status = no_changes = _(u"No changes made.")
         for subform in self.subforms:
             # With the ``extractData()`` call, validation will occur,
@@ -209,15 +211,17 @@ class EditForm(form.Form):
             if errors:
                 if status is no_changes:
                     status = subform.formErrorsMessage
+                elif status is success:
+                    status = partly_success
                 continue
             del data['select']
             self.context.before_update(subform.content, data)
             changes = subform.applyChanges(data)
             if changes:
                 if status is no_changes:
-                    status = _(u"Successfully updated.")
+                    status = success
                 elif status is subform.formErrorsMessage:
-                    status = _(u"Some of your changes could not be applied.")
+                    status = partly_success
 
                 # If there were changes, we'll update the view widgets
                 # again, so that they'll actually display the changes
