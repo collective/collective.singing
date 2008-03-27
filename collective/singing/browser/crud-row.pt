@@ -1,8 +1,11 @@
-<tal:block define="tups view/getCombinedWidgets" repeat="tup tups">
-  <td tal:define="error python:tup[0].error"
+<tal:block define="tups view/getCombinedWidgets;
+                   niceTitles view/getNiceTitles" 
+           repeat="tup tups">
+  <td tal:define="error python:tup[0].error;
+                  idx repeat/tup/index"
       tal:attributes="class python:'field' + (error and ' error' or '')">
     <tal:block repeat="widget tup">
-
+<tal:notSubscribers  tal:condition="python: idx != 2">
     <a href=""
        tal:define="link python:view.context.context.link(view.getContent(), widget.field.__name__)"
        tal:omit-tag="python:widget.mode == 'input' or link is None"
@@ -12,8 +15,19 @@
         <div tal:condition="error" tal:replace="structure error/render" />
         <input type="text" tal:replace="structure widget/render" />
       </span>
-
+      
     </a>
+</tal:notSubscribers>
+<tal:subscribers  tal:condition="python: idx == 2">
+<span class="link-subscribers">
+    <a href=""
+       tal:define="link python:view.context.context.link(view.getContent(), widget.field.__name__)"
+       tal:omit-tag="python:widget.mode == 'input' or link is None"
+       tal:attributes="href link"><span i18n:translate="">Edit</span>
+    </a>
+    </span>
+</tal:subscribers>
+
     <br/>
     </tal:block>
 

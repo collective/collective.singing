@@ -21,7 +21,7 @@
           <th tal:define="widgetsForTitles row1/getTitleWidgets;
                           niceTitles row1/getNiceTitles"
               tal:repeat="widget widgetsForTitles">
-   <!--                   tal:content="widget/field/title"-->         
+       
             <span tal:define="idx repeat/widget/index"
                   tal:content="python: niceTitles[idx]"
                   tal:attributes="title widget/field/description;
