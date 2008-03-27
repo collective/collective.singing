@@ -18,11 +18,14 @@
     <table class="crud-table" tal:define="rows view/subforms">
         <thead tal:define="row1 python:len(rows) and rows[0] or None"
                tal:condition="python:row1 is not None">
-          <th tal:define="widgetsForTitles row1/getTitleWidgets"
+          <th tal:define="widgetsForTitles row1/getTitleWidgets;
+                          niceTitles row1/getNiceTitles"
               tal:repeat="widget widgetsForTitles">
-            
-            <span tal:content="widget/field/title"
-                  tal:attributes="title widget/field/description">
+   <!--                   tal:content="widget/field/title"-->         
+            <span tal:define="idx repeat/widget/index"
+                  tal:content="python: niceTitles[idx]"
+                  tal:attributes="title widget/field/description;
+                                  class python: 'header-' + niceTitles[idx]">
               Field
             </span>
 

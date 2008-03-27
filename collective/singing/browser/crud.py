@@ -146,6 +146,7 @@ class EditSubForm(form.EditForm):
             if widget.mode == INPUT_MODE:
                 view_widget = self.widgets.get('view_%s' % name)
                 if ('title' == name):
+                    
                     combined.append((widget, ))
                     combined.append((view_widget, ))
                     seen.add(view_widget)
@@ -163,8 +164,17 @@ class EditSubForm(form.EditForm):
     def getTitleWidgets(self):
         combinedWidgets = self.getCombinedWidgets()
         widgetsForTitles = [w[0] for w in combinedWidgets]
-        widgetsForTitles[2].field.title=u'subscribers'
+        #widgetsForTitles[2].field.title=u'subscribers'
         return widgetsForTitles
+
+    def getNiceTitles(self):
+        widgetsForTitles = self.getTitleWidgets()        
+                
+        freakList = []
+        for item in widgetsForTitles:
+            freakList.append(item.field.title)
+        freakList[2] = u'Subscribers'
+        return freakList
         
 class EditForm(form.Form):
     label = _(u"Edit")
