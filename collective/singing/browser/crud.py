@@ -136,16 +136,45 @@ class EditSubForm(form.EditForm):
                              title=_(u'select')))
         select_field.widgetFactory[INPUT_MODE] = select_widget_factory
         return select_field
-
+        
+    def getCombinedWidgets(self):
+        """Returns pairs of widgets to improve layout"""
+        widgets = self.widgets.items()
+        combined = []
+        seen = set()
+        for name, widget in list(widgets):
+            if widget.mode == INPUT_MODE:
+                view_widget = self.widgets.get('view_%s' % name)
+                if ('title' == name):
+                    combined.append((widget, ))
+                    combined.append((view_widget, ))
+                    seen.add(view_widget)
+                else:
+                    if ('title' != name) and (view_widget is not None):
+                        combined.append((widget, view_widget))
+                        seen.add(view_widget)
+                    else:
+                        combined.append((widget,))
+            else:
+                if widget not in seen:
+                    combined.append((widget,))
+        return combined
+            
+    def getTitleWidgets(self):
+        combinedWidgets = self.getCombinedWidgets()
+        widgetsForTitles = [w[0] for w in combinedWidgets]
+        widgetsForTitles[2].field.title=u'subscribers'
+        return widgetsForTitles
+        
 class EditForm(form.Form):
     label = _(u"Edit")
     template = viewpagetemplatefile.ViewPageTemplateFile('crud-table.pt')
     prefix = 'crud-edit.'
-    
+        
     def update(self):
         self._update_subforms()
         super(EditForm, self).update()
-
+    
     def _update_subforms(self):
         self.subforms = []
         for id, item in self.context.get_items():
