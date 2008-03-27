@@ -24,7 +24,7 @@ def getIFormatAdapter(obj, format):
     else:
         return format
 
-def assemble_messages(channel):
+def assemble_messages(channel, items=(), use_collector=True):
     collector = channel.collector
     composers = channel.composers
 
@@ -37,19 +37,21 @@ def assemble_messages(channel):
                 continue
 
             # Collect items for subscription
-            if collector is not None:
-                items, cue = collector.get_items(
+            if collector is not None and use_collector:
+                collector_items, cue = collector.get_items(
                     subscription_metadata.get('cue'), sub)
                 subscription_metadata['cue'] = cue
 
                 # If there was a collector but no items, we'll skip
                 # this subscription:
-                if len(items) == 0:
+                if not items and len(collector_items) == 0:
                     continue
             else:
                 # If there's no collector, we go on with an empty
                 # items list:
-                items = ()
+                collector_items = ()
+
+            items = items + collector_items
 
             # First format all items...
             format = subscription_metadata['format']
