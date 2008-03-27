@@ -160,7 +160,7 @@ class EditSubForm(form.EditForm):
                 if widget not in seen:
                     combined.append((widget,))
         return combined
-            
+             
     def getTitleWidgets(self):
         combinedWidgets = self.getCombinedWidgets()
         widgetsForTitles = [w[0] for w in combinedWidgets]
@@ -173,7 +173,8 @@ class EditSubForm(form.EditForm):
         freakList = []
         for item in widgetsForTitles:
             freakList.append(item.field.title)
-        freakList[2] = u'Subscribers'
+        if len(freakList)> 2:
+            freakList[2] = u'Subscribers'
         return freakList
         
 class EditForm(form.Form):
