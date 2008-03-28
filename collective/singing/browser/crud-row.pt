@@ -5,7 +5,7 @@
                   idx repeat/tup/index"
       tal:attributes="class python:'field' + (error and ' error' or '')">
     <tal:block repeat="widget tup">
-<tal:notSubscribers  tal:condition="python: idx != 2">
+<tal:notSubscribers  tal:condition="python: True or idx != 2">
     <a href=""
        tal:define="link python:view.context.context.link(view.getContent(), widget.field.__name__)"
        tal:omit-tag="python:widget.mode == 'input' or link is None"
@@ -18,7 +18,7 @@
       
     </a>
 </tal:notSubscribers>
-<tal:subscribers  tal:condition="python: idx == 2">
+<tal:subscribers  tal:condition="python: False and idx == 2">
 <span class="link-subscribers">
     <a href=""
        tal:define="link python:view.context.context.link(view.getContent(), widget.field.__name__)"

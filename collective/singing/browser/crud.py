@@ -173,8 +173,8 @@ class EditSubForm(form.EditForm):
         freakList = []
         for item in widgetsForTitles:
             freakList.append(item.field.title)
-        if len(freakList)> 2:
-            freakList[2] = u'Subscribers'
+        #if len(freakList)> 2:
+        #    freakList[2] = u'Subscribers'
         return freakList
         
 class EditForm(form.Form):

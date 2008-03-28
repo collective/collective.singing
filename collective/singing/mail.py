@@ -29,6 +29,7 @@ def create_html_mail(subject, html, text=None, from_addr=None, to_addr=None,
 
     Ripped from http://aspn.activestate.com/ASPN/Cookbook/Python/Recipe/67083
     """
+    html = html.encode(encoding)
     if text is None:
         # Produce an approximate textual rendering of the HTML string,
         # unless you have been given a better version as an argument
@@ -39,7 +40,9 @@ def create_html_mail(subject, html, text=None, from_addr=None, to_addr=None,
         parser.close()
         text = textout.getvalue()
         del textout, formtext, parser
-
+    else:
+        text = text.encode(encoding)
+        
     out = StringIO.StringIO() # output buffer for our message
     htmlin = StringIO.StringIO(html) # input buffer for the HTML
     txtin = StringIO.StringIO(text) # input buffer for the plain text

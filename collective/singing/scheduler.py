@@ -29,6 +29,7 @@ def assemble_messages(channel, items=(), use_collector=True):
     composers = channel.composers
 
     queued_messages = 0
+
     for secret, subscriptions in channel.subscriptions.items():
         for sub in subscriptions:
             subscription_metadata = interfaces.ISubscriptionMetadata(sub)
@@ -51,17 +52,17 @@ def assemble_messages(channel, items=(), use_collector=True):
                 # items list:
                 collector_items = ()
 
-            items = items + collector_items
+            final_items = tuple(items) + tuple(collector_items)
 
             # First format all items...
             format = subscription_metadata['format']
-            items = [getIFormatAdapter(item, format)() for item in items]
+            final_items = [getIFormatAdapter(item, format)() for item in final_items]
             transforms = component.getAllUtilitiesRegisteredFor(
                 interfaces.ITransform)
 
             # ... then transform them ...
             transformed_items = []
-            for item in items:
+            for item in final_items:
                 for transform in transforms:
                     item = transform(item, sub)
                 transformed_items.append(item)
