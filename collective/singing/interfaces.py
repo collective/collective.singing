@@ -114,8 +114,12 @@ class IComposer(interface.Interface):
     """Composers will typically provide a user interface that lets you
     modify the look of the message rendered through it.
     """
-
     
+    name = schema.TextLine(
+        title=u"The Composer's format, e.g. 'html'",
+        )
+    
+
     title = schema.TextLine(
         title=u"The Composer's title, e.g. 'HTML E-Mail'",
         )
@@ -167,6 +171,14 @@ class ICollector(interface.Interface):
         If 'subscription' is given, I will filter according to the
         subscriber's ICollectorData.
         """
+
+class ITemplate(interface.Interface):
+    """Templates are useful for generating and presenting newsletters.
+    """
+
+    title = schema.TextLine(
+        title=u"Title",
+        )
 
 class IScheduler(interface.Interface):
     """A scheduler triggers the sending of messages periodically.
@@ -306,6 +318,38 @@ class IChannelLookup(interface.Interface):
 
     def __call__():
         """Return a list of ``IChannel`` objects.
+        """
+
+class IComposerLookup(interface.Interface):
+    """A utility that looks up all composers in a site.
+    """
+
+    def __call__():
+        """Return a list of ``IComposer`` objects.
+        """
+
+class IComposerLookup(interface.Interface):
+    """A utility that looks up all composers in a site.
+    """
+
+    def __call__():
+        """Return a list of ``IComposer`` objects.
+        """
+
+class ICollectorLookup(interface.Interface):
+    """A utility that looks up all collectors in a site.
+    """
+
+    def __call__():
+        """Return a list of ``ICollector`` objects.
+        """
+
+class ITemplateLookup(interface.Interface):
+    """A utility that looks up all templates in a site.
+    """
+
+    def __call__():
+        """Return a list of ``ITemplate`` objects.
         """
 
 class IFormLayer(z3c.form.interfaces.IFormLayer):
