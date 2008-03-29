@@ -125,7 +125,7 @@ class IComposer(interface.Interface):
         )
     
     schema = schema.Object(
-        title=u"A schema for use in the subscription form",
+        title=u"A schema instance for use in the subscription form",
         description=u"Values are stored via the IComposerData adapter per "
         "subscriber.",
         schema=IInterface,
@@ -152,8 +152,12 @@ class ICollector(interface.Interface):
         title=u"Title",
         )
 
+    optional = schema.Bool(
+        title=u"Subscriber optional",
+        )
+
     schema = schema.Object(
-        title=u"A schema for use in the subscription form",
+        title=u"A schema instance for use in the subscription form",
         description=u"Values are stored via the ICollectorData adapter per "
         "subscriber.",
         required=False,

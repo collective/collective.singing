@@ -2,7 +2,6 @@ from z3c.form import term
 from zope.schema import vocabulary
 
 import z3c.form.browser.checkbox
-import z3c.form.interfaces
 
 class SingleCheckboxWidget(z3c.form.browser.checkbox.SingleCheckBoxWidget):
     """XXX: We need to refactor this and patch z3c.form where
