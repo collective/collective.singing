@@ -4,7 +4,7 @@ version = '0.1'
 
 setup(name='collective.singing',
       version=version,
-      description="",
+      description="A Zope library for sending notifications and newsletters",
       long_description="""\
 """,
 
@@ -15,10 +15,10 @@ setup(name='collective.singing',
         "Programming Language :: Python",
         "Topic :: Software Development :: Libraries :: Python Modules",
         ],
-      keywords='',
-      author='Plone Foundation',
-      author_email='',
-      url='',
+      keywords='zope plone notification newsletter',
+      author='Daniel Nouri, Thomas Clement Mogensen and contributors',
+      author_email='daniel.nouri@gmail.com',
+      url='http://pypi.python.org/pypi/collective.singing',
       license='GPL',
       packages=find_packages(exclude=['ez_setup']),
       namespace_packages=['collective'],
