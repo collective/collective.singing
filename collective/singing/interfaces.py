@@ -320,40 +320,8 @@ class IChannelLookup(interface.Interface):
     """A utility that looks up all channels in a site.
     """
 
-    def __call__():
+    def __call__(context=None):
         """Return a list of ``IChannel`` objects.
-        """
-
-class IComposerLookup(interface.Interface):
-    """A utility that looks up all composers in a site.
-    """
-
-    def __call__():
-        """Return a list of ``IComposer`` objects.
-        """
-
-class IComposerLookup(interface.Interface):
-    """A utility that looks up all composers in a site.
-    """
-
-    def __call__():
-        """Return a list of ``IComposer`` objects.
-        """
-
-class ICollectorLookup(interface.Interface):
-    """A utility that looks up all collectors in a site.
-    """
-
-    def __call__():
-        """Return a list of ``ICollector`` objects.
-        """
-
-class ITemplateLookup(interface.Interface):
-    """A utility that looks up all templates in a site.
-    """
-
-    def __call__():
-        """Return a list of ``ITemplate`` objects.
         """
 
 class IFormLayer(z3c.form.interfaces.IFormLayer):
