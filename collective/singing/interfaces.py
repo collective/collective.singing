@@ -214,7 +214,7 @@ class IScheduler(interface.Interface):
         """
 
 class ISubscriptions(interface.Interface):
-    """An adapter on IChannel that stores subscriptions.
+    """The `subscriptions` attribute of IChannel implements this.
 
     Maps secrets to lists of ISubscription objects.
     """
