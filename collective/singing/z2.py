@@ -36,7 +36,8 @@ def add_getURL(request):
 
 def switch_on(view, request_layer=interfaces.IFormLayer):
     request = view.request
-    interface.alsoProvides(request, request_layer)
-    request.locale = setup_locale(request)
-    add_getURL(request)
-    decode.processInputs(request)
+    if not request_layer.providedBy(request):
+        interface.alsoProvides(request, request_layer)
+        request.locale = setup_locale(request)
+        add_getURL(request)
+        decode.processInputs(request)
