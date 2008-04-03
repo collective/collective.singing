@@ -18,79 +18,80 @@
            tal:condition="view/description | nothing"
            tal:content="view/description">Form description</div>
 
-      <div class="portalMessage"
-           tal:condition="view/status" tal:content="view/status">
-      </div>
+      <metal:define define-macro="titlelessform">
+	<div class="portalMessage"
+             tal:condition="view/status" tal:content="view/status">
+	</div>
 
-      <tal:comment condition="nothing">
-        <ul tal:define="errors view/widgets/errors"
-            tal:condition="errors">
-          <li tal:repeat="error errors">
-            <tal:block replace="error/widget/label"/>:
-            <tal:block replace="structure error/render" />
-          </li>
-        </ul>
-      </tal:comment>
+	<tal:comment condition="nothing">
+          <ul tal:define="errors view/widgets/errors"
+              tal:condition="errors">
+            <li tal:repeat="error errors">
+              <tal:block replace="error/widget/label"/>:
+              <tal:block replace="structure error/render" />
+            </li>
+          </ul>
+	</tal:comment>
 
-      <form action="." method="post" tal:attributes="action request/getURL">
+	<form action="." method="post" tal:attributes="action request/getURL">
 
-        <metal:define define-macro="fields">
-          
-          <tal:widgets repeat="widget view/widgets/values">
-            <div class="row"
-                 tal:define="hidden python:widget.mode == 'hidden'"
-                 tal:omit-tag="hidden">
-              
-              <metal:field define-macro="field">
-                <div class="field"
-                     tal:define="error widget/error"
-                     tal:attributes="class python:'field' + (error and ' error' or '')">
-                  
-                  <label for=""
-                         tal:attributes="for widget/id"
-                         tal:condition="not:hidden">
-                    <span i18n:translate=""
-                          tal:content="widget/label">label</span>
-                  </label>
-                  
-                  <span class="fieldRequired" title="Required"
-                        tal:condition="widget/required"
-                        i18n:translate="label_required"
-                        i18n:attributes="title title_required;">
-                    (Required)
-                  </span>
-                  
-                  <div class="formHelp"
-                       tal:define="description widget/field/description"
-                       i18n:translate=""
-                       tal:content="description"
-                       tal:condition="description"
-                       >field description</div>
-                  
-                  <div tal:condition="error"
-                       tal:content="structure error/render">
-                    Error
+          <metal:define define-macro="fields">
+            
+            <tal:widgets repeat="widget view/widgets/values">
+              <div class="row"
+                   tal:define="hidden python:widget.mode == 'hidden'"
+                   tal:omit-tag="hidden">
+		
+		<metal:field define-macro="field">
+                  <div class="field"
+                       tal:define="error widget/error"
+                       tal:attributes="class python:'field' + (error and ' error' or '')">
+                    
+                    <label for=""
+                           tal:attributes="for widget/id"
+                           tal:condition="not:hidden">
+                      <span i18n:translate=""
+                            tal:content="widget/label">label</span>
+                    </label>
+                    
+                    <span class="fieldRequired" title="Required"
+                          tal:condition="widget/required"
+                          i18n:translate="label_required"
+                          i18n:attributes="title title_required;">
+                      (Required)
+                    </span>
+                    
+                    <div class="formHelp"
+			 tal:define="description widget/field/description"
+			 i18n:translate=""
+			 tal:content="description"
+			 tal:condition="description"
+			 >field description</div>
+                    
+                    <div tal:condition="error"
+			 tal:content="structure error/render">
+                      Error
+                    </div>
+                    
+                    <div class="widget">
+                      <input type="text" tal:replace="structure widget/render" />
+                    </div>  
                   </div>
-                  
-                  <div class="widget">
-                    <input type="text" tal:replace="structure widget/render" />
-                  </div>  
-                </div>
-              </metal:field>
+		</metal:field>
 
+              </div>
+            </tal:widgets>
+
+          </metal:define>
+
+          <metal:define define-macro="actions">
+            <div class="action" tal:repeat="action view/actions/values|nothing">
+              <input type="submit" tal:replace="structure action/render" />
             </div>
-          </tal:widgets>
+          </metal:define>
 
-        </metal:define>
-
-        <metal:define define-macro="actions">
-          <div class="action" tal:repeat="action view/actions/values|nothing">
-            <input type="submit" tal:replace="structure action/render" />
-          </div>
-        </metal:define>
-
-      </form>
-
+	</form>
+      </metal:define>
     </div>
   </body>
 </html>
