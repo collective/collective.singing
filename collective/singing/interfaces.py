@@ -320,7 +320,7 @@ class IChannelLookup(interface.Interface):
     """A utility that looks up all channels in a site.
     """
 
-    def __call__(context=None):
+    def __call__():
         """Return a list of ``IChannel`` objects.
         """
 

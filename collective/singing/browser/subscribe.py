@@ -87,6 +87,7 @@ class Subscribe(wizard.Wizard):
     success_message = _(
         u"Thanks for your subscription; "
         u"we sent you a message for confirmation.")
+    factory = subscribe.SimpleSubscription
 
     def format(self):
         return self.before_steps[0].widgets.extract()[0]['format']
@@ -129,7 +130,7 @@ class Subscribe(wizard.Wizard):
                             u"(${error})",
                             mapping=dict(error=status_msg))
 
-    def create(self, comp_data, coll_data):
+    def create(self, comp_data, coll_data, factory=None):
         """Create a subscription corresponding to data.
 
         A fake channel to play with:
@@ -191,13 +192,9 @@ class Subscribe(wizard.Wizard):
                         date=datetime.datetime.now(),
                         pending=True)
 
-        return subscribe.SimpleSubscription(
-            self.context,
-            secret,
-            comp_data,
-            coll_data,
-            metadata,
-            )
+        if factory is None:
+            factory = self.factory
+        return factory(self.context, secret, comp_data, coll_data, metadata)
 
     def _secret(self, data, request):
         """Convenience method for looking up secrets.
