@@ -2,16 +2,19 @@
 Use cases authors Singing & Dancing
 ===================================
 
-XXX Missing actions
-===================
+XXX Missing actions description
+===============================
 
 Set up archive. We still need to define all use cases of setting up archives.
 Using a predifined channel
-Setting up a basic channel.
+Setting up a basic channel
 Setting up an advanced channel
+Setting up a meta channel
 Using a predefined collector
 Setting up a basic collector
 Setting up an advanced collector
+Setting up a basic subscription portlet
+Setting up an advanced subscription portlet
 
 Authors
 =======
@@ -32,6 +35,9 @@ Authors
   Wants total control of the newsletter product and use all functionality of the newsletter product.
   Setting up and managing several newsletter channels and collectors is a standard task.
   Setting up and managing advanced channels and collectors is his goal.
+
+Actions by author level
+=======================
 
 Level 1 author
 --------------
@@ -67,7 +73,37 @@ Level 4 author
 1) Go to the Singing & Dancing configuraton panel
 2) Make new collector(s) 
 3) Make new channel(s)
-4) Make a mega broadcast channel
+4) Make a meta channel
 5) Set up a newsletter portlet
 6) Check the newsletter
 7) Set the newsletter timing
+
+Detailed description actions
+============================
+
+Using a predifined channel
+--------------------------
+
+Setting up a basic channel
+--------------------------
+
+Setting up an advanced channel
+------------------------------
+
+Setting up a meta channel
+-------------------------
+
+Using a predefined collector
+----------------------------
+
+Setting up a basic collector
+----------------------------
+
+Setting up an advanced collector
+--------------------------------
+
+Setting up a basic subscription portlet
+---------------------------------------
+
+Setting up an advanced subscription portlet
+-------------------------------------------
