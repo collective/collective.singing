@@ -2,18 +2,39 @@
 Use cases authors Singing & Dancing
 ===================================
 
+XXX Missing actions
+===================
+
+Set up archive. We still need to define all use cases of setting up archives.
+Using a predifined channel
+Setting up a basic channel.
+Setting up an advanced channel
+Using a predefined collector
+Setting up a basic collector
+Setting up an advanced collector
+
 Authors
 =======
 
-Level 1 author
-Level 2 author
-Level 3 author
-Level 4 author
+* Level 1 author
+  The basic author with knowledge of creating a Plone Document, folders, links and familiar with the Plone Interface.
+  Wants to make a newsletter fast without having to do lots of configurations.
+* Level 2 author
+  The author with basic knowledge of using add on products. 
+  Wants to make a newsletter and is willing to learn and use basic functionality of the newsletter product.
+  Setting up and managing several newsletter channels is his goal.
+* Level 3 author
+  The author with advanced knowledge of using add on products. 
+  Wants to use most functionality of the newsletter product.
+  Setting up and managing several newsletter channels and collectors is his goal.
+* Level 4 author
+  The author with advanced knowledge of using add on products. 
+  Wants total control of the newsletter product and use all functionality of the newsletter product.
+  Setting up and managing several newsletter channels and collectors is a standard task.
+  Setting up and managing advanced channels and collectors is his goal.
 
 Level 1 author
 --------------
-
-The basic author with knowledge of creating a Plone Document, folders, links and familiar with the Plone Interface.
 
 1) Make a Plone Folder to put newsletters in
 2) Make a Plone Document containing newsletter content
@@ -22,8 +43,6 @@ The basic author with knowledge of creating a Plone Document, folders, links and
 
 Level 2 author
 --------------
-
-The author with basic knowledge of using add on products.
 
 1) Go to the Singing & Dancing configuraton panel
 2) Make a new channel
@@ -35,8 +54,6 @@ The author with basic knowledge of using add on products.
 Level 3 author
 --------------
 
-The author with advanced knowledge of using add on products.
-
 1) Go to the Singing & Dancing configuraton panel
 2) Make new collector(s) 
 3) Make new channel(s)
@@ -46,8 +63,6 @@ The author with advanced knowledge of using add on products.
 
 Level 4 author
 --------------
-
-The author with advanced knowledge of using add on products.
 
 1) Go to the Singing & Dancing configuraton panel
 2) Make new collector(s) 
