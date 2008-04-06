@@ -1,0 +1,58 @@
+===================================
+Use cases authors Singing & Dancing
+===================================
+
+Authors
+=======
+
+Level 1 author
+Level 2 author
+Level 3 author
+Level 4 author
+
+Level 1 author
+--------------
+
+The basic author with knowledge of creating a Plone Document, folders, links and familiar with the Plone Interface.
+
+1) Make a Plone Folder to put newsletters in
+2) Make a Plone Document containing newsletter content
+3) Make a link on the website to the newsletter and the subscription page
+4) Use the action 'Send as newsletter' on the Plone Ducument he want to send as newsletter
+
+Level 2 author
+--------------
+
+The author with basic knowledge of using add on products.
+
+1) Go to the Singing & Dancing configuraton panel
+2) Make a new channel
+3) Select predifend collectors
+4) Add predefined newsletter portlet
+5) Check the newsletter
+6) Set the newsletter timing
+
+Level 3 author
+--------------
+
+The author with advanced knowledge of using add on products.
+
+1) Go to the Singing & Dancing configuraton panel
+2) Make new collector(s) 
+3) Make new channel(s)
+4) Set up a newsletter portlet
+5) Check the newsletter
+6) Set the newsletter timing
+
+Level 4 author
+--------------
+
+The author with advanced knowledge of using add on products.
+
+1) Go to the Singing & Dancing configuraton panel
+2) Make new collector(s) 
+3) Make new channel(s)
+4) Make a mega broadcast channel
+5) Set up a newsletter portlet
+6) Check the newsletter
+7) Set the newsletter timing
