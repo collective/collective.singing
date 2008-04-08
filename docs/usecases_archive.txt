@@ -1,0 +1,51 @@
+==================================
+use cases author Singing & Dancing
+==================================
+
+(This document expands on usecases_author.txt, read that doc for 
+description of Author Levels.)
+
+Proposed name for subsystem : Reflecting
+
+XXX = please contribute comments 
+
+Abstractions
+============
+
+Recorder : a named handler of content to be archived.
+Holds a reference to a Formatter, and a Container.
+
+Formatter : a named processor of content into a Container. 
+Simplest case is a copy operation. 
+
+Container : a destination for permanently stored content. Simplest
+case being a folder. 
+
+Default installation
+====================
+
+A tool is created called portal_reflector
+
+In this tool, a recorder is defined called "Simple Recorder", which uses a Formatter called
+"Copy Formatter" which inserts content into a folder in the portal_reflector called SimpleArchive.
+
+Actions by Author level
+=======================
+
+Level 1 & 2 author
+------------------
+
+No additional action - the Simple Recorder is connected by default to the channel.
+
+
+Level 3 and above author
+------------------------
+
+1) Create several new Recorders to be used by different newsletters
+2) Attach appropriate Formatter to each channel. 
+   Example: RecordOnlyEditorial (rejects all news links, event links, etc.)
+            RecordAll
+            ExpandAll (expands all referenced items in place)
+3) Designate destinations in specific parts of the site for each Recorder.
+
+
