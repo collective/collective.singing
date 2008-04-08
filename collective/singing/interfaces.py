@@ -6,6 +6,11 @@ from zope.interface.common.mapping import IMapping
 from zope.annotation.interfaces import IAnnotatable
 import z3c.form.interfaces
 
+class ISalt(interface.Interface):
+    """A utility that's a salt for use in creating secrets.
+    """
+
+
 class IRequestBasedSecret(interface.Interface):
     """A utility that provides a secret based on the request.
     """
