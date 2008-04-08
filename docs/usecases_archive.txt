@@ -7,7 +7,7 @@ description of Author Levels.)
 
 Proposed name for subsystem : Reflecting
 
-XXX = please contribute comments 
+XXX = please contribute comments, esp near XXX
 
 Abstractions
 ============
@@ -45,7 +45,12 @@ Level 3 and above author
 2) Attach appropriate Formatter to each channel. 
    Example: RecordOnlyEditorial (rejects all news links, event links, etc.)
             RecordAll
-            ExpandAll (expands all referenced items in place)
+            ExpandAll (expands all referenced items in place) XXX
 3) Designate destinations in specific parts of the site for each Recorder.
 
+API thoughts
+============
+
+XXX IF a newsletter wants to include links to the permanent location of newsletter content, 
+the Recorder must return the location where the content {will be|has been}  put.
 
