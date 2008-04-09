@@ -15,6 +15,8 @@ import zope.sendmail.interfaces
 from collective.singing import interfaces
 
 def header(text, encoding):
+    assert isinstance(text, unicode)
+    
     try:
         return text.encode()
     except UnicodeEncodeError:
