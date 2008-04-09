@@ -21,5 +21,9 @@
   <adapter factory=".subscribe.SimpleMetadata" />
 
   <i18n:registerTranslations directory="locales"/>
+
+  <utility
+     name="collective.dancing.vocabularies.ChannelVocabulary"
+     component=".vocabularies.ChannelVocabulary" />
   
 </configure>

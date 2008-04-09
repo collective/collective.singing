@@ -33,7 +33,7 @@ def test_suite():
            ),
 
         doctest.DocTestSuite(
-           'collective.singing.mail',
+           'collective.singing.vocabularies',
            setUp=testing.setUp, tearDown=testing.tearDown,
            ),
 
