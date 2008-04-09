@@ -17,12 +17,12 @@ class UnicodeFormatter(object):
         return unicode(self.item)
 
 def getIFormatAdapter(obj, format):
-    format = component.queryAdapter(
+    formatter = component.queryAdapter(
         obj, interfaces.IFormatItem, name=format)
-    if format is None:
-        return component.getAdapter(obj, interfaces.IFormatItem)
+    if formatter is None:
+        return interfaces.IFormatItem(obj)
     else:
-        return format
+        return formatter
 
 def assemble_messages(channel, items=(), use_collector=True):
     collector = channel.collector
