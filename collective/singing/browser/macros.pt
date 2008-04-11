@@ -11,8 +11,8 @@
 
     <div class="form" metal:define-macro="form">
 
-      <h2 tal:condition="view/label | nothing"
-          tal:content="view/label">Form title</h2>
+      <h3 tal:condition="view/label | nothing">
+          <span tal:replace="view/label">Form title</span>:</h3>
       
       <div class="description"
            tal:condition="view/description | nothing"
@@ -33,12 +33,12 @@
           </ul>
 	</tal:comment>
 
-	<form action="." method="post" tal:attributes="action request/getURL">
+	<form class="rowlike" action="." method="post" tal:attributes="action request/getURL">
 
           <metal:define define-macro="fields">
             
             <tal:widgets repeat="widget view/widgets/values">
-              <div class="row"
+              <div class="row horizontal"
                    tal:define="hidden python:widget.mode == 'hidden'"
                    tal:omit-tag="hidden">
 		
@@ -47,14 +47,14 @@
                        tal:define="error widget/error"
                        tal:attributes="class python:'field' + (error and ' error' or '')">
                     
-                    <label for=""
+                    <label for="" class="horizontal"
                            tal:attributes="for widget/id"
                            tal:condition="not:hidden">
                       <span i18n:translate=""
                             tal:content="widget/label">label</span>
                     </label>
                     
-                    <span class="fieldRequired" title="Required"
+                    <span class="fieldRequired horizontal" title="Required"
                           tal:condition="widget/required"
                           i18n:translate="label_required"
                           i18n:attributes="title title_required;">
@@ -73,7 +73,7 @@
                       Error
                     </div>
                     
-                    <div class="widget">
+                    <div class="widget horizontal">
                       <input type="text" tal:replace="structure widget/render" />
                     </div>  
                   </div>
@@ -85,13 +85,15 @@
           </metal:define>
 
           <metal:define define-macro="actions">
-            <div class="action" tal:repeat="action view/actions/values|nothing">
+            <div class="action horizontal" tal:repeat="action view/actions/values|nothing">
               <input type="submit" tal:replace="structure action/render" />
             </div>
           </metal:define>
 
 	</form>
       </metal:define>
-    </div>
+      </div>
+   
+    
   </body>
 </html>
