@@ -35,10 +35,6 @@ class ISubscription(IAnnotatable):
     """A subscription to a channel.
     """
 
-    label = schema.TextLine(
-        title=u"Label",
-        description=u"A human-readable string that uniquely identifies this subscription.")
-
     channel = schema.Object(
         title=u"The channel that we're subscribed to",
         schema=IInterface, # should be really IChannel
