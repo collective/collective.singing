@@ -5,8 +5,15 @@ import persistent.dict
 import persistent.list
 from zope import interface
 from zope import component
+from zope.schema.interfaces import ISource, IContextSourceBinder
+from zope.schema.interfaces import ITitledTokenizedTerm
+from zope.app.form.browser.interfaces import ISourceQueryView, ITerms
+from zope.publisher.interfaces.browser import IBrowserRequest
+from zope.schema.vocabulary import SimpleTerm
 
 from collective.singing import interfaces
+
+import sha
 
 def secret(channel, composer, data, request):
     """Look up an appropriate secret.
@@ -94,7 +101,7 @@ class SimpleSubscription(persistent.Persistent):
     @property
     def metadata(self):
         return interfaces.ISubscriptionMetadata(self)
-        
+
     def __repr__(self):
         def dict_format(data):
             return pprint.pformat(dict(data)).replace('\n', '')
@@ -127,3 +134,88 @@ def SimpleCollectorData(subscription):
 @component.adapter(SimpleSubscription)
 def SimpleMetadata(subscription):
     return _data_dict(subscription, '_metadata')
+
+class SubscriptionTerm(object):
+    interface.implements(ITitledTokenizedTerm)
+    component.adapts(interfaces.ISubscription)
+    
+    def __init__(self, subscription):
+        self.subscription = subscription
+
+    @property
+    def value(self):
+        return self.subscription
+
+    @property
+    def token(self):
+        salt = repr(self.subscription)
+        return sha.sha(salt).hexdigest()
+ 
+    @property
+    def title(self):
+        """XXX: This is just a prototype implementation."""
+        
+        data = self.subscription.composer_data
+        if not data:
+            raise ValueError("Subscription has no data.")
+        
+        format = self.subscription.metadata.get('format')
+        composer = self.subscription.channel.composers.get(format)
+
+        # by default, choose first composer data value as label
+        label = data.values()[0]
+
+        if composer is not None:
+            for name in composer.schema:
+                if interfaces.ISubscriptionLabel.providedBy(schema[name]):
+                    label = getattr(data, name); break
+            
+        return "%s (%s)" % (label, self.subscription.channel.name)
+
+class SubscriptionQuerySource(object):
+    """Subscription query source.
+
+    This source supports text-queries for subscriptions registered for
+    a channel.
+
+    >>> source = SubscriptionQuerySource(None)
+    >>> source
+    <collective.singing.subscribe.SubscriptionQuerySource object at ...>
+
+    """
+    
+    interface.implements(ISource)
+    interface.classProvides(IContextSourceBinder)
+
+    def __init__(self, context, channels):
+        self.context = context
+        self.channels = channels
+
+    def __contains__(self, value):
+        """Return whether the value is available in this source.
+
+        For now, we'll just verify that ``value`` is a subscription.
+        """
+
+        return interfaces.ISubscription.providedBy(value)
+
+    def search(self, query_string):
+        channels = self.channels or \
+                   component.getAllUtilitiesRegisteredFor(interfaces.IChannel)
+
+        results = []
+
+        for channel in channels:
+            subscriptions = channel.subscriptions.values()
+            results.extend([s for s in subscriptions if query_string in repr(s)])
+
+        return results
+
+class SubscriptionQuerySourceBinder(object):
+    interface.implements(IContextSourceBinder)
+
+    def __init__(self, channels=None):
+        self.channels = channels
+    
+    def __call__(self, context):
+        return SubscriptionQuerySource(context, self.channels)

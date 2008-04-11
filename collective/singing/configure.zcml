@@ -19,6 +19,7 @@
   <adapter factory=".subscribe.SimpleComposerData" />
   <adapter factory=".subscribe.SimpleCollectorData" />
   <adapter factory=".subscribe.SimpleMetadata" />
+  <adapter factory=".subscribe.SubscriptionTerm" />
   
   <i18n:registerTranslations directory="locales"/>
 

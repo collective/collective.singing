@@ -6,6 +6,10 @@ from zope.interface.common.mapping import IMapping
 from zope.annotation.interfaces import IAnnotatable
 import z3c.form.interfaces
 
+class ISubscriptionLabel(interface.Interface):
+    """Marker-interface for a field that uniquely labels a subscription."""
+
+
 class ISalt(interface.Interface):
     """A utility that's a salt for use in creating secrets.
     """
@@ -34,7 +38,11 @@ class IComposerBasedSecret(interface.Interface):
 class ISubscription(IAnnotatable):
     """A subscription to a channel.
     """
-    
+
+    label = schema.TextLine(
+        title=u"Label",
+        description=u"A human-readable string that uniquely identifies this subscription.")
+
     channel = schema.Object(
         title=u"The channel that we're subscribed to",
         schema=IInterface, # should be really IChannel
@@ -93,7 +101,6 @@ class IComposerData(IMapping):
 
     Entries correspond to the IComposer's schema.
     """
-
 
 class ICollectorData(IMapping):
     """An adapter from the subscription to data used by the collector.
