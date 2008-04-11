@@ -28,9 +28,9 @@ class ChannelVocabularyFactory(object):
     interface.implements(IVocabularyFactory)
 
     def __call__(self, context):
-        channels = component.getAllUtilitiesRegisteredFor(IChannel)
-        items = [SimpleTerm(channel.name, channel.name, channel.title) \
-                 for channel in channels]
+        utilities = component.getUtilitiesFor(IChannel)
+        items = [SimpleTerm(channel, name, channel.title) \
+                 for name, channel in utilities]
         
         return SimpleVocabulary(items)
 
