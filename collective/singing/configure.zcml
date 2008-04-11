@@ -19,12 +19,13 @@
   <adapter factory=".subscribe.SimpleComposerData" />
   <adapter factory=".subscribe.SimpleCollectorData" />
   <adapter factory=".subscribe.SimpleMetadata" />
-  <adapter factory=".subscribe.SubscriptionTerm" />
+
+  <!-- Vocabularies stuff -->
+  <adapter factory=".vocabularies.SubscriptionTerm" />
+  <utility component=".vocabularies.channel_vocabulary"
+           name="collective.singing.vocabularies.ChannelVocabulary" />
+  
   
   <i18n:registerTranslations directory="locales"/>
 
-  <utility
-     name="collective.dancing.vocabularies.ChannelVocabulary"
-     component=".vocabularies.ChannelVocabulary" />
-  
 </configure>

@@ -6,10 +6,6 @@ from zope.interface.common.mapping import IMapping
 from zope.annotation.interfaces import IAnnotatable
 import z3c.form.interfaces
 
-class ISubscriptionLabel(interface.Interface):
-    """Marker-interface for a field that uniquely labels a subscription."""
-
-
 class ISalt(interface.Interface):
     """A utility that's a salt for use in creating secrets.
     """
@@ -154,6 +150,19 @@ class IComposer(interface.Interface):
         return it.
         """
 
+class ISubscriptionLabel(interface.Interface):
+    """Marker interface for field on IComposerSchema that labels a
+    subscription.
+    """
+
+class ISubscriptionKey(interface.Interface):
+    """Marker interface for field on IComposerSchema that serves as a
+    key for conflicts.
+
+    For subscriptions per e-mail this is the e-mail field.  No
+    subscriptions for the same format and same e-mail address will be
+    allowed, then.
+    """
 
 class ICollector(interface.Interface):
     """Collectors are useful for automatic newsletters.  They are
@@ -230,6 +239,9 @@ class ISubscriptions(interface.Interface):
 
     Maps secrets to lists of ISubscription objects.
     """
+    subscription_factory = interface.Attribute(
+        "The factory for creating subscriptions")
+    
     def __getitem__(key):
         """Return a list of subscriptions for a given key/secret.
         Note that this never raises KeyError.  Instead, if a key is
@@ -244,6 +256,12 @@ class ISubscriptions(interface.Interface):
         """Returns an iterator of tuples of the form
         ``(secret, subscriptions)``, where ``subscriptions`` is a
         list of ISubscription objects.
+        """
+
+    def add(subscription):
+        """Add a subscription.
+
+        Raises ValueError if subscription already exists.
         """
 
 class IMessageQueues(IMapping):

@@ -89,13 +89,13 @@ Let's render the form for the first time now:
          value="0" />
     <div class="row">
         <div class="field">
-          <label for="one-widgets-age">
+          <label for="one-widgets-age" class="horizontal">
             <span>Age</span>
           </label>
-          <span class="fieldRequired" title="Required">
+          <span class="fieldRequired horizontal" title="Required">
                 (Required)
           </span>
-          <div class="widget">
+          <div class="widget horizontal">
             <input type="text" id="one-widgets-age"
                    name="one.widgets.age"
                    class="text-widget required int-field" value="" />
@@ -145,10 +145,10 @@ Submit the first step successfully
          value="27" />
     <div class="row">
         <div class="field">
-          <label for="two-widgets-name">
+          <label for="two-widgets-name" class="horizontal">
             <span>Name</span>
           </label>
-          <div class="widget">
+          <div class="widget horizontal">
             <input type="text" id="two-widgets-name"
                    name="two.widgets.name"
                    class="text-widget textline-field" value="" />

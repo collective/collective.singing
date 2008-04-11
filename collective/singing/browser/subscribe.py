@@ -87,7 +87,6 @@ class Subscribe(wizard.Wizard):
     success_message = _(
         u"Thanks for your subscription; "
         u"we sent you a message for confirmation.")
-    factory = subscribe.SimpleSubscription
 
     def format(self):
         return self.before_steps[0].widgets.extract()[0]['format']
@@ -135,8 +134,12 @@ class Subscribe(wizard.Wizard):
 
         A fake channel to play with:
 
+          >>> class Subscriptions(object):
+          ...     subscription_factory = subscribe.SimpleSubscription
+
           >>> class Channel(object):
           ...     composers = {'html': object()}
+          ...     subscriptions = Subscriptions()
 
           >>> channel = Channel()
 
@@ -193,7 +196,7 @@ class Subscribe(wizard.Wizard):
                         pending=True)
 
         if factory is None:
-            factory = self.factory
+            factory = self.context.subscriptions.subscription_factory
         return factory(self.context, secret, comp_data, coll_data, metadata)
 
     def _secret(self, data, request):

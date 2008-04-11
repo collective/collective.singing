@@ -1,37 +1,103 @@
+import sha
+
 from zope import interface
 from zope import component
+import zope.schema.interfaces
+import zope.schema.vocabulary
+from zope.schema.interfaces import ISource, IContextSourceBinder
+from zope.schema.interfaces import ITitledTokenizedTerm
+from zope.app.form.browser.interfaces import ISourceQueryView, ITerms
 
-from zope.app.schema.vocabulary import IVocabularyFactory
-from zope.schema.vocabulary import SimpleTerm, SimpleVocabulary
+from collective.singing import interfaces
 
-from collective.singing.interfaces import IChannel
+def channel_vocabulary(context):
+    terms = []
+    for channel in component.getUtility(interfaces.IChannelLookup)():
+        terms.append(
+            zope.schema.vocabulary.SimpleTerm(
+                value=channel,
+                token=channel.name,
+                title=channel.title))
+    return zope.schema.vocabulary.SimpleVocabulary(terms)
+interface.alsoProvides(channel_vocabulary,
+                       zope.schema.interfaces.IVocabularyFactory)
 
-class ChannelVocabularyFactory(object):
-    """Channel vocabulary.
-
-    >>> from zope import interface, component
-    >>> from collective.singing.interfaces import IChannel
+class SubscriptionTerm(object):
+    interface.implements(ITitledTokenizedTerm)
+    component.adapts(interfaces.ISubscription)
     
-    >>> class MockChannel(object):
-    ...     interface.implements(IChannel)
-    ...     name = 'mock'; title = u'Mock'
-    
-    >>> component.provideUtility(MockChannel())
+    def __init__(self, subscription):
+        self.subscription = subscription
 
-    Look up channels.
-    
-    >>> ChannelVocabulary(None) # doctest: +ELLIPSIS
-    <zope.schema.vocabulary.SimpleVocabulary object at ...>
-    
+    @property
+    def value(self):
+        return self.subscription
+
+    @property
+    def token(self):
+        salt = repr(self.subscription)
+        return sha.sha(salt).hexdigest()
+ 
+    @property
+    def title(self):
+        """XXX: This is just a prototype implementation."""
+        
+        data = self.subscription.composer_data
+        if not data:
+            raise ValueError("Subscription has no data.")
+        
+        format = self.subscription.metadata['format']
+        composer = self.subscription.channel.composers[format]
+
+        # by default, choose first composer data value as label
+        label = data.values()[0]
+        for name in composer.schema:
+            if interfaces.ISubscriptionLabel.providedBy(composer.schema[name]):
+                label = getattr(data, name)
+                break
+
+        return "%s (%s)" % (label, self.subscription.channel.name)
+
+class SubscriptionQuerySource(object):
+    """Subscription query source.
+
+    This source supports text-queries for subscriptions registered for
+    a channel.
+
+      >>> source = SubscriptionQuerySource(None)
+      >>> source # doctest: +ELLIPSIS
+      <collective.singing.vocabularies.SubscriptionQuerySource object at ...>
     """
     
-    interface.implements(IVocabularyFactory)
+    interface.implements(ISource)
+    interface.classProvides(IContextSourceBinder)
 
+    def __init__(self, context):
+        self.context = context
+
+    def __contains__(self, value):
+        """Return whether the value is available in this source.
+
+        For now, we'll just verify that ``value`` is a subscription.
+        """
+        return interfaces.ISubscription.providedBy(value)
+
+    def search(self, query_string):
+        channels = component.getUtility(interfaces.IChannelLookup)()
+        results = []
+
+        for channel in channels:
+            subscriptions = channel.subscriptions.values()
+            results.extend(
+                [s for s in subscriptions if query_string in repr(s)])
+
+        return results
+
+class SubscriptionQuerySourceBinder(object):
+    interface.implements(IContextSourceBinder)
+
+    def __init__(self, channels=None):
+        self.channels = channels
+    
     def __call__(self, context):
-        utilities = component.getUtilitiesFor(IChannel)
-        items = [SimpleTerm(channel, name, channel.title) \
-                 for name, channel in utilities]
-        
-        return SimpleVocabulary(items)
-
-ChannelVocabulary = ChannelVocabularyFactory()
+        return SubscriptionQuerySource(context, self.channels)

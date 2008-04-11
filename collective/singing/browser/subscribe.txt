@@ -114,8 +114,10 @@ We'll also need a subscriptions object that complies with the
 supposed to raise a KeyError on ``__getitem__.  It should rather
 return a new list that it adds to itself:
 
+  >>> from collective.singing.subscribe import SimpleSubscription
   >>> class Subscriptions(dict):
   ...     interface.implements(interfaces.ISubscriptions)
+  ...     subscription_factory = SimpleSubscription
   ...     
   ...     def __getitem__(self, key):
   ...         if key not in self:
