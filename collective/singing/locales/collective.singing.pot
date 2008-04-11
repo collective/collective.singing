@@ -4,7 +4,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
-"POT-Creation-Date: 2007-12-27 13:42+0000\n"
+"POT-Creation-Date: 2008-04-11 12:05+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI +ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,11 +17,31 @@ msgstr ""
 "Preferred-Encodings: utf-8 latin1\n"
 "Domain: collective.singing\n"
 
-#: ./browser/subscribe.py:82
+#: ./browser/crud.py:252
+msgid "Add"
+msgstr ""
+
+#: ./browser/crud.py:194
+msgid "Apply changes"
+msgstr ""
+
+#: ./scheduler.py:103
+msgid "Daily scheduler"
+msgstr ""
+
+#: ./browser/crud.py:229
+msgid "Delete"
+msgstr ""
+
+#: ./browser/crud.py:177
+msgid "Edit"
+msgstr ""
+
+#: ./browser/subscribe.py:86
 msgid "Fill in the information below to subscribe."
 msgstr ""
 
-#: ./browser/subscribe.py:67
+#: ./browser/subscribe.py:69
 msgid "Filters"
 msgstr ""
 
@@ -29,7 +49,7 @@ msgstr ""
 msgid "Finish"
 msgstr ""
 
-#: ./browser/subscribe.py:37
+#: ./browser/subscribe.py:39
 msgid "Format"
 msgstr ""
 
@@ -37,11 +57,35 @@ msgstr ""
 msgid "Information submitted successfully."
 msgstr ""
 
+#: ./browser/crud.py:270
+msgid "Item added successfully."
+msgstr ""
+
+#: ./browser/crud.py:198
+msgid "No changes made."
+msgstr ""
+
+#: ./browser/crud.py:239
+msgid "Please select items to delete."
+msgstr ""
+
 #: ./browser/wizard.py:84
 msgid "Proceed"
 msgstr ""
 
-#: ./browser/subscribe.py:83
+#: ./browser/crud.py:197
+msgid "Some of your changes could not be applied."
+msgstr ""
+
+#: ./browser/crud.py:233
+msgid "Successfully deleted items."
+msgstr ""
+
+#: ./browser/crud.py:196
+msgid "Successfully updated"
+msgstr ""
+
+#: ./browser/subscribe.py:87
 msgid "Thanks for your subscription; we sent you a message for confirmation."
 msgstr ""
 
@@ -49,13 +93,26 @@ msgstr ""
 msgid "There were errors."
 msgstr ""
 
+#: ./browser/subscribe.py:128
+msgid "We're sorry, but there seems to be an error. Please try again later.
+(${error})"
+msgstr ""
+
+#: ./scheduler.py:107
+msgid "Weekly scheduler"
+msgstr ""
+
 #. Default: "(Required)"
-#: ./browser/wizard-step.pt:52
+#: ./browser/macros.pt:57
 msgid "label_required"
 msgstr ""
 
+#: ./browser/crud.py:136
+msgid "select"
+msgstr ""
+
 #. Default: "Required"
-#: ./browser/wizard-step.pt:52
+#: ./browser/macros.pt:57
 msgid "title_required"
 msgstr ""
 
