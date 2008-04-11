@@ -13,11 +13,13 @@ the data it needs to create a message:
   >>> from zope import interface
   >>> from zope import schema
   >>> from collective.singing import interfaces
+  >>> import collective.singing.subscribe
 
   >>> class Channel(object):
   ...     interface.implements(interfaces.IChannel)
   ...     def __init__(self):
-  ...          self.subscriptions = Subscriptions()
+  ...          self.subscriptions = \
+  ...              collective.singing.subscribe.SimpleSubscriptions()
   ...          self.composers = dict(html=Composer())
   ...          self.collector = Collector()
 
@@ -37,10 +39,16 @@ gets a nice error message if the e-mail address is not good:
   ...         raise InvalidEmailAddress
   ...     return True
 
+We'll define a composer schema and mark the email field as
+ISubscriptionKey.  This will allow us later to refuse duplicate
+subscriptions (for the same format):
+
   >>> class IComposerSchema(interface.Interface):
   ...     email = schema.TextLine(
   ...         title=u"E-Mail address",
   ...         constraint=check_email)
+  >>> interface.directlyProvides(IComposerSchema['email'],
+  ...                            collective.singing.interfaces.ISubscriptionKey)
 
   >>> class Message(object):
   ...     def __init__(self, payload):
@@ -106,24 +114,6 @@ with the composer, it may define a schema for doing that:
   ...     interface.implements(interfaces.ICollector)
   ...     schema = ICollectorSchema
 
-Defining the subscriptions
---------------------------
-
-We'll also need a subscriptions object that complies with the
-``ISubscriptions`` interface.  That is, we need a dict that's not
-supposed to raise a KeyError on ``__getitem__.  It should rather
-return a new list that it adds to itself:
-
-  >>> from collective.singing.subscribe import SimpleSubscription
-  >>> class Subscriptions(dict):
-  ...     interface.implements(interfaces.ISubscriptions)
-  ...     subscription_factory = SimpleSubscription
-  ...     
-  ...     def __getitem__(self, key):
-  ...         if key not in self:
-  ...             self[key] = []
-  ...         return super(Subscriptions, self).__getitem__(key)
-
 Setup form machinery
 --------------------
 
@@ -175,8 +165,8 @@ Successfully add a subscription through the form
 
 We'll submit the form correctly now, including a colour:
 
-  >>> channel.subscriptions
-  {}
+  >>> len(channel.subscriptions)
+  0
   >>> request.form['composer.widgets.email'] = u'daniel@testingunderground.com'
   >>> request.form['collector.widgets.colour'] = [u'red']
   >>> subscribe = Subscribe(channel, request)
@@ -189,7 +179,7 @@ We're now subscribed to the channel:
 
   >>> len(channel.subscriptions)
   1
-  >>> channel.subscriptions # doctest: +NORMALIZE_WHITESPACE +ELLIPSIS
+  >>> dict(channel.subscriptions) # doctest: +NORMALIZE_WHITESPACE +ELLIPSIS
   {u'daniel@testingunderground.com':
    [<SimpleSubscription to <Channel object at ...>
      with composerdata: {'email': u'daniel@testingunderground.com'},
@@ -199,6 +189,13 @@ We're now subscribed to the channel:
                     'pending': True}>]}
 
   >>> 'Thanks for your subscription' in html
+  True
+
+Trying to subscribe again for the same format and e-mail address will
+produce a form error:
+
+  >>> html = subscribe() # doctest: +NORMALIZE_WHITESPACE
+  >>> "You are already subscribed" in html
   True
 
 Another format
@@ -247,7 +244,7 @@ Our two subscriptions are keyed with the same key:
 
   >>> len(channel.subscriptions)
   1
-  >>> channel.subscriptions # doctest: +NORMALIZE_WHITESPACE +ELLIPSIS
+  >>> dict(channel.subscriptions) # doctest: +NORMALIZE_WHITESPACE +ELLIPSIS
   {u'daniel@testingunderground.com':
    [<SimpleSubscription to ...>, <SimpleSubscription to ...>]}
 
@@ -288,12 +285,3 @@ delete our subscriptions from the channel:
   u'...You have been unsubscribed...'
   >>> len(channel.subscriptions)
   0
-
-Editing a subscription
-----------------------
-
-XXX Let's go on here
-
-We can edit subscritions through the SubscriptionEditForm
-
-  >>> #from collective.singing.browser.subscribe import SubscriptionEditForm

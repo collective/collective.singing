@@ -131,6 +131,22 @@ class SimpleSubscriptions(persistent.dict.PersistentDict):
         return super(SimpleSubscriptions, self).__getitem__(key)
 
     def add(self, subscription):
+        format = subscription.metadata['format']
+        cschema = subscription.channel.composers[format].schema
+
+        key, name = None, None
+        for name in cschema:
+            if interfaces.ISubscriptionKey.providedBy(cschema[name]):
+                key = subscription.composer_data[name]
+
+        if key is not None:
+            for other in self[subscription.secret]:
+                if other.metadata['format'] == format:
+                    
+                    if other.composer_data[name] == key:
+                        raise ValueError(
+                            'Subscription with %s=%r already exists' % (
+                            name, key))
         
         self[subscription.secret].append(subscription)
 

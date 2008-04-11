@@ -117,7 +117,11 @@ class Subscribe(wizard.Wizard):
         # Create the subscription and add it to the channel's
         # subscriptions
         subscription = self.create(comp_data, coll_data)
-        self.context.subscriptions[subscription.secret].append(subscription)
+        try:
+            self.context.subscriptions.add(subscription)
+        except ValueError:
+            self.status = _(u"You are already subscribed.")
+            return
 
         # Ask the composer to render a confirmation message
         composer = self.context.composers[self.format()]
