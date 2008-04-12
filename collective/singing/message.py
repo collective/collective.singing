@@ -42,7 +42,8 @@ class Message(object):
         self.payload = payload
         self.subscription = subscription
         self.status_message = status_message
-        self.status = status
+        if status is not None:
+            self.status = status
 
     @apply
     def status():
