@@ -33,6 +33,11 @@ def test_suite():
            ),
 
         doctest.DocTestSuite(
+           'collective.singing.subscribe',
+           setUp=testing.setUp, tearDown=testing.tearDown,
+           ),
+
+        doctest.DocTestSuite(
            'collective.singing.vocabularies',
            setUp=testing.setUp, tearDown=testing.tearDown,
            ),

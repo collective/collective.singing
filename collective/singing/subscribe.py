@@ -36,14 +36,14 @@ def has_single_format(channel):
       >>> has_single_format(channel) == 'sms'
       True
 
-      >>> Channel.composers = {}
-      >>> has_single_composer(channel) # doctest: +ELLIPSIS
+      >>> channel.composers = {}
+      >>> has_single_format(channel) # doctest: +ELLIPSIS
       Traceback (most recent call last):
       ...
       AssertionError...
 
-      >>> Channel.composers = {'sms': None, 'email': None}
-      >>> has_single_composer(channel) is None
+      >>> channel.composers = {'sms': None, 'email': None}
+      >>> has_single_format(channel) is None
       True
     """
     composers = channel.composers.keys()
@@ -53,6 +53,11 @@ def has_single_format(channel):
         return composers[0]
 
 class SimpleSubscription(persistent.Persistent):
+    """
+      >>> from zope.interface.verify import verifyClass
+      >>> verifyClass(interfaces.ISubscription, SimpleSubscription)
+      True
+    """
     interface.implements(interfaces.ISubscription)
 
     def __init__(self, channel, secret,
@@ -120,6 +125,10 @@ class SimpleSubscriptions(persistent.dict.PersistentDict):
       >>> d['bar'].append('spam')
       >>> d['bar']
       ['spam']
+
+      >>> from zope.interface.verify import verifyObject
+      >>> verifyObject(interfaces.ISubscriptions, d)
+      True
     """
     interface.implements(interfaces.ISubscriptions)
 
@@ -149,4 +158,3 @@ class SimpleSubscriptions(persistent.dict.PersistentDict):
                             name, key))
         
         self[subscription.secret].append(subscription)
-
