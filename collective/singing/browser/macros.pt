@@ -65,7 +65,7 @@
 			 tal:define="description widget/field/description"
 			 i18n:translate=""
 			 tal:content="description"
-			 tal:condition="description"
+			 tal:condition="python:description and not hidden"
 			 >field description</div>
                     
                     <div tal:condition="error"

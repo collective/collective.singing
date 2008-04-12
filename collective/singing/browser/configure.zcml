@@ -1,6 +1,7 @@
 <zope:configure
    xmlns:zope="http://namespaces.zope.org/zope"
-   xmlns="http://namespaces.zope.org/browser">
+    xmlns:z3c="http://namespaces.zope.org/z3c"
+    xmlns="http://namespaces.zope.org/browser">
 
   <page
       name="singing-macros"
@@ -9,6 +10,20 @@
       template="macros.pt"
       allowed_interface="zope.interface.common.mapping.IItemMapping"
       permission="zope.Public"
+      />
+
+  <z3c:widgetTemplate
+      mode="hidden"
+      widget="z3c.form.interfaces.ICheckBoxWidget"
+      layer="z3c.form.interfaces.IFormLayer"
+      template="checkbox_hidden.pt"
+      />
+
+  <z3c:widgetTemplate
+      mode="hidden"
+      widget="z3c.form.interfaces.IRadioWidget"
+      layer="z3c.form.interfaces.IFormLayer"
+      template="checkbox_hidden.pt"
       />
       
 </zope:configure>
