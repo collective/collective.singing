@@ -132,10 +132,9 @@ class Subscribe(wizard.Wizard):
         msg = composer.render_confirmation(subscription)
         status, status_msg = message.dispatch(msg)
         if status != u'sent':
-            self.status = _(u"We're sorry, but there seems to be an error. "
-                            u"Please try again later.\n"
-                            u"(${error})",
-                            mapping=dict(error=status_msg))
+            raise RuntimeError(
+                "There was an error with sending your e-mail.  Please try "
+                "again later.")
 
     def _secret(self, data, request):
         """Convenience method for looking up secrets.
