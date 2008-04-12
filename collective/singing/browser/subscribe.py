@@ -114,11 +114,15 @@ class Subscribe(wizard.Wizard):
             elif key.startswith('composer.'):
                 comp_data[name] = value
 
-        # Create the subscription and add it to the channel's
-        # subscriptions
-        subscription = self.create(comp_data, coll_data)
+        # Create the data necessary to create a subscription:
+        secret = self._secret(comp_data, self.request)
+        metadata = dict(format=self.format(),
+                        date=datetime.datetime.now(),
+                        pending=True)
+
         try:
-            self.context.subscriptions.add(subscription)
+            subscription = self.context.subscriptions.add_subscription(
+                self.context, secret, comp_data, coll_data, metadata)
         except ValueError:
             self.status = _(u"You are already subscribed.")
             return
@@ -132,76 +136,6 @@ class Subscribe(wizard.Wizard):
                             u"Please try again later.\n"
                             u"(${error})",
                             mapping=dict(error=status_msg))
-
-    def create(self, comp_data, coll_data, factory=None):
-        """Create a subscription corresponding to data.
-
-        A fake channel to play with:
-
-          >>> class Subscriptions(object):
-          ...     subscription_factory = subscribe.SimpleSubscription
-
-          >>> class Channel(object):
-          ...     composers = {'html': object()}
-          ...     subscriptions = Subscriptions()
-
-          >>> channel = Channel()
-
-        We'll patch our ``_secret`` method for now to return
-        something, to avoid the complexity of having to register a
-        secret adapter:
-
-          >>> form = Subscribe(channel, None)
-          >>> form._secret = lambda data, request: data['e-mail']
-
-        We'll also need to provide data adapters for the simple
-        subscription implementation to work:
-
-          >>> from zope import component
-          >>> from collective.singing import subscribe
-          >>> component.provideAdapter(subscribe.SimpleComposerData)
-          >>> component.provideAdapter(subscribe.SimpleCollectorData)
-          >>> component.provideAdapter(subscribe.SimpleMetadata)
-
-        We're almost there.  The last missing piece is the ``format``
-        attribute of our form.  This is normally retrieved by looking
-        at the request.  We'll set the format manually:
-
-          >>> form.format = lambda: 'html'
-
-          >>> s = form.create({'e-mail': 'eggs'}, {'filter': 'underground'})
-          >>> s.channel is channel
-          True
-          >>> s.secret
-          'eggs'
-
-        Let's get the composer and collector data back:
-
-          >>> from collective.singing import interfaces
-          >>> dict(interfaces.IComposerData(s))
-          {'e-mail': 'eggs'}
-          >>> dict(interfaces.ICollectorData(s))
-          {'filter': 'underground'}
-
-        In addition to these, also metadata was saved:
-
-          >>> m = interfaces.ISubscriptionMetadata(s)
-          >>> m['format']
-          'html'
-          >>> m['date'] # doctest: +ELLIPSIS
-          datetime.datetime(...)
-          >>> m['pending']
-          True
-        """
-        secret = self._secret(comp_data, self.request)
-
-        metadata = dict(format=self.format(),
-                        date=datetime.datetime.now(),
-                        pending=True)
-
-        if factory is None:
-            factory = self.context.subscriptions.subscription_factory
-        return factory(self.context, secret, comp_data, coll_data, metadata)
 
     def _secret(self, data, request):
         """Convenience method for looking up secrets.

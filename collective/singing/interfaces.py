@@ -235,9 +235,6 @@ class ISubscriptions(interface.Interface):
 
     Maps secrets to lists of ISubscription objects.
     """
-    subscription_factory = interface.Attribute(
-        "The factory for creating subscriptions")
-    
     def __getitem__(key):
         """Return a list of subscriptions for a given key/secret.
         Note that this never raises KeyError.  Instead, if a key is
@@ -254,8 +251,9 @@ class ISubscriptions(interface.Interface):
         list of ISubscription objects.
         """
 
-    def add(subscription):
-        """Add a subscription.
+    def add_subscription(
+        channel, secret, composer_data, collector_data, metadata):
+        """Add a subscription and return it.
 
         Raises ValueError if subscription already exists.
         """

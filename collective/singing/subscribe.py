@@ -7,6 +7,7 @@ from zope import interface
 from zope import component
 
 from collective.singing import interfaces
+import collective.singing.subscribe
 
 def secret(channel, composer, data, request):
     """Look up an appropriate secret.
@@ -139,10 +140,17 @@ class SimpleSubscriptions(persistent.dict.PersistentDict):
             self[key] = persistent.list.PersistentList()
         return super(SimpleSubscriptions, self).__getitem__(key)
 
-    def add(self, subscription):
+    def add_subscription(
+        self, channel, secret, composerd, collectord, metadata):
+        subscription = self.subscription_factory(
+            channel, secret, composerd, collectord, metadata)
+
         format = subscription.metadata['format']
         cschema = subscription.channel.composers[format].schema
 
+        # Try to find a key in the composer data.  When we have such a
+        # key, try and see if a subscription with the same value for
+        # that key already exists.  If it does, raise ValueError.
         key, name = None, None
         for name in cschema:
             if interfaces.ISubscriptionKey.providedBy(cschema[name]):
@@ -151,10 +159,10 @@ class SimpleSubscriptions(persistent.dict.PersistentDict):
         if key is not None:
             for other in self[subscription.secret]:
                 if other.metadata['format'] == format:
-                    
                     if other.composer_data[name] == key:
                         raise ValueError(
                             'Subscription with %s=%r already exists' % (
                             name, key))
         
         self[subscription.secret].append(subscription)
+        return subscription
