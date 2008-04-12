@@ -282,7 +282,11 @@ class IChannel(interface.Interface):
     title = schema.TextLine(
         title=u"Title",
         )
-    
+
+    description = schema.Text(
+        title=u"Description"
+        )
+
     scheduler = schema.Object(
         title=u"Scheduler (when)",
         required=False,
