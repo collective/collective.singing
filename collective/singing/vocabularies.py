@@ -72,25 +72,28 @@ class SubscriptionQuerySource(object):
     interface.implements(ISource)
     interface.classProvides(IContextSourceBinder)
 
-    def __init__(self, context):
+    def __init__(self, context, channels=None):
         self.context = context
+        self.channels = channels
 
-    def __contains__(self, value):
+    def __contains__(self, term):
         """Return whether the value is available in this source.
 
         For now, we'll just verify that ``value`` is a subscription.
         """
-        return interfaces.ISubscription.providedBy(value)
+        return interfaces.ISubscription.providedBy(term.value)
 
     def search(self, query_string):
-        channels = component.getUtility(interfaces.IChannelLookup)()
+        if self.channels is None:
+            channels = component.getUtility(interfaces.IChannelLookup)()
+        else:
+            channels = self.channels
+
         results = []
-
         for channel in channels:
-            subscriptions = channel.subscriptions.values()
-            results.extend(
-                [s for s in subscriptions if query_string in repr(s)])
-
+            for subscriptions in channel.subscriptions.values():
+                results.extend(
+                    [s for s in subscriptions if query_string in repr(s)])
         return results
 
 class SubscriptionQuerySourceBinder(object):
