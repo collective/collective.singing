@@ -4,7 +4,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
-"POT-Creation-Date: 2008-04-11 12:05+0000\n"
+"POT-Creation-Date: 2008-04-14 08:06+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI +ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -93,13 +93,12 @@ msgstr ""
 msgid "There were errors."
 msgstr ""
 
-#: ./browser/subscribe.py:128
-msgid "We're sorry, but there seems to be an error. Please try again later.
-(${error})"
-msgstr ""
-
 #: ./scheduler.py:107
 msgid "Weekly scheduler"
+msgstr ""
+
+#: ./browser/subscribe.py:127
+msgid "You are already subscribed."
 msgstr ""
 
 #. Default: "(Required)"
