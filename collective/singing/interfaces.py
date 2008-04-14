@@ -326,3 +326,11 @@ class IChannelLookup(interface.Interface):
 
 class IFormLayer(z3c.form.interfaces.IFormLayer):
     pass
+
+class IDynamicVocabularyCollection(zope.schema.interfaces.ICollection):
+    """ Used to mark ICollection Fields in our dynamic schemas.
+        To indicate that thay have dynamic vocabularies.
+        We need a more tolerant z3c.form.interfaces.IDataConverter
+        in this case - one that drops saved values that are no longer
+        in the vocabulary when updating widgets.
+        """

@@ -25,5 +25,9 @@
       layer="z3c.form.interfaces.IFormLayer"
       template="checkbox_hidden.pt"
       />
-      
+
+  <zope:adapter
+     factory=".converters.CollectionSequenceDataConverter"
+     />
+  
 </zope:configure>
