@@ -84,17 +84,10 @@ does the right thing:
   ...                                                     subscription)
   ...         return '<Message>'
 
-  >>> from zope import interface, component
-  >>> @component.adapter(Subscription)
-  ... @interface.implementer(interfaces.ISubscriptionMetadata)
-  ... def subscription_metadata(subscription):
-  ...     return subscription.metadata
-  >>> component.provideAdapter(subscription_metadata)
-
   >>> subscription = Subscription('daniel', dict(format='my-format'))
   >>> channel = Channel(
   ...     composers={'my-format': Composer()},
-  ...     subscriptions={'my-secret': [subscription]})
+  ...     subscriptions={'my-subscription': subscription})
 
 Note that the ``assemble_messages`` function returns the number of
 messages that were created:
@@ -145,6 +138,7 @@ A ``UnicodeFormatter`` defined in the ``scheduler`` module returns
 for our ``my-format`` composer to render both strings and Subscription
 objects to unicode:
 
+  >>> from zope import component
   >>> component.provideAdapter(scheduler.UnicodeFormatter,
   ...                          adapts=(str,))
   >>> component.provideAdapter(scheduler.UnicodeFormatter,
@@ -174,6 +168,7 @@ rendered:
 We can register an ``ITransform`` utility to rewrite text that's sent
 out:
 
+  >>> from zope import interface
   >>> class SimpleTransform(object):
   ...     interface.implements(interfaces.ITransform)
   ... 

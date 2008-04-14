@@ -29,6 +29,7 @@ setup(name='collective.singing',
       # 2 environment, try the `fakezope2eggs` recipe
       install_requires=[
           'setuptools',
+          'zope.app.catalog',
           'z3c.form',
           'zc.queue',
       ],

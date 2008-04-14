@@ -5,6 +5,14 @@ import persistent.dict
 import persistent.list
 from zope import interface
 from zope import component
+import zope.event
+import zope.lifecycleevent
+import zope.index.text.interfaces
+import zope.app.catalog.catalog
+import zope.app.catalog.field
+import zope.app.catalog.text
+import zope.app.intid.interfaces
+import zope.app.container.btree
 
 from collective.singing import interfaces
 import collective.singing.subscribe
@@ -65,21 +73,13 @@ class SimpleSubscription(persistent.Persistent):
                  composer_data, collector_data, metadata):
         self.channel = channel
         self.secret = secret
+
+        self.composer_data = persistent.dict.PersistentDict()
+        self.collector_data = persistent.dict.PersistentDict()
+        self.metadata = persistent.dict.PersistentDict()
         self.composer_data.update(composer_data)
         self.collector_data.update(collector_data)
         self.metadata.update(metadata)
-
-    @property
-    def composer_data(self):
-        return interfaces.IComposerData(self)
-
-    @property
-    def collector_data(self):
-        return interfaces.ICollectorData(self)
-
-    @property
-    def metadata(self):
-        return interfaces.ISubscriptionMetadata(self)
 
     def __repr__(self):
         def dict_format(data):
@@ -92,77 +92,141 @@ class SimpleSubscription(persistent.Persistent):
         fmt_str = "<SimpleSubscription to %(channel)r with composerdata: %(composer_data)s, collectordata: %(collector_data)s, and metadata: %(metadata)s>"
         return fmt_str % data
 
-def _data_dict(subscription, name):
-    data = getattr(subscription, name, None)
-    if data is None:
-        data = persistent.dict.PersistentDict()
-        setattr(subscription, name, data)
-    return data
+class ISubscriptionCatalogData(interface.Interface):
+    """Extract metadata from subscription for use in catalog.
+    """
+    format = interface.Attribute(u"Format")
+    key = interface.Attribute(u"Key")
+    label = interface.Attribute(u"Label")
 
-@interface.implementer(interfaces.IComposerData)
-@component.adapter(SimpleSubscription)
-def SimpleComposerData(subscription):
-    return _data_dict(subscription, '_composer_data')
+@interface.implementer(ISubscriptionCatalogData)
+@component.adapter(interfaces.ISubscription)
+def catalog_data(subscription):
+    class Metadata(object):
+        def __init__(self, **kwargs):
+            self.__dict__.update(kwargs)
 
-@interface.implementer(interfaces.ICollectorData)
-@component.adapter(SimpleSubscription)
-def SimpleCollectorData(subscription):
-    return _data_dict(subscription, '_collector_data')
+    metadata = subscription.metadata
+    composer_data = subscription.composer_data
+    cschema = subscription.channel.composers[metadata['format']].schema
 
-@interface.implementer(interfaces.ISubscriptionMetadata)
-@component.adapter(SimpleSubscription)
-def SimpleMetadata(subscription):
-    return _data_dict(subscription, '_metadata')
+    def _find_field(schema, interface):
+        for name in schema:
+            if interface.providedBy(cschema[name]):
+                return cschema[name]
+        else:
+            return cschema[cschema.names()[0]]
 
-class SimpleSubscriptions(persistent.dict.PersistentDict):
-    """A dict that makes sure that when you access an element that it
-    doesn't have, you get a nice list back:
+    key_field = _find_field(cschema, interfaces.ISubscriptionKey)
+    label_field = _find_field(cschema, interfaces.ISubscriptionLabel)
 
-      >>> d = SimpleSubscriptions()
-      >>> 'bar' in d
-      False
-      >>> d['bar']
-      []
-      >>> d['bar'].append('spam')
-      >>> d['bar']
-      ['spam']
+    return Metadata(format=metadata['format'],
+                    key=composer_data[key_field.__name__],
+                    label=composer_data[label_field.__name__])
+
+class SubscriptionSearchableText(object):
+    component.adapts(interfaces.ISubscription)
+    interface.implements(zope.index.text.interfaces.ISearchableText)
+
+    def __init__(self, subscription):
+        self.subscription = subscription
+
+    def getSearchableText(self):
+        return u' '.join(
+            unicode(v) for v in self.subscription.composer_data.values())
+
+class Subscriptions(zope.app.container.btree.BTreeContainer):
+    """An ISubscriptions implementation that's based on ZODB and uses
+    a zope.app.catalog Catalog to provide the query interface.
 
       >>> from zope.interface.verify import verifyObject
-      >>> verifyObject(interfaces.ISubscriptions, d)
+      >>> verifyObject(interfaces.ISubscriptions, Subscriptions())
       True
     """
     interface.implements(interfaces.ISubscriptions)
 
     subscription_factory = SimpleSubscription
 
-    def __getitem__(self, key):
-        if key not in self:
-            self[key] = persistent.list.PersistentList()
-        return super(SimpleSubscriptions, self).__getitem__(key)
+    def __init__(self):
+        super(Subscriptions, self).__init__()
+        self._catalog = zope.app.catalog.catalog.Catalog()
+
+        fulltext = zope.app.catalog.text.TextIndex(
+            interface=zope.index.text.interfaces.ISearchableText,
+            field_name='getSearchableText',
+            field_callable=True)
+
+        secret = zope.app.catalog.field.FieldIndex(
+            interface=interfaces.ISubscription,
+            field_name='secret',
+            )
+
+        format = zope.app.catalog.field.FieldIndex(
+            interface=ISubscriptionCatalogData,
+            field_name='format',
+            )
+
+        key = zope.app.catalog.field.FieldIndex(
+            interface=ISubscriptionCatalogData,
+            field_name='key',
+            )
+
+        label = zope.app.catalog.text.TextIndex(
+            interface=ISubscriptionCatalogData,
+            field_name='label',
+            )
+
+        self._catalog[u'fulltext'] = fulltext
+        self._catalog[u'secret'] = secret
+        self._catalog[u'format'] = format
+        self._catalog[u'key'] = key
+        self._catalog[u'label'] = label
+
+    def query(self, **kwargs):
+        query = {}
+        for key, value in kwargs.items():
+            index = self._catalog[key]
+            if isinstance(index, zope.app.catalog.field.FieldIndex):
+                value = (value, value)
+            query[key] = value
+        return self._catalog.searchResults(**query)
 
     def add_subscription(
         self, channel, secret, composerd, collectord, metadata):
         subscription = self.subscription_factory(
             channel, secret, composerd, collectord, metadata)
 
-        format = subscription.metadata['format']
-        cschema = subscription.channel.composers[format].schema
+        data = ISubscriptionCatalogData(subscription)
+        contained_name = u'%s-%s' % (data.key, data.format)
+        if contained_name in self:
+            raise ValueError(
+                "There's already a subscription for %r." % contained_name)
+        self[contained_name] = subscription
+        return self[contained_name]
 
-        # Try to find a key in the composer data.  When we have such a
-        # key, try and see if a subscription with the same value for
-        # that key already exists.  If it does, raise ValueError.
-        key, name = None, None
-        for name in cschema:
-            if interfaces.ISubscriptionKey.providedBy(cschema[name]):
-                key = subscription.composer_data[name]
+    def remove_subscription(self, subscription):
+        data = ISubscriptionCatalogData(subscription)
+        del self[u'%s-%s' % (data.key, data.format)]
 
-        if key is not None:
-            for other in self[subscription.secret]:
-                if other.metadata['format'] == format:
-                    if other.composer_data[name] == key:
-                        raise ValueError(
-                            'Subscription with %s=%r already exists' % (
-                            name, key))
-        
-        self[subscription.secret].append(subscription)
-        return subscription
+def _catalog_subscription(subscription):
+    intids = component.getUtility(zope.app.intid.interfaces.IIntIds)
+    subscription.channel.subscriptions._catalog.index_doc(
+        intids.getId(subscription), subscription)
+
+@component.adapter(collective.singing.interfaces.ISubscription,
+                   zope.app.container.interfaces.IObjectAddedEvent)
+def subscription_added(obj, event):
+    intids = component.getUtility(zope.app.intid.interfaces.IIntIds)
+    intids.register(obj)
+    _catalog_subscription(obj)
+
+@component.adapter(collective.singing.interfaces.ISubscription,
+                   zope.lifecycleevent.IObjectModifiedEvent)
+def subscription_modified(obj, event):
+    _catalog_subscription(obj)
+
+@component.adapter(collective.singing.interfaces.ISubscription,
+                   zope.app.intid.interfaces.IIntIdRemovedEvent)
+def subscription_removed(obj, event):
+    intids = component.getUtility(zope.app.intid.interfaces.IIntIds)
+    obj.channel.subscriptions._catalog.unindex_doc(intids.getId(obj))

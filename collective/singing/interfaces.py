@@ -50,6 +50,10 @@ class ISubscription(IAnnotatable):
         """,
         )
 
+    composer_data = schema.Dict(title=u"Composer data")
+    collector_data = schema.Dict(title=u"Collector data")
+    metadata = schema.Dict(title=u"Metadata")
+
 MESSAGE_STATES = [u'new',   # just added
                   u'sent',  # sent successfully
                   u'error', # error while sending
@@ -86,32 +90,6 @@ class IMessageChanged(zope.lifecycleevent.interfaces.IObjectModifiedEvent):
     changed.
     """
     old_status = schema.TextLine(title=u"Old status of message")
-
-
-class IComposerData(IMapping):
-    """An adapter from the subscription to data used by the composer.
-
-    Entries correspond to the IComposer's schema.
-    """
-
-class ICollectorData(IMapping):
-    """An adapter from the subscription to data used by the collector.
-
-    Entries correspond to the ICollector's schema.    
-    """
-
-
-class ISubscriptionMetadata(IMapping):
-    """An adapter from the subscription to metadata.
-
-    Entries ``format`` and ``date`` are guaranteed to exist.
-    ``format`` is the format that's inherent to the composer, and
-    ``date`` is the subscription date of type ``datetime.datetime``.
-
-    May be used for application-specific data.
-
-    XXX: I don't like this.  :)
-    """
 
 
 class IComposer(interface.Interface):
@@ -233,29 +211,23 @@ class IScheduler(interface.Interface):
 class ISubscriptions(interface.Interface):
     """The `subscriptions` attribute of IChannel implements this.
 
-    Maps secrets to lists of ISubscription objects.
+    Allows for adding, removing, and querying subscriptions.
     """
-    def __getitem__(key):
-        """Return a list of subscriptions for a given key/secret.
-        Note that this never raises KeyError.  Instead, if a key is
-        not known to the storage, it will return a list.
-        """
-
-    def __contains__(key):
-        """True if a key/secret is known to the storage.
-        """
-
-    def items():
-        """Returns an iterator of tuples of the form
-        ``(secret, subscriptions)``, where ``subscriptions`` is a
-        list of ISubscription objects.
-        """
-
     def add_subscription(
         channel, secret, composer_data, collector_data, metadata):
         """Add a subscription and return it.
 
         Raises ValueError if subscription already exists.
+        """
+
+    def remove_subscription(subscription):
+        """Remove subscription.
+        """
+
+    def query(**kwargs):
+        """Search subscriptions.
+
+        Available fields are: 'fulltext', 'secret', 'format', 'key', 'label'.
         """
 
 class IMessageQueues(IMapping):

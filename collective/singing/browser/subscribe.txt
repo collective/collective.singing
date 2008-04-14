@@ -14,14 +14,15 @@ the data it needs to create a message:
   >>> from zope import schema
   >>> from collective.singing import interfaces
   >>> import collective.singing.subscribe
+  >>> from collective.singing import tests
 
   >>> class Channel(object):
   ...     interface.implements(interfaces.IChannel)
   ...     def __init__(self):
-  ...          self.subscriptions = \
-  ...              collective.singing.subscribe.SimpleSubscriptions()
+  ...          self.subscriptions = tests.create_subscriptions()
   ...          self.composers = dict(html=Composer())
   ...          self.collector = Collector()
+  >>> __builtins__['Channel'] = Channel # make persistable
 
 Defining a composer
 -------------------
@@ -64,10 +65,11 @@ subscriptions (for the same format):
   ...         return data['email']
   ... 
   ...     def render_confirmation(self, subscription):
-  ...         email = interfaces.IComposerData(subscription)['email']
+  ...         email = subscription.composer_data['email']
   ...         return Message(
   ...             u"This is a message to %s to confirm their subscription." %
   ...             (email,))
+  >>> __builtins__['Composer'] = Composer # make persistable
 
 Note that our composer also implements ``IComposerBasedSecret``.  This
 will allow us to provide a secret, i.e. an ASCII string that
@@ -113,6 +115,7 @@ with the composer, it may define a schema for doing that:
   >>> class Collector(object):
   ...     interface.implements(interfaces.ICollector)
   ...     schema = ICollectorSchema
+  >>> __builtins__['Collector'] = Collector # make persistable
 
 Setup form machinery
 --------------------
@@ -122,6 +125,12 @@ defaults for our forms.  This is of course only required in tests:
 
   >>> from collective.singing.browser.tests import setup_defaults
   >>> setup_defaults()
+
+Set up adapters
+---------------
+
+  >>> from zope import component
+  >>> component.provideAdapter(collective.singing.subscribe.catalog_data)
 
 Rendering the subscription add form
 -----------------------------------
@@ -179,14 +188,14 @@ We're now subscribed to the channel:
 
   >>> len(channel.subscriptions)
   1
-  >>> dict(channel.subscriptions) # doctest: +NORMALIZE_WHITESPACE +ELLIPSIS
-  {u'daniel@testingunderground.com':
-   [<SimpleSubscription to <Channel object at ...>
-     with composerdata: {'email': u'daniel@testingunderground.com'},
-     collectordata: {'colour': 'red'},
-     and metadata: {'date': datetime.datetime(...),
-                    'format': 'html',
-                    'pending': True}>]}
+  >>> list(channel.subscriptions.values()) \
+  ... # doctest: +NORMALIZE_WHITESPACE +ELLIPSIS
+  [<SimpleSubscription to <Channel object at ...>
+    with composerdata: {'email': u'daniel@testingunderground.com'},
+    collectordata: {'colour': 'red'},
+    and metadata: {'date': datetime.datetime(...),
+                   'format': 'html',
+                   'pending': True}>]
 
   >>> 'Thanks for your subscription' in html
   True
@@ -207,6 +216,7 @@ we'll define another composer:
 
   >>> class PlainTextEmailComposer(Composer):
   ...     title = 'Plain text E-Mail'
+  >>> __builtins__['PlainTextEmailComposer'] = PlainTextEmailComposer
 
   >>> channel.composers['plaintext'] = PlainTextEmailComposer()
     
@@ -240,31 +250,28 @@ We can now "finish" by providing an e-mail address:
     subscription.
   True
 
-Our two subscriptions are keyed with the same key:
-
   >>> len(channel.subscriptions)
-  1
-  >>> dict(channel.subscriptions) # doctest: +NORMALIZE_WHITESPACE +ELLIPSIS
-  {u'daniel@testingunderground.com':
-   [<SimpleSubscription to ...>, <SimpleSubscription to ...>]}
+  2
 
-  >>> html = channel.subscriptions['daniel@testingunderground.com'][0]
-  >>> plaintext = channel.subscriptions['daniel@testingunderground.com'][1]
+  >>> html = [sub for sub in channel.subscriptions.values()
+  ...         if sub.metadata['format'] == 'html'][0]
+  >>> plaintext = [sub for sub in channel.subscriptions.values()
+  ...              if sub.metadata['format'] == 'plaintext'][0]
 
 We need to adapt the subscription objects to ``IComposerData`` and
 ``ICollectorData`` to confirm that the data we entered is actually
 stored:
 
-  >>> dict(interfaces.ICollectorData(html))
+  >>> dict(html.collector_data)
   {'colour': 'red'}
-  >>> dict(interfaces.ICollectorData(plaintext))
+  >>> dict(plaintext.collector_data)
   {'colour': 'yellow'}
 
 Also metadata was stored.  Note that the subscription is flagged as
 pending:
 
   >>> from pprint import pprint
-  >>> pprint(dict(interfaces.ISubscriptionMetadata(html))) # doctest: +ELLIPSIS
+  >>> pprint(dict(html.metadata)) # doctest: +ELLIPSIS
   {'date': datetime.datetime(...),
    'format': 'html',
    'pending': True}
@@ -277,10 +284,10 @@ delete our subscriptions from the channel:
 
   >>> from collective.singing.browser.subscribe import Unsubscribe
   >>> request = TestRequest()
-  >>> request.form['secret'] = 'daniel@testingunderground.com'
+  >>> request.form['secret'] = u'daniel@testingunderground.com'
   >>> unsubscribe = Unsubscribe(channel, request)
   >>> len(channel.subscriptions)
-  1
+  2
   >>> unsubscribe() # doctest: +ELLIPSIS
   u'...You have been unsubscribed...'
   >>> len(channel.subscriptions)

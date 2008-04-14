@@ -16,9 +16,7 @@
   <adapter factory=".scheduler.UnicodeFormatter"
            for="str" />
 
-  <adapter factory=".subscribe.SimpleComposerData" />
-  <adapter factory=".subscribe.SimpleCollectorData" />
-  <adapter factory=".subscribe.SimpleMetadata" />
+  <adapter factory=".subscribe.catalog_data" />
 
   <!-- Vocabularies stuff -->
   <adapter factory=".vocabularies.SubscriptionTerm" />

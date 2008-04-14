@@ -69,11 +69,10 @@ def render_message(channel, sub, items, use_collector):
 
 def assemble_messages(channel, items=(), use_collector=True):
     queued_messages = 0
-    for secret, subscriptions in channel.subscriptions.items():
-        for sub in subscriptions:
-            message = render_message(channel, sub, items, use_collector)
-            if message is not None:
-                queued_messages +=1
+    for subscription in channel.subscriptions.values():
+        message = render_message(channel, subscription, items, use_collector)
+        if message is not None:
+            queued_messages +=1
     return queued_messages
 
 class AbstractPeriodicScheduler(object):

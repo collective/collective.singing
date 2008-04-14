@@ -149,5 +149,6 @@ class Unsubscribe(utils.OverridableTemplate,
 
     def __call__(self):
         secret = self.request.form['secret']
-        del self.context.subscriptions[secret]
+        for subscription in self.context.subscriptions.query(secret=secret):
+            self.context.subscriptions.remove_subscription(subscription)
         return self.template()

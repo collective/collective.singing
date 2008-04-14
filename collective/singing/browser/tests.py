@@ -22,11 +22,6 @@ def setup_defaults():
     component.provideAdapter(
         zope.traversing.namespace.view, (None, None), name='view')
 
-    # Setup the data adapters for the simple subscription
-    component.provideAdapter(subscribe.SimpleComposerData)
-    component.provideAdapter(subscribe.SimpleCollectorData)
-    component.provideAdapter(subscribe.SimpleMetadata)
-
     # Setup singing macros
     component.provideAdapter(
         macros.Macros,

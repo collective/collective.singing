@@ -1,0 +1,104 @@
+Subscribe
+=========
+
+The subscribe module gives us a ZODB container for subscriptions
+called Subscriptions and a Subscription class to go with it.
+
+  >>> from collective.singing import subscribe
+
+Subscription
+------------
+
+To define a subscription, we'll first need to set up a composer
+schema:
+
+  >>> from zope import schema
+  >>> from zope import interface
+  >>> from collective.singing.interfaces import (
+  ...     ISubscriptionKey, ISubscriptionLabel)
+
+  >>> class IComposerSchema(interface.Interface):
+  ...     email = schema.TextLine(title=u"E-Mail address")
+  ...     name = schema.TextLine(title=u"Full name")
+  >>> interface.directlyProvides(IComposerSchema['email'], ISubscriptionKey)
+  >>> interface.directlyProvides(IComposerSchema['name'], ISubscriptionLabel)
+
+  >>> class Composer(object):
+  ...     schema = IComposerSchema
+  >>> __builtins__['Composer'] = Composer # make persistable
+
+  >>> class Channel(object):
+  ...     pass
+  >>> __builtins__['Channel'] = Channel # make persistable
+
+  >>> channel = Channel()
+  >>> channel.composers = {'myformat': Composer()}
+
+Here's a subscription:
+
+  >>> subscription = subscribe.SimpleSubscription(
+  ...     channel, 'secret',
+  ...     {'email': u'daniel@localhost', 'name': u'Daniel Nouri'},
+  ...     {'favourite_color': u'violet'},
+  ...     {'format': 'myformat'})
+
+  >>> subscription # doctest: +ELLIPSIS +NORMALIZE_WHITESPACE
+  <SimpleSubscription to <Channel object at ...>
+   with composerdata: {'email': u'daniel@localhost', 'name': u'Daniel Nouri'},
+   collectordata: {'favourite_color': u'violet'},
+   and metadata: {'format': 'myformat'}>
+
+Subscriptions
+-------------
+
+Our subscriptions object has a 'query' method that lets us search
+subscriptions.  This query interface relies on a zope.app.catalog to
+do the job.  Before we can use this catalog, we'll need to register an
+IIntIds utility and wire in a couple of adatpers defined in the
+subscribe module.  This is what 'create_subscriptions' does for us:
+
+  >>> from collective.singing import tests
+  >>> Channel.subscriptions = subscriptions = tests.create_subscriptions()
+
+At this point, no objects are in the subscription catalog:
+
+  >>> len(subscriptions.query(fulltext=u'daniel'))
+  0
+
+Let's add a subscription to the subscriptions container and search for
+it:
+
+  >>> subscription = subscriptions.add_subscription(
+  ...     channel, 'secret',
+  ...     {'email': u'daniel@localhost', 'name': u'Daniel Nouri'},
+  ...     {'favourite_color': u'violet'},
+  ...     {'format': 'myformat'})
+
+  >>> len(subscriptions.query(secret='yoursecret'))
+  0
+  >>> len(subscriptions.query(secret='secret'))
+  1
+
+  >>> len(subscriptions.query(fulltext=u'daniele'))
+  0
+  >>> len(subscriptions.query(fulltext=u'daniel'))
+  1
+  >>> len(subscriptions.query(fulltext=u'Nouri'))
+  1
+
+  >>> len(subscriptions.query(format='yourformat'))
+  0
+  >>> len(subscriptions.query(format='myformat'))
+  1
+
+  >>> len(subscriptions.query(label=u'Daniele'))
+  0
+  >>> len(subscriptions.query(label=u'Daniel'))
+  1
+
+  >>> len(subscriptions.query(key=u'daniel@redhotcar'))
+  0
+  >>> len(subscriptions.query(key='daniel@localhost'))
+  1
+  >>> tuple(subscriptions.query(key='daniel@localhost'))[0] is subscription
+  True

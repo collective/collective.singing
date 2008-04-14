@@ -4,6 +4,8 @@ from zope.component import testing
 from zope import component
 from zope import interface
 
+from collective.singing import subscribe
+
 def create_eventlog(event=interface.Interface):
     value = []
     @component.adapter(event)
@@ -11,6 +13,56 @@ def create_eventlog(event=interface.Interface):
         value.append(event)
     component.provideHandler(log)
     return value
+
+count = 0
+root = None
+
+def subscription_added(obj, event):
+    global count
+    count += 1
+    root[str(count)] = obj
+    from transaction import commit; commit()
+    subscribe.subscription_added(obj, event)
+
+def create_subscriptions():
+    # Register adapters and handlers:
+    from zope.component import provideUtility, provideAdapter, provideHandler
+    for adapter in (subscribe.catalog_data,
+                    subscribe.SubscriptionSearchableText):
+        provideAdapter(adapter)
+
+    from zope.component.event import objectEventNotify
+    for handler in (subscribe.subscription_modified,
+                    subscribe.subscription_removed,
+                    objectEventNotify):
+        provideHandler(handler)
+
+    # Set up an IIntIds utility:
+    from zope.app.intid import IntIds
+    from zope.app.intid.interfaces import IIntIds
+    intids = IntIds()
+    provideUtility(intids, IIntIds)
+
+    # We'll register a slight variation of the subscription_added
+    # handler that commits the transaction, so that a later lookup of
+    # IKeyReference for our subscription will work:
+    from ZODB.DemoStorage import DemoStorage
+    from ZODB import DB
+    global root
+    db = DB(DemoStorage())
+    root = db.open().root()
+
+    subscription_added.__component_adapts__ = (
+        subscribe.subscription_added.__component_adapts__)
+    provideHandler(subscription_added)
+
+    # As a last step, we'll register the IKeyReference adapter for all
+    # persistent objects:
+    from zope.app.keyreference.persistent import KeyReferenceToPersistent
+    from persistent.interfaces import IPersistent
+    provideAdapter(KeyReferenceToPersistent, adapts=(IPersistent,))
+
+    return subscribe.Subscriptions()
 
 def test_suite():
     return unittest.TestSuite([
@@ -24,6 +76,11 @@ def test_suite():
 
         doctest.DocFileSuite(
             'scheduler.txt',
+            setUp=testing.setUp, tearDown=testing.tearDown,
+        ),
+
+        doctest.DocFileSuite(
+            'subscribe.txt',
             setUp=testing.setUp, tearDown=testing.tearDown,
         ),
 
