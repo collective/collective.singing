@@ -13,11 +13,11 @@
 
       <h3 tal:condition="view/label | nothing">
           <span tal:replace="view/label">Form title</span>:</h3>
-      
+
       <div class="description"
            tal:condition="view/description | nothing"
-           tal:content="view/description">Form description</div>
-
+           tal:content="structure view/description">Form description</div>
+      
       <metal:define define-macro="titlelessform">
 	<div class="portalMessage"
              tal:condition="view/status" tal:content="view/status">

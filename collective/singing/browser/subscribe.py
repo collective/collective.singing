@@ -88,6 +88,11 @@ class Subscribe(wizard.Wizard):
         u"Thanks for your subscription; "
         u"we sent you a message for confirmation.")
 
+    @property 
+    def description(self):
+        if hasattr(self.context, 'description'):
+            return self.context.description
+    
     def format(self):
         return self.before_steps[0].widgets.extract()[0]['format']
 
