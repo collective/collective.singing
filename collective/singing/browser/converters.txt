@@ -1,0 +1,62 @@
+DynamicVocabularyCollSeqConverter
+=================================
+
+This converter is much like the CollectionSequenceDataConverter except
+that it will not return values that aren't part of the widget, instead
+of producing LookupError.
+
+This test is a lot like the one for CollectionSequenceDataConverter in
+``z3c/form/converter.txt``.
+
+  >>> from zope import component
+  >>> from zope import schema
+  >>> from zope.schema.vocabulary import SimpleVocabulary
+  >>> import z3c.form.widget
+  >>> from z3c.form.testing import TestRequest
+  >>> import z3c.form.term
+
+  >>> component.provideAdapter(z3c.form.term.CollectionTerms)
+
+  >>> gender = schema.Choice(
+  ...     vocabulary = SimpleVocabulary(
+  ...         [SimpleVocabulary.createTerm(0, 'f', u'female'),
+  ...          SimpleVocabulary.createTerm(1, 'm', u'male')]))
+
+Let's now create a set field and a widget:
+
+  >>> genders = schema.List(value_type=gender)
+  >>> seq_widget = z3c.form.widget.SequenceWidget(TestRequest())
+  >>> seq_widget.field = genders
+
+We now use the field and widget to instantiate the converter and convert :
+
+  >>> from collective.singing.browser import converters
+  >>> converter = converters.DynamicVocabularyCollSeqConverter(
+  ...     genders, seq_widget)
+
+We can now convert a real value to a widget value, which will be the term's
+token:
+
+  >>> converter.toWidgetValue([0, 1])
+  ['f', 'm']
+
+Let's now remove 'm' from the vocabulary and try again:
+
+  >>> gender.vocabulary = SimpleVocabulary(
+  ...     [SimpleVocabulary.createTerm(0, 'f', u'female')])
+  >>> seq_widget = z3c.form.widget.SequenceWidget(TestRequest())
+  >>> seq_widget.field = genders
+  >>> converter = converters.DynamicVocabularyCollSeqConverter(
+  ...     genders, seq_widget)
+  >>> converter.toWidgetValue([0, 1])
+  ['f']
+
+This is unlike how the standard CollectionSequenceDataConverter behaves:
+
+  >>> from z3c.form import converter
+  >>> converter = converter.CollectionSequenceDataConverter(
+  ...     genders, seq_widget)
+  >>> converter.toWidgetValue([0, 1]) # doctest: +ELLIPSIS
+  Traceback (most recent call last):
+  ...
+  LookupError: 1

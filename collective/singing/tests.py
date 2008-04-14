@@ -83,8 +83,13 @@ def test_suite():
             'subscribe.txt',
             setUp=testing.setUp, tearDown=testing.tearDown,
         ),
+ 
+        doctest.DocFileSuite(
+            'browser/converters.txt',
+            setUp=testing.setUp, tearDown=testing.tearDown,
+        ),
 
-        doctest.DocTestSuite(
+       doctest.DocTestSuite(
            'collective.singing.mail',
            setUp=testing.setUp, tearDown=testing.tearDown,
            ),

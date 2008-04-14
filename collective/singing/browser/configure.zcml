@@ -27,7 +27,7 @@
       />
 
   <zope:adapter
-     factory=".converters.CollectionSequenceDataConverter"
+     factory=".converters.DynamicVocabularyCollSeqConverter"
      />
   
 </zope:configure>
