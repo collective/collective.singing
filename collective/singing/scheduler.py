@@ -10,21 +10,28 @@ from collective.singing import MessageFactory as _
 class UnicodeFormatter(object):
     interface.implements(interfaces.IFormatItem)
 
-    def __init__(self, item):
+    def __init__(self, item, request):
         self.item = item
 
     def __call__(self):
         return unicode(self.item)
 
-def getIFormatAdapter(obj, format):
-    formatter = component.queryAdapter(
-        obj, interfaces.IFormatItem, name=format)
-    if formatter is None:
-        return interfaces.IFormatItem(obj)
-    else:
+def getIFormatAdapter(obj, request, format):
+    """Return item formatter for the specified format.
+
+    If a formatter for the specified format is not found, an
+    attempt to look up an unspecified formatter is made.
+    """
+    
+    formatter = component.queryMultiAdapter(
+        (obj, request), interfaces.IFormatItem, name=format)
+
+    if formatter is not None:
         return formatter
 
-def render_message(channel, sub, items, use_collector):
+    return component.getMultiAdapter((obj, request), interfaces.IFormatItem)
+
+def render_message(channel, request, sub, items, use_collector):
     collector = channel.collector
     composers = channel.composers
 
@@ -48,10 +55,10 @@ def render_message(channel, sub, items, use_collector):
         collector_items = ()
 
     final_items = tuple(items) + tuple(collector_items)
-
+        
     # First format all items...
     format = subscription_metadata['format']
-    final_items = [getIFormatAdapter(item, format)() for item in final_items]
+    final_items = [getIFormatAdapter(item, request, format)() for item in final_items]
     transforms = component.getAllUtilitiesRegisteredFor(
         interfaces.ITransform)
 
@@ -67,10 +74,10 @@ def render_message(channel, sub, items, use_collector):
     composer = composers[format]
     return composer.render(sub, transformed_items)
 
-def assemble_messages(channel, items=(), use_collector=True):
+def assemble_messages(channel, request, items=(), use_collector=True):
     queued_messages = 0
     for subscription in channel.subscriptions.values():
-        message = render_message(channel, subscription, items, use_collector)
+        message = render_message(channel, request, subscription, items, use_collector)
         if message is not None:
             queued_messages +=1
     return queued_messages
@@ -82,14 +89,14 @@ class AbstractPeriodicScheduler(object):
     active = False
     delta = None
 
-    def tick(self, channel):
+    def tick(self, channel, request):
         now = datetime.datetime.now()
         if self.active and (now - self.triggered_last >= self.delta):
-            return self.trigger(channel)
+            return self.trigger(channel, request)
 
-    def trigger(self, channel):
+    def trigger(self, channel, request):
         self.triggered_last = datetime.datetime.now()
-        return assemble_messages(channel)
+        return assemble_messages(channel, request)
 
     def __eq__(self, other):
         return (isinstance(other, AbstractPeriodicScheduler) and

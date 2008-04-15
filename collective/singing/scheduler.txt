@@ -22,13 +22,16 @@ Schedulers have an overwritten ``__eq__`` special method for comparison:
 Schedulers implement a ``tick`` method that'll call
 ``assemble_messages`` when it needs to:
 
+  >>> from zope.publisher.browser import TestRequest
+  >>> request = TestRequest()
+
   >>> daily = scheduler.DailyScheduler()
-  >>> daily.tick(None)
+  >>> daily.tick(None, request)
 
 Nothing happened because our scheduler is inactive by default:
 
   >>> daily.active = True
-  >>> daily.tick(None) # doctest: +ELLIPSIS
+  >>> daily.tick(None, request) # doctest: +ELLIPSIS
   Traceback (innermost last):
   ...
   AttributeError: ...
@@ -38,11 +41,11 @@ attribute is set to now:
 
   >>> import datetime
   >>> daily.triggered_last = datetime.datetime.now()
-  >>> daily.tick(None)
+  >>> daily.tick(None, request)
 
 We can override the check by calling ``trigger``:
 
-  >>> daily.trigger(None) # doctest: +ELLIPSIS
+  >>> daily.trigger(None, request) # doctest: +ELLIPSIS
   Traceback (innermost last):
   ...
   AttributeError: ...
@@ -52,7 +55,7 @@ go off:
 
   >>> daily.triggered_last = (
   ...     datetime.datetime.now() - datetime.timedelta(days=1))
-  >>> daily.tick(None) # doctest: +ELLIPSIS
+  >>> daily.tick(None, request) # doctest: +ELLIPSIS
   Traceback (innermost last):
   ...
   AttributeError: ...
@@ -92,14 +95,14 @@ does the right thing:
 Note that the ``assemble_messages`` function returns the number of
 messages that were created:
 
-  >>> scheduler.assemble_messages(channel)
+  >>> scheduler.assemble_messages(channel, request)
   Rendering message with () for <Subscription 'daniel'>
   1
 
 If our subscription were in pending state, nothing would happen:
 
   >>> subscription.metadata['pending'] = True
-  >>> scheduler.assemble_messages(channel)
+  >>> scheduler.assemble_messages(channel, request)
   0
   >>> subscription.metadata['pending'] = False
 
@@ -107,7 +110,7 @@ If our subscription were for a format that's unknown, an error is
 raised:
 
   >>> subscription.metadata['format'] = 'bar'
-  >>> scheduler.assemble_messages(channel) # doctest: +ELLIPSIS
+  >>> scheduler.assemble_messages(channel, request) # doctest: +ELLIPSIS
   Traceback (innermost last):
   ...
   KeyError: 'bar'
@@ -139,12 +142,14 @@ for our ``my-format`` composer to render both strings and Subscription
 objects to unicode:
 
   >>> from zope import component
+  >>> from zope.publisher.interfaces.browser import IBrowserRequest
+  
   >>> component.provideAdapter(scheduler.UnicodeFormatter,
-  ...                          adapts=(str,))
+  ...                          adapts=(str, IBrowserRequest))
   >>> component.provideAdapter(scheduler.UnicodeFormatter,
-  ...                          adapts=(Subscription,))
+  ...                          adapts=(Subscription, IBrowserRequest))
 
-  >>> scheduler.assemble_messages(channel)
+  >>> scheduler.assemble_messages(channel, request)
   Collecting items for <Subscription 'daniel'> with cue None
   Rendering message with (u'some', u'items', u'for', u"<Subscription 'daniel'>") for <Subscription 'daniel'>
   1
@@ -152,7 +157,7 @@ objects to unicode:
 Note that the second we call this, the cue we returned in the previous
 call to ``get_items`` will be passed to the collector:
 
-  >>> scheduler.assemble_messages(channel)
+  >>> scheduler.assemble_messages(channel, request)
   Collecting items for <Subscription 'daniel'> with cue 'somecue'
   Rendering message with (u'some', u'items', u'for', u"<Subscription 'daniel'>") for <Subscription 'daniel'>
   1
@@ -161,7 +166,7 @@ If the collector decides to return no items, no messages will be
 rendered:
 
   >>> channel.collector.items = ()
-  >>> scheduler.assemble_messages(channel)
+  >>> scheduler.assemble_messages(channel, request)
   Collecting items for <Subscription 'daniel'> with cue 'somecue'
   0
 
@@ -181,7 +186,7 @@ out:
 
   >>> channel.collector.items = ('We', 'love', 'life')
   >>> component.provideUtility(SimpleTransform(u'life', u'Grappa'))
-  >>> scheduler.assemble_messages(channel)
+  >>> scheduler.assemble_messages(channel, request)
   Collecting items for <Subscription 'daniel'> with cue 'somecue'
   Rendering message with (u'We', u'love', u'Grappa', u'for', u"<Subscription 'daniel'>") for <Subscription 'daniel'>
   1
@@ -189,13 +194,13 @@ out:
 We can supply our own items to assemble_messages:
 
   >>> items = ('Vincenzo', 'likes', 'life', 'and', 'singing')
-  >>> scheduler.assemble_messages(channel, items)
+  >>> scheduler.assemble_messages(channel, request, items)
   Collecting items for <Subscription 'daniel'> with cue 'somecue'
   Rendering message with (u'Vincenzo', u'likes', u'Grappa', u'and', u'singing', u'We', u'love', u'Grappa', u'for', u"<Subscription 'daniel'>") for <Subscription 'daniel'>
   1
 
 ... and choose not to include the collector items:
   
-  >>> scheduler.assemble_messages(channel, items, use_collector=False)
+  >>> scheduler.assemble_messages(channel, request, items, use_collector=False)
   Rendering message with (u'Vincenzo', u'likes', u'Grappa', u'and', u'singing') for <Subscription 'daniel'>
   1

@@ -194,14 +194,14 @@ class IScheduler(interface.Interface):
         title=u"Active",
         )
 
-    def tick(channel):
+    def tick(channel, request):
         """Check if messages need to be assembled and sent; return the
         number of messages queued or None.
         
         This method is guaranteed to be called periodically.
         """
 
-    def trigger(channel):
+    def trigger(channel, request):
         """Assemble and queue messages; return the number of messages
         queued.
 

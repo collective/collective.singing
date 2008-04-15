@@ -11,10 +11,7 @@
   <subscriber handler=".message.queue_message" />
 
   <adapter factory=".scheduler.UnicodeFormatter"
-           for="unicode" />
-
-  <adapter factory=".scheduler.UnicodeFormatter"
-           for="str" />
+           for="unicode zope.publisher.interfaces.browser.IBrowserRequest" />
 
   <adapter factory=".subscribe.catalog_data" />
 
