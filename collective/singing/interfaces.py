@@ -289,11 +289,15 @@ class IChannel(interface.Interface):
 
 
 class IFormatItem(interface.Interface):
-    """Given an item as retrieved from a collector, this interface
-    defines a method that returns a representation of given item ready
-    for inclusion in the message via the ``IComposer.render`` method.
-    This representation must be of type unicode.
+    """A view that formats an item for use in a newsletter.
+
+    Given an item as retrieved from a collector, this view returns a
+    representation of the given item ready for inclusion in the
+    message via the ``IComposer.render`` method.
     """
+
+    def __call__():
+        """Returns a unicode-string."""
 
 class ITransform(interface.Interface):
     """Allows to rewrite links and the like.
