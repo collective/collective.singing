@@ -1,10 +1,6 @@
 collective.singing 0.2
 
-  - Replace this text with your commit message.
-    [replace this text with your IRC nick]
-
-- Cleaned up a bit in a few templates. Needed to structure view/Desvription in wizard. Got rid of annoying label filters in wizard-step.
-    [bartholdy]
-    
-- Forgot to put my signature into this file
+  - Cleaned up a bit in a few templates. Needed to structure
+    view/Desvription in wizard. Got rid of annoying label filters in
+    wizard-step.
     [bartholdy]
