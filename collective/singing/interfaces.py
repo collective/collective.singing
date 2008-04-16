@@ -6,6 +6,8 @@ from zope.interface.common.mapping import IMapping
 from zope.annotation.interfaces import IAnnotatable
 import z3c.form.interfaces
 
+from collective.singing import MessageFactory as _
+
 class ISalt(interface.Interface):
     """A utility that's a salt for use in creating secrets.
     """
@@ -248,25 +250,25 @@ class IChannel(interface.Interface):
     """
 
     name = schema.ASCIILine(
-        title=u"Unique identifier for this channel across the site.",
+        title=_(u"Unique identifier for this channel across the site."),
         )
     
     title = schema.TextLine(
-        title=u"Title",
+        title=_(u"Title"),
         )
 
     description = schema.Text(
-        title=u"Description"
+        title=_(u"Description")
         )
 
     scheduler = schema.Object(
-        title=u"Scheduler (when)",
+        title=_(u"Scheduler (when)"),
         required=False,
         schema=IScheduler,
         )
 
     collector = schema.Object(
-        title=u"Collector (what)",
+        title=_(u"Collector (what)"),
         required=False,
         schema=ICollector,
         )
@@ -278,7 +280,7 @@ class IChannel(interface.Interface):
         )
 
     subscriptions = schema.Object(
-        title=u"The channel's subscriptions",
+        title=_(u"The channel's subscriptions"),
         schema=ISubscriptions,
         )
 
