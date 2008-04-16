@@ -20,13 +20,16 @@
 
   <div class="subform"
        tal:condition="view/widgets">
-
+<tal:out tal:condition="nothing">
+<!--
+   turns out that we dont want this label shown
+-->
     <div class="form-title"
          tal:condition="view/label"
          tal:content="view/label">
       Form title
     </div>
-        
+</tal:out>         
     <metal:use use-macro="context/@@singing-macros/fields" />
   </div>
 

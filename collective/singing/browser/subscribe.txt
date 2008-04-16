@@ -235,7 +235,7 @@ Let's select the plain-text format and "click" proceed:
   ... })
   >>> html = subscribe()
   >>> 'Finish' in html, 'Filters' in html
-  (True, True)
+  (True, False)
 
 We can now "finish" by providing an e-mail address:
 

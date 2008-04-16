@@ -11,7 +11,7 @@
   
   <div class="description"
        tal:condition="view/description"
-       tal:content="view/description">Form description</div>
+       tal:content="structure view/description">Form description</div>
 
   <div class="portalMessage"
        tal:condition="view/status" tal:content="view/status">
@@ -44,6 +44,7 @@
       <h2 tal:condition="form/label" tal:content="form/label">
         Subform title
       </h2>
+      
       <div tal:replace="structure form/render" />
     </tal:form>
 
