@@ -303,6 +303,24 @@ get an option to have their secret sent to them again:
   >>> "We sent you a message" in html
   True
 
+The ForgotSecret form does the same.  For this one to work, we'll need
+to register an IChannelLookup utility:
+
+  >>> def channel_lookup():
+  ...     return [channel]
+  >>> interface.directlyProvides(
+  ...     channel_lookup, collective.singing.interfaces.IChannelLookup)
+  >>> component.provideUtility(channel_lookup)
+
+  >>> from collective.singing.browser.subscribe import ForgotSecret
+  >>> request = TestRequest()
+  >>> request.form['form.widgets.address'] = u'daniel@testingunderground.com'
+  >>> request.form['form.buttons.send'] = u'Send'
+  >>> html = ForgotSecret(None, request)()
+  This is your dispatcher speaking:  This is a message to daniel@testingunderground.com to remind them.
+  >>> "We sent you a message" in html
+  True
+
 Unsubscribe
 -----------
 

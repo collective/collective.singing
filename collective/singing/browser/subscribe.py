@@ -1,5 +1,7 @@
 import datetime
 
+from zope import component
+from zope import schema
 import zope.schema.interfaces
 import zope.schema.vocabulary
 import zope.publisher.browser
@@ -202,3 +204,41 @@ class Unsubscribe(utils.OverridableTemplate,
         for subscription in self.context.subscriptions.query(secret=secret):
             self.context.subscriptions.remove_subscription(subscription)
         return self.template()
+
+class ForgotSecret(utils.OverridableTemplate, form.Form):
+    ignoreContext = True
+    index = viewpagetemplatefile.ViewPageTemplateFile('form.pt')
+
+    label = _(u"Retrieve a link to your personalized subscription settings")
+
+    fields = field.Fields(
+        schema.TextLine(
+            __name__='address',
+            title=_(u"Address"),
+            description=_(u"The address you're already subscribed with"),
+            ),
+        )
+
+    @button.buttonAndHandler(_('Send'), name='send')
+    def handle_send(self, action):
+        data, errors = self.extractData()
+        if errors:
+            self.status = form.EditForm.formErrorsMessage
+            return
+
+        address = data['address']
+        for channel in component.getUtility(interfaces.IChannelLookup)():
+            subscriptions = channel.subscriptions.query(key=address)
+            if len(subscriptions):
+                subscription = tuple(subscriptions)[0]
+                composer = channel.composers[subscription.metadata['format']]
+                msg = composer.render_forgot_secret(subscription)
+                status, status_msg = message.dispatch(msg)
+                if status != u'sent':
+                    raise RuntimeError(
+                        "There was an error with sending your e-mail.  Please "
+                        "try again later.")
+                self.status = _(u"Thanks.  We sent you a message.")
+                break
+        else:
+            self.status = _(u"Your subscription isn't known to us.")
