@@ -1,5 +1,8 @@
 collective.singing 0.2
-
+ 
+  - updated pot and danish translation
+    [bartholdy]
+    
   - Cleaned up a bit in a few templates. Needed to structure
     view/Desvription in wizard. Got rid of annoying label filters in
     wizard-step.

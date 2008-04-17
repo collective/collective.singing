@@ -4,7 +4,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
-"POT-Creation-Date: 2008-04-14 08:06+0000\n"
+"POT-Creation-Date: 2008-04-17 08:41+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI +ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,101 +17,125 @@ msgstr ""
 "Preferred-Encodings: utf-8 latin1\n"
 "Domain: collective.singing\n"
 
-#: ./browser/crud.py:252
+#: ../browser/crud.py:252
 msgid "Add"
 msgstr ""
 
-#: ./browser/crud.py:194
+#: ../browser/crud.py:194
 msgid "Apply changes"
 msgstr ""
 
-#: ./scheduler.py:103
+#: ../interfaces.py:271
+msgid "Collector (what)"
+msgstr ""
+
+#: ../scheduler.py:109
 msgid "Daily scheduler"
 msgstr ""
 
-#: ./browser/crud.py:229
+#: ../browser/crud.py:229
 msgid "Delete"
 msgstr ""
 
-#: ./browser/crud.py:177
+#: ../interfaces.py:261
+msgid "Description"
+msgstr ""
+
+#: ../browser/crud.py:177
 msgid "Edit"
 msgstr ""
 
-#: ./browser/subscribe.py:86
+#: ../browser/subscribe.py:86
 msgid "Fill in the information below to subscribe."
 msgstr ""
 
-#: ./browser/subscribe.py:69
+#: ../browser/subscribe.py:69
 msgid "Filters"
 msgstr ""
 
-#: ./browser/wizard.py:102
+#: ../browser/wizard.py:102
 msgid "Finish"
 msgstr ""
 
-#: ./browser/subscribe.py:39
+#: ../browser/subscribe.py:39
 msgid "Format"
 msgstr ""
 
-#: ./browser/wizard.py:26
+#: ../browser/wizard.py:26
 msgid "Information submitted successfully."
 msgstr ""
 
-#: ./browser/crud.py:270
+#: ../browser/crud.py:270
 msgid "Item added successfully."
 msgstr ""
 
-#: ./browser/crud.py:198
+#: ../browser/crud.py:198
 msgid "No changes made."
 msgstr ""
 
-#: ./browser/crud.py:239
+#: ../browser/crud.py:239
 msgid "Please select items to delete."
 msgstr ""
 
-#: ./browser/wizard.py:84
+#: ../browser/wizard.py:84
 msgid "Proceed"
 msgstr ""
 
-#: ./browser/crud.py:197
+#: ../interfaces.py:265
+msgid "Scheduler (when)"
+msgstr ""
+
+#: ../browser/crud.py:197
 msgid "Some of your changes could not be applied."
 msgstr ""
 
-#: ./browser/crud.py:233
+#: ../browser/crud.py:233
 msgid "Successfully deleted items."
 msgstr ""
 
-#: ./browser/crud.py:196
+#: ../browser/crud.py:196
 msgid "Successfully updated"
 msgstr ""
 
-#: ./browser/subscribe.py:87
+#: ../browser/subscribe.py:87
 msgid "Thanks for your subscription; we sent you a message for confirmation."
 msgstr ""
 
-#: ./browser/wizard.py:27
+#: ../interfaces.py:283
+msgid "The channel's subscriptions"
+msgstr ""
+
+#: ../browser/wizard.py:27
 msgid "There were errors."
 msgstr ""
 
-#: ./scheduler.py:107
+#: ../interfaces.py:257
+msgid "Title"
+msgstr ""
+
+#: ../interfaces.py:253
+msgid "Unique identifier for this channel across the site."
+msgstr ""
+
+#: ../scheduler.py:113
 msgid "Weekly scheduler"
 msgstr ""
 
-#: ./browser/subscribe.py:127
+#: ../browser/subscribe.py:132
 msgid "You are already subscribed."
 msgstr ""
 
 #. Default: "(Required)"
-#: ./browser/macros.pt:57
+#: ../browser/macros.pt:56
 msgid "label_required"
 msgstr ""
 
-#: ./browser/crud.py:136
+#: ../browser/crud.py:136
 msgid "select"
 msgstr ""
 
 #. Default: "Required"
-#: ./browser/macros.pt:57
+#: ../browser/macros.pt:56
 msgid "title_required"
 msgstr ""
 
