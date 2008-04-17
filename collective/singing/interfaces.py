@@ -126,6 +126,11 @@ class IComposer(interface.Interface):
         return it.
         """
 
+    def render_forgot_secret(subscription):
+        """Given a subscription, I will create an IMessage that links
+        the user to his subscription page.
+        """
+
 class ISubscriptionLabel(interface.Interface):
     """Marker interface for field on IComposerSchema that labels a
     subscription.

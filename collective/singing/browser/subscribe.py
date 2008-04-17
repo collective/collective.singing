@@ -5,6 +5,7 @@ import zope.schema.vocabulary
 import zope.publisher.browser
 from zope.app.pagetemplate import viewpagetemplatefile
 import z3c.form.interfaces
+from z3c.form import button
 from z3c.form import field
 from z3c.form import form
 import z3c.form.browser.checkbox
@@ -61,6 +62,47 @@ class SubscribeStep(wizard.Step):
         errors = errors + sub_errors
         return data, errors
 
+    def _show_forgot_button(self):
+        btn = self.buttons['forgot']
+        form = self.request.form
+        button_name = '%s.buttons.%s' % (self.prefix, btn.__name__)
+        return (self.parent.status == self.parent.already_subscribed_message or
+                form.get(button_name) == btn.title)
+
+    @button.buttonAndHandler(
+        _('Send my subscription details'),
+        name='forgot',
+        condition=lambda form:form._show_forgot_button())
+    def handle_forgot(self, action):
+        data, errors = self.parent.extractData()
+        
+        if errors:
+            self.parent.status = form.EditForm.formErrorsMessage
+            return
+
+        comp_data = {}
+        for key, value in data.items():
+            name = key.split('.')[-1]
+            if key.startswith('composer.'):
+                comp_data[name] = value
+
+        secret = self.parent._secret(comp_data, self.request)
+        subs = self.context.subscriptions
+        subscriptions = subs.query(secret=secret)
+        if len(subscriptions) == 0:
+            self.status = _(u"Your subscription isn't known to us.")
+        else:
+            subscription = tuple(subscriptions)[0]
+            composer = self.context.composers[self.parent.format()]
+            msg = composer.render_forgot_secret(subscription)
+            status, status_msg = message.dispatch(msg)
+            if status != u'sent':
+                raise RuntimeError(
+                    "There was an error with sending your e-mail.  Please try "
+                    "again later.")
+            else:
+                self.parent.status = _(u"Thanks.  We sent you a message.")
+
 class CollectorDataForm(utils.OverridableTemplate, form.Form):
     """A subform for the collector specific data.
     """
@@ -87,6 +129,7 @@ class Subscribe(wizard.Wizard):
     success_message = _(
         u"Thanks for your subscription; "
         u"we sent you a message for confirmation.")
+    already_subscribed_message = _(u"You are already subscribed.")
 
     @property 
     def description(self):
@@ -129,7 +172,9 @@ class Subscribe(wizard.Wizard):
             subscription = self.context.subscriptions.add_subscription(
                 self.context, secret, comp_data, coll_data, metadata)
         except ValueError:
-            self.status = _(u"You are already subscribed.")
+            self.status = self.already_subscribed_message
+            self.finished = False
+            self.current_step.updateActions()
             return
 
         # Ask the composer to render a confirmation message

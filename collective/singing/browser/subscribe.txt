@@ -69,6 +69,14 @@ subscriptions (for the same format):
   ...         return Message(
   ...             u"This is a message to %s to confirm their subscription." %
   ...             (email,))
+  ... 
+  ...     def render_forgot_secret(self, subscription):
+  ...         email = subscription.composer_data['email']
+  ...         return Message(
+  ...             u"This is a message to %s to remind them." %
+  ...             (email,))
+
+
   >>> __builtins__['Composer'] = Composer # make persistable
 
 Note that our composer also implements ``IComposerBasedSecret``.  This
@@ -275,6 +283,25 @@ pending:
   {'date': datetime.datetime(...),
    'format': 'html',
    'pending': True}
+
+Forgot secret
+-------------
+
+If a user tries to subscribe with an existing e-mail address, they'll
+get an option to have their secret sent to them again:
+
+  >>> html = subscribe()
+  >>> "You are already subscribed" in html
+  True
+  >>> "Send my subscription details" in html
+  True
+  >>> del request.form['form.buttons.finish']
+  >>> request.form['composer.buttons.forgot'] = (
+  ...     u'Send my subscription details')
+  >>> html = subscribe()
+  This is your dispatcher speaking:  This is a message to daniel@testingunderground.com to remind them.
+  >>> "We sent you a message" in html
+  True
 
 Unsubscribe
 -----------
