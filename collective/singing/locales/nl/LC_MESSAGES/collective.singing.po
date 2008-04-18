@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "POT-Creation-Date: 2007-12-27 13:42+0000\n"
-"PO-Revision-Date: 2008-04-16 22:09+0200\n"
+"PO-Revision-Date: 2008-04-18 16:10+0100\n"
 "Last-Translator: Wim Boucquaert <wim@infrae.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -15,44 +15,126 @@ msgstr ""
 "Domain: collective.singing\n"
 "X-Is-Fallback-For: nl-be nl-nl\n"
 
-#: ./browser/subscribe.py:82
+#: ../browser/crud.py:252
+msgid "Add"
+msgstr "Toevoegen"
+
+#: ../browser/crud.py:194
+msgid "Apply changes"
+msgstr "Aanpassingen toepassen"
+
+#: ../interfaces.py:271
+msgid "Collector (what)"
+msgstr "Collector (wat)"
+
+#: ../scheduler.py:109
+msgid "Daily scheduler"
+msgstr "Dagelijkse planner"
+
+#: ../browser/crud.py:229
+msgid "Delete"
+msgstr "Verwijderen"
+
+#: ../interfaces.py:261
+msgid "Description"
+msgstr "Beschrijving"
+
+#: ../browser/crud.py:177
+msgid "Edit"
+msgstr "Bewerken"
+
+#: ../browser/subscribe.py:86
 msgid "Fill in the information below to subscribe."
 msgstr "Vul onderstaande informatie in om je in te schrijven."
 
-#: ./browser/subscribe.py:67
+#: ../browser/subscribe.py:69
 msgid "Filters"
 msgstr "Filter"
 
-#: ./browser/wizard.py:102
+#: ../browser/wizard.py:102
 msgid "Finish"
 msgstr "Afronden"
 
-#: ./browser/subscribe.py:37
+#: ../browser/subscribe.py:39
 msgid "Format"
 msgstr "Formaat"
 
-#: ./browser/wizard.py:26
+#: ../browser/wizard.py:26
 msgid "Information submitted successfully."
 msgstr "Informatie succesvol verzonden."
 
-#: ./browser/wizard.py:84
+#: ../browser/crud.py:270
+#, fuzzy
+msgid "Item added successfully."
+msgstr "Informatie succesvol verzonden."
+
+#: ../browser/crud.py:198
+msgid "No changes made."
+msgstr "Geen aanpassingen gemaakt."
+
+#: ../browser/crud.py:239
+msgid "Please select items to delete."
+msgstr "Gelieve items te selecteren om te vewijderen."
+
+#: ../browser/wizard.py:84
 msgid "Proceed"
 msgstr "Ga verder"
 
-#: ./browser/subscribe.py:83
+#: ../interfaces.py:265
+msgid "Scheduler (when)"
+msgstr "Planner (wanneeer)"
+
+#: ../browser/crud.py:197
+msgid "Some of your changes could not be applied."
+msgstr "Sommige van je aanpassingen konden niet toegepast worden."
+
+#: ../browser/crud.py:233
+msgid "Successfully deleted items."
+msgstr "Succesvol verwijderde items."
+
+#: ../browser/crud.py:196
+msgid "Successfully updated"
+msgstr "Succesvol bijgewerkt"
+
+#: ../browser/subscribe.py:87
 msgid "Thanks for your subscription; we sent you a message for confirmation."
 msgstr "Bedankt voor je inschrijving, je zal een e-mail bericht ontvangen ter bevestiging."
 
-#: ./browser/wizard.py:27
+#: ../interfaces.py:283
+msgid "The channel's subscriptions"
+msgstr "De kanaal inschrijvingen"
+
+#: ../browser/wizard.py:27
 msgid "There were errors."
 msgstr "Er traden fouten op."
 
+#: ../interfaces.py:257
+msgid "Title"
+msgstr "Titel"
+
+#: ../interfaces.py:253
+msgid "Unique identifier for this channel across the site."
+msgstr "Unieke indentifactor voor dit kanaal doorheen de site."
+
+#: ../scheduler.py:113
+msgid "Weekly scheduler"
+msgstr "Wekelijkse planner"
+
+#: ../browser/subscribe.py:132
+msgid "You are already subscribed."
+msgstr "Je bent reeds ingeschreven."
+
 #. Default: "(Required)"
-#: ./browser/wizard-step.pt:52
+#: ../browser/macros.pt:56
 msgid "label_required"
 msgstr "Verplicht"
 
+#: ../browser/crud.py:136
+msgid "select"
+msgstr "Selecteren"
+
 #. Default: "Required"
-#: ./browser/wizard-step.pt:52
+#: ../browser/macros.pt:56
 msgid "title_required"
 msgstr "Verplicht"
+
