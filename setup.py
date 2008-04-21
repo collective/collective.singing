@@ -25,13 +25,11 @@ setup(name='collective.singing',
       include_package_data=True,
       zip_safe=False,
 
-      # If the dependency to z3c.form gives you trouble within a Zope
-      # 2 environment, try the `fakezope2eggs` recipe
       install_requires=[
           'setuptools',
           'zope.app.catalog',
-          'z3c.form',
           'zc.queue',
+          'plone.z3cform',
       ],
       dependency_links=[
       ],

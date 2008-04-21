@@ -10,12 +10,12 @@
        tal:define="hidden python:widget.mode == 'hidden'"
        tal:omit-tag="hidden">
 
-    <metal:field use-macro="context/@@singing-macros/field" />
+    <metal:field use-macro="context/@@ploneform-macros/field" />
     
   </div>
 </tal:widgets>
 
-<metal:use use-macro="context/@@singing-macros/actions" />
+<metal:use use-macro="context/@@ploneform-macros/actions" />
 
 <tal:subforms define="subforms nocall:view/subforms"
               repeat="view subforms">
@@ -32,7 +32,7 @@
       Form title
     </div>
 </tal:out>         
-    <metal:use use-macro="context/@@singing-macros/fields" />
+    <metal:use use-macro="context/@@ploneform-macros/fields" />
   </div>
 
 </tal:subforms>
