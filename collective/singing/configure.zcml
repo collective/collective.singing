@@ -16,7 +16,6 @@
   <adapter factory=".subscribe.catalog_data" />
 
   <!-- Vocabularies stuff -->
-  <adapter factory=".vocabularies.SubscriptionTerm" />
   <utility component=".vocabularies.channel_vocabulary"
            name="collective.singing.vocabularies.ChannelVocabulary" />
   
