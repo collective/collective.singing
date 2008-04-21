@@ -307,7 +307,8 @@ class IFormatItem(interface.Interface):
         """Returns a unicode-string."""
 
 class ITransform(interface.Interface):
-    """Allows to rewrite links and the like.
+    """An adapter that allows to rewrite links and the like in
+    outgoing messages.
     """
     def __call__(text, subscription):
         """Return transformed text
