@@ -1,5 +1,10 @@
 collective.singing 0.2
  
+  - ITransform is now an adapter on the content being transformed
+    instead of a utility.  This allows us to use the content's URL
+    when rewriting links.
+    [tmog]
+
   - updated pot and danish translation
     [bartholdy]
     
