@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "POT-Creation-Date: 2007-12-27 13:42+0000\n"
-"PO-Revision-Date: 2008-04-18 16:10+0100\n"
+"PO-Revision-Date: 2008-04-21 21:24+0100\n"
 "Last-Translator: Wim Boucquaert <wim@infrae.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -15,126 +15,153 @@ msgstr ""
 "Domain: collective.singing\n"
 "X-Is-Fallback-For: nl-be nl-nl\n"
 
-#: ../browser/crud.py:252
+#: browser/crud.py:252
 msgid "Add"
 msgstr "Toevoegen"
 
-#: ../browser/crud.py:194
+#: browser/subscribe.py:217
+msgid "Address"
+msgstr "Adres"
+
+#: browser/crud.py:194
 msgid "Apply changes"
 msgstr "Aanpassingen toepassen"
 
-#: ../interfaces.py:271
+#: interfaces.py:276
 msgid "Collector (what)"
 msgstr "Collector (wat)"
 
-#: ../scheduler.py:109
+#: scheduler.py:108
 msgid "Daily scheduler"
 msgstr "Dagelijkse planner"
 
-#: ../browser/crud.py:229
+#: browser/crud.py:229
 msgid "Delete"
 msgstr "Verwijderen"
 
-#: ../interfaces.py:261
+#: interfaces.py:266
 msgid "Description"
 msgstr "Beschrijving"
 
-#: ../browser/crud.py:177
+#: browser/crud.py:177
 msgid "Edit"
 msgstr "Bewerken"
 
-#: ../browser/subscribe.py:86
+#: browser/subscribe.py:130
 msgid "Fill in the information below to subscribe."
 msgstr "Vul onderstaande informatie in om je in te schrijven."
 
-#: ../browser/subscribe.py:69
+#: browser/subscribe.py:113
 msgid "Filters"
 msgstr "Filter"
 
-#: ../browser/wizard.py:102
+#: browser/wizard.py:102
 msgid "Finish"
 msgstr "Afronden"
 
-#: ../browser/subscribe.py:39
+#: browser/subscribe.py:42
 msgid "Format"
 msgstr "Formaat"
 
-#: ../browser/wizard.py:26
+#: browser/wizard.py:26
 msgid "Information submitted successfully."
 msgstr "Informatie succesvol verzonden."
 
-#: ../browser/crud.py:270
-#, fuzzy
+#: browser/crud.py:270
 msgid "Item added successfully."
-msgstr "Informatie succesvol verzonden."
+msgstr "Item succesvol toegevoegd."
 
-#: ../browser/crud.py:198
+#: browser/crud.py:198
 msgid "No changes made."
 msgstr "Geen aanpassingen gemaakt."
 
-#: ../browser/crud.py:239
+#: browser/crud.py:239
 msgid "Please select items to delete."
 msgstr "Gelieve items te selecteren om te vewijderen."
 
-#: ../browser/wizard.py:84
+#: browser/wizard.py:84
 msgid "Proceed"
 msgstr "Ga verder"
 
-#: ../interfaces.py:265
+#: browser/subscribe.py:212
+msgid "Retrieve a link to your personalized subscription settings"
+msgstr "Een link ontvangen met je inschrijvings instellingen"
+
+#: interfaces.py:270
 msgid "Scheduler (when)"
 msgstr "Planner (wanneeer)"
 
-#: ../browser/crud.py:197
+#: browser/subscribe.py:222
+msgid "Send"
+msgstr "Verzenden"
+
+#: browser/subscribe.py:75
+msgid "Send my subscription details"
+msgstr "Verzend mijn inschrijvings details"
+
+#: browser/crud.py:197
 msgid "Some of your changes could not be applied."
 msgstr "Sommige van je aanpassingen konden niet toegepast worden."
 
-#: ../browser/crud.py:233
+#: browser/crud.py:233
 msgid "Successfully deleted items."
 msgstr "Succesvol verwijderde items."
 
-#: ../browser/crud.py:196
+#: browser/crud.py:196
 msgid "Successfully updated"
 msgstr "Succesvol bijgewerkt"
 
-#: ../browser/subscribe.py:87
+#: browser/subscribe.py:131
 msgid "Thanks for your subscription; we sent you a message for confirmation."
 msgstr "Bedankt voor je inschrijving, je zal een e-mail bericht ontvangen ter bevestiging."
 
-#: ../interfaces.py:283
+#: browser/subscribe.py:106
+msgid "Thanks.  We sent you a message."
+msgstr "Bedankt. We vezonden je een bericht."
+
+#: browser/subscribe.py:218
+msgid "The address you're already subscribed with"
+msgstr "Het adres waarmee je reeds ingeschreven bent"
+
+#: interfaces.py:288
 msgid "The channel's subscriptions"
 msgstr "De kanaal inschrijvingen"
 
-#: ../browser/wizard.py:27
+#: browser/wizard.py:27
 msgid "There were errors."
 msgstr "Er traden fouten op."
 
-#: ../interfaces.py:257
+#: interfaces.py:262
 msgid "Title"
 msgstr "Titel"
 
-#: ../interfaces.py:253
+#: interfaces.py:258
 msgid "Unique identifier for this channel across the site."
 msgstr "Unieke indentifactor voor dit kanaal doorheen de site."
 
-#: ../scheduler.py:113
+#: scheduler.py:112
 msgid "Weekly scheduler"
 msgstr "Wekelijkse planner"
 
-#: ../browser/subscribe.py:132
+#: browser/subscribe.py:134
 msgid "You are already subscribed."
 msgstr "Je bent reeds ingeschreven."
 
+#: browser/subscribe.py:95
+msgid "Your subscription isn't known to us."
+msgstr "Je inschrijving is onbekend bij ons."
+
 #. Default: "(Required)"
-#: ../browser/macros.pt:56
+#: browser/macros.pt:56
 msgid "label_required"
 msgstr "Verplicht"
 
-#: ../browser/crud.py:136
+#: browser/crud.py:136
 msgid "select"
 msgstr "Selecteren"
 
 #. Default: "Required"
-#: ../browser/macros.pt:56
+#: browser/macros.pt:56
 msgid "title_required"
 msgstr "Verplicht"
 
