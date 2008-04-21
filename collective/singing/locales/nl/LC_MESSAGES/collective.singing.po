@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "POT-Creation-Date: 2007-12-27 13:42+0000\n"
-"PO-Revision-Date: 2008-04-21 21:59+0100\n"
+"PO-Revision-Date: 2008-04-21 22:05+0100\n"
 "Last-Translator: Wim Boucquaert <wim@infrae.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -22,7 +22,7 @@ msgstr "Bedankt. We verzonden je een bericht."
 
 #: /browser/subscribe.py:113
 msgid "Filters"
-msgstr "Filter"
+msgstr "Filters"
 
 #: /browser/subscribe.py:130
 msgid "Fill in the information below to subscribe."
