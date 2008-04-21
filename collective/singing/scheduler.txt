@@ -170,33 +170,50 @@ rendered:
   Collecting items for <Subscription 'daniel'> with cue 'somecue'
   0
 
-We can register an ``ITransform`` utility to rewrite text that's sent
+We can register an ``ITransform`` adapter to rewrite text that's sent
 out:
 
   >>> from zope import interface
   >>> class SimpleTransform(object):
-  ...     interface.implements(interfaces.ITransform)
-  ... 
-  ...     def __init__(self, sub, stitue):
+  ...     def __init__(self, context, sub, stitute):
+  ...         self.context = context
   ...         self.sub = sub
-  ...         self.stitute = stitue
+  ...         self.stitute = stitute
   ... 
-  ...     def __call__(self, text, subscription):
+  ...     def __call__(self, text, sub):
   ...         return text.replace(self.sub, self.stitute)
-
+  >>> 
+  >>> @interface.implementer(interfaces.ITransform)
+  ... @component.adapter(str)
+  ... def simple_transform(context):
+  ...     return SimpleTransform(context=context, sub=u'life', stitute=u'Grappa')
+  >>> component.provideAdapter(simple_transform, name=u'simple_transform')
   >>> channel.collector.items = ('We', 'love', 'life')
-  >>> component.provideUtility(SimpleTransform(u'life', u'Grappa'))
   >>> scheduler.assemble_messages(channel, request)
   Collecting items for <Subscription 'daniel'> with cue 'somecue'
   Rendering message with (u'We', u'love', u'Grappa', u'for', u"<Subscription 'daniel'>") for <Subscription 'daniel'>
   1
+
+We can have more than one transform, but we cannot depend on the order they are applied in:
+
+  >>> @interface.implementer(interfaces.ITransform)
+  ... @component.adapter(str)
+  ... def other_simple_transform(context):
+  ...     return SimpleTransform(context=context, sub=u'We', stitute=u'Frogs')
+  >>> component.provideAdapter(other_simple_transform, name=u'other_simple_transform')	     
+  >>> channel.collector.items = ('We', 'love', 'life')     
+  >>> scheduler.assemble_messages(channel, request)
+  Collecting items for <Subscription 'daniel'> with cue 'somecue'
+  Rendering message with (u'Frogs', u'love', u'Grappa', u'for', u"<Subscription 'daniel'>") for <Subscription 'daniel'>
+  1
+
 
 We can supply our own items to assemble_messages:
 
   >>> items = ('Vincenzo', 'likes', 'life', 'and', 'singing')
   >>> scheduler.assemble_messages(channel, request, items)
   Collecting items for <Subscription 'daniel'> with cue 'somecue'
-  Rendering message with (u'Vincenzo', u'likes', u'Grappa', u'and', u'singing', u'We', u'love', u'Grappa', u'for', u"<Subscription 'daniel'>") for <Subscription 'daniel'>
+  Rendering message with (u'Vincenzo', u'likes', u'Grappa', u'and', u'singing', u'Frogs', u'love', u'Grappa', u'for', u"<Subscription 'daniel'>") for <Subscription 'daniel'>
   1
 
 ... and choose not to include the collector items:
