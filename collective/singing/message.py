@@ -1,6 +1,7 @@
 import datetime
 import traceback
 
+import transaction
 import persistent.dict
 from BTrees.Length import Length
 from ZODB.POSException import ConflictError
@@ -80,8 +81,7 @@ class MessageQueues(persistent.dict.PersistentDict):
             while True:
                 try:
                     message = queue.pull()
-                    # XXX: I think we shold commit immediately after we
-                    # pull from the queue.
+                    transaction.commit()
                 except IndexError:
                     break
                 else:

@@ -1,5 +1,8 @@
 collective.singing 0.2
  
+  - Commit after pulling a message from the queue.
+    [nouri]
+
   - ITransform is now an adapter on the content being transformed
     instead of a utility.  This allows us to use the content's URL
     when rewriting links.

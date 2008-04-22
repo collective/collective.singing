@@ -1,18 +1,8 @@
 import unittest
 from zope.testing import doctest
 from zope.component import testing
-from zope import component
-from zope import interface
 
 from collective.singing import subscribe
-
-def create_eventlog(event=interface.Interface):
-    value = []
-    @component.adapter(event)
-    def log(event):
-        value.append(event)
-    component.provideHandler(log)
-    return value
 
 count = 0
 root = None
