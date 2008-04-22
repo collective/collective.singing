@@ -1,6 +1,6 @@
 msgid ""
 msgstr ""
-"POT-Creation-Date: Mon Apr 21 21:41:58 2008\n"
+"POT-Creation-Date: Tue Apr 22 23:38:56 2008\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: Silva i18n team <walco@infrae.com>\n"
