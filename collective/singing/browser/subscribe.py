@@ -69,7 +69,7 @@ class SubscribeStep(wizard.Step):
         form = self.request.form
         button_name = '%s.buttons.%s' % (self.prefix, btn.__name__)
         return (self.parent.status == self.parent.already_subscribed_message or
-                form.get(button_name) == btn.title)
+                form.get(button_name))
 
     @button.buttonAndHandler(
         _('Send my subscription details'),
@@ -77,7 +77,6 @@ class SubscribeStep(wizard.Step):
         condition=lambda form:form._show_forgot_button())
     def handle_forgot(self, action):
         data, errors = self.parent.extractData()
-        
         if errors:
             self.parent.status = form.EditForm.formErrorsMessage
             return
