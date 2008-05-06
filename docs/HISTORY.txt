@@ -1,21 +1,28 @@
-collective.singing 0.2
- 
-  - Commit after pulling a message from the queue.
-    [nouri]
+History
+=======
 
-  - ITransform is now an adapter on the content being transformed
-    instead of a utility.  This allows us to use the content's URL
-    when rewriting links.
-    [tmog]
+Version 0.3
+-----------
 
-  - updated pot and danish translation
-    [bartholdy]
-    
-  - Add button to subscribe form to "Send my subscription details",
-    for when subscribers forgot their secret.
-    [nouri]
+Version 0.2
+-----------
 
-  - Cleaned up a bit in a few templates. Needed to structure
-    view/Desvription in wizard. Got rid of annoying label filters in
-    wizard-step.
-    [bartholdy]
+- Commit after pulling a message from the queue.
+  [nouri]
+
+- ITransform is now an adapter on the content being transformed
+  instead of a utility.  This allows us to use the content's URL
+  when rewriting links.
+  [tmog]
+
+- updated pot and danish translation
+  [bartholdy]
+
+- Add button to subscribe form to "Send my subscription details",
+  for when subscribers forgot their secret.
+  [nouri]
+
+- Cleaned up a bit in a few templates. Needed to structure
+  view/Desvription in wizard. Got rid of annoying label filters in
+  wizard-step.
+  [bartholdy]
