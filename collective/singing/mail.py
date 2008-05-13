@@ -1,12 +1,14 @@
-import email.Message
-import email.Parser
 import formatter
 import htmllib
-import mimetools
-import MimeWriter
 import quopri
 import StringIO
 import traceback
+import email 
+
+from email.Header import Header
+from email.MIMEMultipart import MIMEMultipart
+from email.MIMEText import MIMEText
+from email.Utils import formatdate
 
 from zope import interface
 from zope import component
@@ -14,22 +16,10 @@ import zope.sendmail.interfaces
 
 from collective.singing import interfaces
 
-def header(text, encoding):
-    assert isinstance(text, unicode)
-    
-    try:
-        return text.encode()
-    except UnicodeEncodeError:
-        encoded_subj = quopri.encodestring(
-            text.encode(encoding), header=True)
-        return '=?%s?Q?%s?=' % (encoding.upper(), encoded_subj)
-
 def create_html_mail(subject, html, text=None, from_addr=None, to_addr=None,
                      encoding='UTF-8'):
     """Create a mime-message that will render HTML in popular
     MUAs, text in better ones.
-
-    Ripped from http://aspn.activestate.com/ASPN/Cookbook/Python/Recipe/67083
     """
     html = html.encode(encoding)
     if text is None:
@@ -45,48 +35,23 @@ def create_html_mail(subject, html, text=None, from_addr=None, to_addr=None,
     else:
         text = text.encode(encoding)
         
-    out = StringIO.StringIO() # output buffer for our message
-    htmlin = StringIO.StringIO(html) # input buffer for the HTML
-    txtin = StringIO.StringIO(text) # input buffer for the plain text
-    writer = MimeWriter.MimeWriter(out)
+    # if we would like to include images in future, there should 
+    # probably be 'related' instead of 'mixed'
+    msg = MIMEMultipart('mixed')
+    # maybe later :)  msg['From'] = Header("%s <%s>" % (send_from_name, send_from), encoding)
+    msg['Subject'] = Header(subject, encoding)
+    msg['From'] = from_addr
+    msg['To'] = to_addr
+    msg['Date'] = formatdate(localtime=True)
+    msg["Message-ID"]=email.Utils.make_msgid()
+    msg.preamble = 'This is a multi-part message in MIME format.'
 
-    # Set up some basic headers.  Place subject here because
-    # smtplib.sendmail expects it to be in the message, as relevant
-    # RFCs prescribe.
-    writer.addheader("Subject", header(subject, encoding))
-    writer.addheader("MIME-Version", "1.0")
-    if from_addr:
-        writer.addheader("From", from_addr)
-    if to_addr:
-        writer.addheader("To", to_addr)
+    alternatives = MIMEMultipart('alternative')
+    msg.attach(alternatives)
+    alternatives.attach( MIMEText(text, 'plain', _charset=encoding) )
+    alternatives.attach( MIMEText(html, 'html',  _charset=encoding) )
 
-    # Start the multipart section of the message.
-    # Multipart/alternative seems to work better on some MUAs than
-    # multipart/mixed.
-    writer.startmultipartbody("alternative")
-    writer.flushheaders()
-
-    # Make plain text section quoted-printable
-    subpart = writer.nextpart()
-    subpart.addheader("Content-Transfer-Encoding", "quoted-printable")
-    pout = subpart.startbody("text/plain", [("charset", encoding)])
-    mimetools.encode(txtin, pout, 'quoted-printable')
-    txtin.close()
-
-    # The HTML subpart is quoted-printable, too
-    subpart = writer.nextpart()
-    subpart.addheader("Content-Transfer-Encoding", "quoted-printable")
-    pout = subpart.startbody("text/html", [("charset", encoding)])
-    mimetools.encode(htmlin, pout, 'quoted-printable')
-    htmlin.close()
-
-    # You're done; close your writer and return the message as a string
-    writer.lastpart()
-    msg = out.getvalue().encode()
-    out.close()
-
-    parser = email.Parser.Parser()
-    return parser.parsestr(msg)
+    return msg
 
 class Dispatch(object):
     """An IDispatcher registered for ``email.message.Message`` that'll

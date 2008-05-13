@@ -4,6 +4,10 @@ History
 Version 0.3
 -----------
 
+- Use email.Header module for message header formatting
+  Refactored mail.py to create messages MIMEMultipart based
+  [naro]
+  
 - added Czech translation
   [naro]
   
