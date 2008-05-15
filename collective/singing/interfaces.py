@@ -220,6 +220,10 @@ class ISubscriptions(interface.Interface):
 
     Allows for adding, removing, and querying subscriptions.
     """
+    def values():
+        """Iterate over all subscription objects.
+        """
+
     def add_subscription(
         channel, secret, composer_data, collector_data, metadata):
         """Add a subscription and return it.
