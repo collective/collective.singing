@@ -54,17 +54,19 @@ def render_message(channel, request, sub, items, use_collector):
         # items list:
         collector_items = ()
 
-    final_items = tuple(items) + tuple(collector_items)
+    formatted_items = tuple(items) + tuple(collector_items)
         
     # First format all items...
     format = subscription_metadata['format']
-    final_items = [(getIFormatAdapter(item, request, format)(), item) for item in final_items]
+    formatted_items = [(getIFormatAdapter(item, request, format)(), item)
+                       for item in formatted_items]
 
     # ... then transform them ...
     transformed_items = []
             
-    for formatted_item, item in final_items:
-        for name, transform in component.getAdapters((item,), interfaces.ITransform):
+    for formatted_item, item in formatted_items:
+        for name, transform in component.getAdapters(
+            (item,), interfaces.ITransform):
             formatted_item = transform(formatted_item, sub)
         transformed_items.append(formatted_item)
 
