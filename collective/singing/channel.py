@@ -16,3 +16,10 @@ def channel_lookup():
 
     return channels
 
+def lookup(name):
+    for channel in channel_lookup():
+        if channel.name == name:
+            return channel
+
+    raise ValueError('Unable to lookup channel with name "%s".' % name)
+
