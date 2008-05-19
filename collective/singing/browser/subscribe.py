@@ -18,6 +18,7 @@ from collective.singing import MessageFactory as _
 from collective.singing import message
 from collective.singing.browser import utils
 from collective.singing.browser import wizard
+from collective.singing.channel import channel_lookup
 
 class Terms(zope.schema.vocabulary.SimpleVocabulary):
     zope.interface.implements(z3c.form.interfaces.ITerms)
@@ -226,7 +227,7 @@ class ForgotSecret(utils.OverridableTemplate, form.Form):
             return
 
         address = data['address']
-        for channel in component.getUtility(interfaces.IChannelLookup)():
+        for channel in channel_lookup():
             subscriptions = channel.subscriptions.query(key=address)
             if len(subscriptions):
                 subscription = tuple(subscriptions)[0]

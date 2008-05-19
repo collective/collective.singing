@@ -4,10 +4,11 @@ import zope.schema.interfaces
 import zope.schema.vocabulary
 
 from collective.singing import interfaces
+from collective.singing.channel import channel_lookup
 
 def channel_vocabulary(context):
     terms = []
-    for channel in component.getUtility(interfaces.IChannelLookup)():
+    for channel in channel_lookup():
         terms.append(
             zope.schema.vocabulary.SimpleTerm(
                 value=channel,
