@@ -4,6 +4,10 @@ History
 Version 0.3
 -----------
 
+- Use zc.lockfile instead of the excessive use of transaction.commit()
+  to lock the queue processing.
+  [nouri]
+
 - Use email.Header module for message header formatting
   Refactored mail.py to create messages MIMEMultipart based
   [naro]

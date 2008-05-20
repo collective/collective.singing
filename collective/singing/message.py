@@ -1,4 +1,5 @@
 import datetime
+import logging
 import traceback
 
 import transaction
@@ -11,8 +12,32 @@ import zope.interface.common.mapping
 import zope.lifecycleevent
 
 import zc.queue.interfaces
+import zc.lockfile
 
 from collective.singing import interfaces
+
+logger = logging.getLogger('collective.singing')
+
+def lock(locked_fun=None):
+    def lock_wrapper(fun):
+        def _lock(*args, **kwargs):
+            try:
+                lock = zc.lockfile.LockFile(
+                    'collective.singing.message.lock:%s' % fun.__name__)
+            except zc.lockfile.LockError:
+                logger.info(
+                    "Did not process %r because it's locked." % fun.__name__)
+                if locked_fun is not None:
+                    return locked_fun(*args, **kwargs)
+                else:
+                    raise
+
+            try:
+                return fun(*args, **kwargs)
+            finally:
+                lock.close()
+        return _lock
+    return lock_wrapper
 
 def dispatch(message):
     dispatcher = interfaces.IDispatch(message.payload)
@@ -72,6 +97,7 @@ class MessageQueues(persistent.dict.PersistentDict):
     def messages_sent(self):
         return self._messages_sent()
 
+    @lock(locked_fun=lambda self: (0,0))
     def dispatch(self):
         sent = 0
         failed = 0
@@ -81,7 +107,6 @@ class MessageQueues(persistent.dict.PersistentDict):
             while True:
                 try:
                     message = queue.pull()
-                    transaction.commit()
                 except IndexError:
                     break
                 else:

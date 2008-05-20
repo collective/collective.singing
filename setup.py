@@ -29,6 +29,7 @@ setup(name='collective.singing',
           'setuptools',
           'zope.app.catalog',
           'zc.queue',
+          'zc.lockfile',
           'plone.z3cform',
       ],
       dependency_links=[
