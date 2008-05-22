@@ -114,4 +114,11 @@ class WeeklyScheduler(persistent.Persistent, AbstractPeriodicScheduler):
     title = _(u"Weekly scheduler")
     delta = datetime.timedelta(weeks=1)
 
-schedulers = (WeeklyScheduler, DailyScheduler)
+class ManualScheduler(persistent.Persistent, AbstractPeriodicScheduler):
+    title = _(u"Manual scheduler")
+    delta = datetime.timedelta()
+
+    def tick(self, channel, request):
+        pass
+        
+schedulers = (WeeklyScheduler, DailyScheduler, ManualScheduler)

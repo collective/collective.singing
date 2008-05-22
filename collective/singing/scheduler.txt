@@ -11,7 +11,9 @@ implementations:
   True
   >>> verify.verifyClass(interfaces.IScheduler, scheduler.WeeklyScheduler)
   True
-
+  >>> verify.verifyClass(interfaces.IScheduler, scheduler.ManualScheduler)
+  True
+  
 Schedulers have an overwritten ``__eq__`` special method for comparison:
 
   >>> scheduler.DailyScheduler() == scheduler.DailyScheduler()
