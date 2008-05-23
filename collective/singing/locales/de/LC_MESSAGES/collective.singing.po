@@ -65,7 +65,7 @@ msgstr "Ihre Anmeldung konnte nicht gefunden werden."
 
 #: /browser/wizard.py:102
 msgid "Finish"
-msgstr "Fertig"
+msgstr "Ok"
 
 #: /browser/wizard.py:26
 msgid "Information submitted successfully."
