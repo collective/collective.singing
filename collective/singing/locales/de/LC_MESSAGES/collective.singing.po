@@ -56,7 +56,7 @@ msgstr ""
 
 #: /browser/subscribe.py:75
 msgid "Send my subscription details"
-msgstr ""
+msgstr "Abonnementdetails zusenden"
 
 #: /browser/subscribe.py:95
 #: /browser/subscribe.py:244
