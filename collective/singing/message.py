@@ -1,5 +1,7 @@
 import datetime
 import logging
+import os
+import tempfile
 import traceback
 
 import transaction
@@ -17,6 +19,9 @@ import zc.lockfile
 from collective.singing import interfaces
 
 logger = logging.getLogger('collective.singing')
+
+LOCKFILE_NAME = os.path.join(tempfile.gettempdir(),
+                             'collective.singing.message.lock')
 
 def dispatch(message):
     dispatcher = interfaces.IDispatch(message.payload)
@@ -78,8 +83,7 @@ class MessageQueues(persistent.dict.PersistentDict):
 
     def dispatch(self):
         try:
-            lock = zc.lockfile.LockFile(
-                'collective.singing.message.dispatchlock')
+            lock = zc.lockfile.LockFile(LOCKFILE_NAME)
         except zc.lockfile.LockError:
             logger.info("Dispatching is locked by another process.")
             return (0, 0)
