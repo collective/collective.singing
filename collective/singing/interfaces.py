@@ -21,6 +21,12 @@ class ICollector(interface.Interface):
         title=u"Subscriber optional",
         )
 
+    significant = schema.Bool(
+        title=u"Significant",
+        description=(u"Include items from this collector even if there are no "
+                     "no items returned by significant siblings.")
+        )
+
     schema = schema.Object(
         title=u"A schema instance for use in the subscription form",
         description=u"Values are stored via the ICollectorData adapter per "
