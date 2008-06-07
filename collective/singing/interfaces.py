@@ -362,3 +362,7 @@ class IDynamicVocabularyCollection(zope.schema.interfaces.ICollection):
 
     (XXX: Mabye this should go into the browser package?)
     """
+
+class ICollectorSchema(interface.Interface):
+    """An adapter from subscription to the collector data.
+    """
