@@ -226,7 +226,7 @@ class ForgotSecret(utils.OverridableTemplate, form.Form):
             self.status = form.EditForm.formErrorsMessage
             return
 
-        address = data['address']
+        address = data['address'].lower()
         for channel in channel_lookup():
             subscriptions = channel.subscriptions.query(key=address)
             if len(subscriptions):
