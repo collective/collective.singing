@@ -16,9 +16,8 @@ There's two methods that you need to override when subclassing from
 correspond to the set of choices made by the user.  These choices are
 passed as an argument to the method.  The other argument to the method
 is the ``cue``.  You must not return data that is older than the
-``cue``.  In this implementation, the ``cue`` is of type
-``dateTime.dateTime``.  We'll make a simple implementation that looks
-up items from a simple dictionary:
+``cue``.  We'll make a simple implementation that looks up items from
+a simple dictionary:
 
   >>> avail_items = {'female': ['Wilma', 'Betty'], 'male': ['Fred', 'Barney']}
   >>> def get_items_for_selection(self, cue, data):
