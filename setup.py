@@ -6,6 +6,9 @@ setup(name='collective.singing',
       version=version,
       description="A Zope library for sending notifications and newsletters",
       long_description="""\
+You can find the development version of collective.singing in the
+`Subversion repository
+<http://svn.plone.org/svn/collective/collective.singing/trunk#egg=collective.singing-dev>`_.
 """,
 
       classifiers=[
