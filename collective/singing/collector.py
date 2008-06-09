@@ -33,10 +33,6 @@ class SubjectsCollectorBase(persistent.Persistent):
         super(SubjectsCollectorBase, self).__init__()
 
     @property
-    def Title(self):
-        return self.title
-
-    @property
     def schema(self):
         vocabulary = self._vocabulary()
         field = schema.Set(
