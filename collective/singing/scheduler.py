@@ -1,6 +1,7 @@
 import datetime
 
 import persistent
+import persistent.list
 from zope import interface
 from zope import component
 
@@ -78,7 +79,8 @@ def render_message(channel, request, sub, items, use_collector):
 def assemble_messages(channel, request, items=(), use_collector=True):
     queued_messages = 0
     for subscription in channel.subscriptions.values():
-        message = render_message(channel, request, subscription, items, use_collector)
+        message = render_message(
+            channel, request, subscription, items, use_collector)
         if message is not None:
             queued_messages +=1
     return queued_messages
@@ -120,5 +122,38 @@ class ManualScheduler(persistent.Persistent, AbstractPeriodicScheduler):
 
     def tick(self, channel, request):
         pass
-        
-schedulers = (WeeklyScheduler, DailyScheduler, ManualScheduler)
+
+class TimedScheduler(persistent.Persistent, AbstractPeriodicScheduler):
+    title = _(u"Timed scheduler")
+    active = True
+    triggered_last = datetime.datetime(1970, 1, 1)
+
+    def __init__(self):
+        super(TimedScheduler, self).__init__()
+        self.items = persistent.list.PersistentList()
+
+    def tick(self, channel, request):
+        return self.trigger(channel, request, manual=False)
+
+    def trigger(self, channel, request, manual=True):
+        count = 0
+        now = datetime.datetime.now()
+        if self.active or manual:
+            self.triggered_last = now
+            for when, content in tuple(self.items):
+                if manual or when < now:
+                    self.items.remove((when, content))
+                    if content is not None:
+                        count += assemble_messages(
+                            channel, request, (content(),))
+                    else:
+                        count += assemble_messages(channel, request)
+        return count
+
+    def __eq__(self, other):
+        return isinstance(other, TimedScheduler)
+
+    def __ne__(self, other):
+        return not self == other
+
+schedulers = (WeeklyScheduler, DailyScheduler, ManualScheduler, TimedScheduler)

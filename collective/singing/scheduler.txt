@@ -1,6 +1,9 @@
 Scheduler
 =========
 
+IScheduler implementations
+--------------------------
+
 The ``scheduler`` module defines a couple of ``IScheduler``
 implementations:
 
@@ -61,6 +64,65 @@ go off:
   Traceback (innermost last):
   ...
   AttributeError: ...
+
+The ``ManualScheduler`` can be programmed to send out items on a
+certain date.  For this, it holds a list of tuples of the form
+``(datetime.datetime, weak reference)``, where the datetime object
+specifies when to send the item out, and the weak reference is an
+optional callable that'll be passed to the ``assemble_messages``
+function for inclusion in the send-out:
+
+  >>> timed = scheduler.TimedScheduler()
+  >>> timed.items.append((datetime.datetime.now(), None))
+
+Let's patch the ``assemble_messages`` function to see what happens:
+
+  >>> def assemble_messages(channel, request, items=(), use_collector=True):
+  ...     print "Sending out %r." % (items,)
+  ...     return 1
+  >>> save_assemble_messages = scheduler.assemble_messages
+  >>> scheduler.assemble_messages = assemble_messages
+
+  >>> timed.tick(None, request)
+  Sending out ().
+  1
+
+This emptied the list of scheduled send-outs.  We won't be sending out
+something a second time:
+
+  >>> timed.tick(None, request)
+  0
+  >>> timed.items
+  []
+
+Let's add another item for now, with a content reference, and one for
+in the future.  We expect the items scheduled for later to stay in the
+queue:
+
+  >>> timed.items.append((datetime.datetime.now(), lambda: u'Hello'))
+  >>> timed.items.append(
+  ...     (datetime.datetime.now() + datetime.timedelta(days=1), None))
+  >>> timed.tick(None, request)
+  Sending out (u'Hello',).
+  1
+  >>> timed.tick(None, request)
+  0
+  >>> timed.items # doctest: +ELLIPSIS
+  [(datetime.datetime(...), None)]
+
+In contrast to the ``tick`` function, the manual ``trigger`` won't
+look at the date, and just send:
+
+  >>> timed.trigger(None, request)
+  Sending out ().
+  1
+  >>> timed.items
+  []
+
+  >>> scheduler.assemble_messages = save_assemble_messages
+
+assemble_messages
+-----------------
 
 ``assemble_messages`` takes an ``IChannel`` as its first argument;
 it'll look up the channel's collector (if any) and the composer and

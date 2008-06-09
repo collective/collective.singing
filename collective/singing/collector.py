@@ -7,6 +7,12 @@ import zope.interface.interface
 import collective.singing.interfaces
 from collective.singing import MessageFactory as _
 
+class ISubjectsCollectorBase(collective.singing.interfaces.ICollector):
+    pass
+
+class IFilteredSubjectsCollectorBase(collective.singing.interfaces.ICollector):
+    pass
+
 class SubjectsCollectorBase(persistent.Persistent):
     """A template class that allows you to create a simple collector
     that presents one field with a vocabulary to the user.
@@ -14,7 +20,9 @@ class SubjectsCollectorBase(persistent.Persistent):
     You can provide the vocabulary and the title of the field by
     overriding methods and attributes.
     """
-    interface.implements(collective.singing.interfaces.ICollector)
+    interface.implements(ISubjectsCollectorBase)
+
+    title = _(u"Subjects collector")
 
     field_name = 'subjects'
     field_title = _(u"Subjects")
@@ -73,6 +81,8 @@ class SubjectsCollectorBase(persistent.Persistent):
         raise NotImplementedError()
 
 class FilteredSubjectsCollectorBase(SubjectsCollectorBase):
+    interface.implements(IFilteredSubjectsCollectorBase)
+
     filtered_items = None
 
     def _vocabulary(self):
