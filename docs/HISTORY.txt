@@ -4,6 +4,9 @@ History
 Version 0.4
 -----------
 
+- Added Polish translation by Barbara Struk
+  [naro]
+
 Version 0.3
 -----------
 
