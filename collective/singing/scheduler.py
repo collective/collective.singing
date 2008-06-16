@@ -55,26 +55,25 @@ def render_message(channel, request, sub, items, use_collector):
         # items list:
         collector_items = ()
 
-    formatted_items = tuple(items) + tuple(collector_items)
-        
+    raw_items = tuple(items) + tuple(collector_items)
+
     # First format all items...
     format = subscription_metadata['format']
-    formatted_items = [(getIFormatAdapter(item, request, format)(), item)
-                       for item in formatted_items]
+    formatted_items = [getIFormatAdapter(item, request, format)()
+                       for item in raw_items]
 
     # ... then transform them ...
     transformed_items = []
-            
-    for formatted_item, item in formatted_items:
+    for formatted_item, raw_item in zip(formatted_items, raw_items):
         for name, transform in component.getAdapters(
-            (item,), interfaces.ITransform):
+            (raw_item,), interfaces.ITransform):
             formatted_item = transform(formatted_item, sub)
         transformed_items.append(formatted_item)
 
     # ... and finally render using the right composer. Note
     # that the message is already queued when we render it.
     composer = composers[format]
-    return composer.render(sub, transformed_items)
+    return composer.render(sub, zip(transformed_items, raw_items))
 
 def assemble_messages(channel, request, items=(), use_collector=True):
     queued_messages = 0

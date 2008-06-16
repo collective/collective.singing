@@ -72,6 +72,16 @@ class IComposer(interface.Interface):
     def render(subscription, items=()):
         """Given a subscription and a list of items, I will create an
         IMessage and return it.
+
+        The ``items`` argument is a list of 2-tuples of the form
+        ``(formatted, original)``, where ``original`` is the item as
+        it was retrieved from the collector, and ``formatted`` is the
+        result of running the item through all applicable formatters
+        and transforms.  Making use of the ``original`` item will
+        obviously bind the implementation of the composer to that of
+        the collector.  However, it's considered useful for custom
+        implementations that need total control and that know what
+        collector they'll be using.
         """
 
     def render_confirmation(subscription):
