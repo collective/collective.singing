@@ -74,7 +74,7 @@ class MessageQueues(persistent.dict.PersistentDict):
     def __init__(self, *args, **kwargs):
         super(MessageQueues, self).__init__(*args, **kwargs)
         for status in interfaces.MESSAGE_STATES:
-            self[status] = zc.queue.Queue()
+            self[status] = zc.queue.CompositeQueue()
         self._messages_sent = Length()
 
     @property
