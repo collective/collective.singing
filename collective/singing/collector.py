@@ -33,6 +33,22 @@ class SubjectsCollectorBase(persistent.Persistent):
         super(SubjectsCollectorBase, self).__init__()
 
     @property
+    def full_schema(self):
+        vocabulary = self.vocabulary()
+        field = schema.Set(
+            __name__=self.field_name,
+            title=self.field_title,
+            value_type=schema.Choice(vocabulary=vocabulary))
+
+        interface.directlyProvides(
+            field, collective.singing.interfaces.IDynamicVocabularyCollection)
+
+        return zope.interface.interface.InterfaceClass(
+            'Schema',
+            bases=(collective.singing.interfaces.ICollectorSchema,),
+            attrs={field.__name__: field})
+
+    @property
     def schema(self):
         vocabulary = self._vocabulary()
         field = schema.Set(
