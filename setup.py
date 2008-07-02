@@ -1,6 +1,6 @@
 from setuptools import setup, find_packages
 
-version = '0.4'
+version = '0.4b3'
 
 setup(name='collective.singing',
       version=version,
