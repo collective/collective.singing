@@ -210,7 +210,10 @@ class ForgotSecret(utils.OverridableTemplate, form.Form):
     index = viewpagetemplatefile.ViewPageTemplateFile('form.pt')
 
     label = _(u"Retrieve a link to your personalized subscription settings")
-
+    
+    successMessage = _(u"Thanks.  We sent you a message.")
+    notKnownMessage = _(u"Your subscription isn't known to us.")
+    
     fields = field.Fields(
         schema.TextLine(
             __name__='address',
@@ -238,7 +241,7 @@ class ForgotSecret(utils.OverridableTemplate, form.Form):
                     raise RuntimeError(
                         "There was an error with sending your e-mail.  Please "
                         "try again later.")
-                self.status = _(u"Thanks.  We sent you a message.")
+                self.status = self.successMessage
                 break
         else:
-            self.status = _(u"Your subscription isn't known to us.")
+            self.status = self.notKnownMessage
