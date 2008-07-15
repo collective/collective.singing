@@ -102,3 +102,18 @@ it:
   1
   >>> tuple(subscriptions.query(key='daniel@localhost'))[0] is subscription
   True
+
+Fulltext indexes all composer_data.
+  
+  >>> len(subscriptions.query(fulltext=u'daniel@redhotcar'))
+  0
+  >>> len(subscriptions.query(fulltext='daniel@localhost'))
+  1
+
+And allows searching on substrings:
+
+  >>> len(subscriptions.query(fulltext='@localhost'))
+  1
+  >>> len(subscriptions.query(fulltext='*@localhost*'))
+  1
+
