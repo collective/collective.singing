@@ -33,7 +33,7 @@ You can find the development version of collective.singing in the
           'zope.app.catalog',
           'zc.queue',
           'zc.lockfile',
-          'plone.z3cform>=0.2,<0.3dev',
+          'plone.z3cform>=0.3dev',
       ],
       dependency_links=[
       ],
