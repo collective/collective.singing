@@ -1,6 +1,6 @@
 from setuptools import setup, find_packages
 
-version = '0.4b3'
+version = '0.5.0'
 
 setup(name='collective.singing',
       version=version,
@@ -33,7 +33,7 @@ You can find the development version of collective.singing in the
           'zope.app.catalog',
           'zc.queue',
           'zc.lockfile',
-          'plone.z3cform',
+          'plone.z3cform>=0.2,<0.3dev',
       ],
       dependency_links=[
       ],

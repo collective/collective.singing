@@ -1,8 +1,29 @@
 History
 =======
 
-Version 0.4
------------
+Version 0.5.0 - unreleased
+--------------------------
+
+Version 0.4 - 2008-07-23
+------------------------
+
+- Added optional checking for channel attr 'subscribeable' to
+  channel_lookup. Subscription validaton and the subscribe portlet use
+  this feature.
+  [tmog]
+
+- Bringing versioning in line with
+  http://peak.telecommunity.com/DevCenter/setuptools
+  [stonor]
+
+- Added full_schema used on the edit page for Filtered Collectors. Now
+  we can re-edit these ;-)
+  [tmog]
+
+- Make call of MessageQueues.flush() more flexible to get a handy
+  method to flush also new messages. this doesnt change any current
+  behaviour.
+  [jensens]
 
 - Added Polish translation by Barbara Struk
   [naro]
