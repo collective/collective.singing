@@ -98,7 +98,7 @@ class FilteredSubjectsCollectorBase(SubjectsCollectorBase):
     filtered_items = []
 
     def _vocabulary(self):
-        if self.filtered_items is not self.__class__.filtered_items:
+        if self.filtered_items:
             return zope.schema.vocabulary.SimpleVocabulary(
                 [t for t in self.vocabulary()
                  if t.token in self.filtered_items])
