@@ -16,6 +16,7 @@ import zope.app.container.btree
 
 from collective.singing import interfaces
 import collective.singing.subscribe
+from collective.singing import MessageFactory as _
 
 def secret(channel, composer, data, request):
     """Look up an appropriate secret.
@@ -199,8 +200,8 @@ class Subscriptions(zope.app.container.btree.BTreeContainer):
         data = ISubscriptionCatalogData(subscription)
         contained_name = u'%s-%s' % (data.key, data.format)
         if contained_name in self:
-            raise ValueError(
-                "There's already a subscription for %r." % contained_name)
+            raise ValueError(_("There's already a subscription for ${name}",
+                               mapping=dict(name=contained_name)))
         self[contained_name] = subscription
         return self[contained_name]
 
