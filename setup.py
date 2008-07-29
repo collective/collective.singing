@@ -1,16 +1,18 @@
+import os
 from setuptools import setup, find_packages
 
-version = '0.5.0'
+version = '0.5.1'
+
+def read(*pathnames):
+    return open(os.path.join(os.path.dirname(__file__), *pathnames)).read()
 
 setup(name='collective.singing',
       version=version,
-      description="A Zope library for sending notifications and newsletters",
-      long_description="""\
-You can find the development version of collective.singing in the
-`Subversion repository
-<http://svn.plone.org/svn/collective/collective.singing/trunk#egg=collective.singing-dev>`_.
-""",
-
+      description="A Zope 3 library for sending notifications and newsletters",
+      long_description='\n'.join([
+          read('docs', 'README.txt'),
+          read('docs', 'HISTORY.txt'),
+          ]),
       classifiers=[
         "Framework :: Plone",
         "Framework :: Zope2",
@@ -34,8 +36,6 @@ You can find the development version of collective.singing in the
           'zc.queue',
           'zc.lockfile',
           'plone.z3cform>=0.3dev',
-      ],
-      dependency_links=[
       ],
       
       entry_points="""

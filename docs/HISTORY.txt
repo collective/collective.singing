@@ -1,8 +1,14 @@
 History
 =======
 
-Version 0.5.0 - unreleased
+Version 0.5.1 - unreleased
 --------------------------
+
+Version 0.5.0 - 2008-07-29
+--------------------------
+
+- Start depending on plone.z3cform>=0.3dev
+  [nouri]
 
 Version 0.4 - 2008-07-23
 ------------------------
