@@ -1,7 +1,10 @@
 History
 =======
 
-Version 0.6.0 - unreleased
+Version 0.6.1 - unreleased
+--------------------------
+
+Version 0.6.0 - 2008-08-21
 --------------------------
 
 - Moved 'singing.scheduler.assemble_messages' and 'render_message'
