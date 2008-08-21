@@ -250,6 +250,30 @@ class IChannel(interface.Interface):
         schema=IMessageQueues,
         )
 
+class IMessageAssemble(interface.Interface):
+    """An adapter on the channel that's usually invoked by a scheduler
+    to render and queue new messages.
+    """
+    def __call__(request, items=(), use_collector=True):
+        """Process all subscribers.
+
+          o ``items`` is the items added manually
+
+          o ``use_collector`` is a boolean indicating whether the
+            channel's collector should be considered at all
+
+        Returns the number of queued messages."""
+
+    def render_message(request, subscription, items=(), use_collector=True):
+        """Render and queue messages for an individual subscription.
+
+          o ``subscription`` is an ISubscription
+
+        For other arguments, please see the docstring of ``__call__``.
+
+        Returns the IMessage if a message was queued or None to
+        indicate that no message was queued.
+        """
 
 class IChannelLookup(interface.Interface):
     """A utility that looks up all channels in a site.

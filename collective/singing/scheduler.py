@@ -4,6 +4,7 @@ import persistent
 import persistent.list
 from zope import interface
 from zope import component
+from zope.deprecation.deprecation import deprecate
 
 from collective.singing import interfaces
 from collective.singing import MessageFactory as _
@@ -32,57 +33,93 @@ def getIFormatAdapter(obj, request, format):
 
     return component.getMultiAdapter((obj, request), interfaces.IFormatItem)
 
-def render_message(channel, request, sub, items, use_collector):
-    collector = channel.collector
-    composers = channel.composers
+class MessageAssemble(object):
+    interface.implements(interfaces.IMessageAssemble)
+    component.adapts(interfaces.IChannel)
 
-    subscription_metadata = sub.metadata
-    if subscription_metadata.get('pending'):
-        return None
+    use_cue = True
 
-    # Collect items for subscription
-    if collector is not None and use_collector:
-        collector_items, cue = collector.get_items(
-            subscription_metadata.get('cue'), sub)
-        subscription_metadata['cue'] = cue
+    def __init__(self, channel):
+        self.channel = channel
 
-        # If there was a collector but no items, we'll skip
-        # this subscription:
-        if not items and len(collector_items) == 0:
+    def render_message(self,
+                       request, subscription, items=(), use_collector=True):
+        channel = self.channel
+        collector = channel.collector
+        composers = channel.composers
+
+        subscription_metadata = subscription.metadata
+        if subscription_metadata.get('pending'):
             return None
-    else:
-        # If there's no collector, we go on with an empty
-        # items list:
-        collector_items = ()
 
-    raw_items = tuple(items) + tuple(collector_items)
+        # Collect items for subscription
+        if collector is not None and use_collector:
 
-    # First format all items...
-    format = subscription_metadata['format']
-    formatted_items = [getIFormatAdapter(item, request, format)()
-                       for item in raw_items]
+            # Optionally use and set cue
+            if self.use_cue:
+                use_cue = subscription_metadata.get('cue')
+            else:
+                use_cue = None
 
-    # ... then transform them ...
-    transformed_items = []
-    for formatted_item, raw_item in zip(formatted_items, raw_items):
-        for name, transform in component.getAdapters(
-            (raw_item,), interfaces.ITransform):
-            formatted_item = transform(formatted_item, sub)
-        transformed_items.append(formatted_item)
+            collector_items, cue = collector.get_items(use_cue, subscription)
+            if self.use_cue is True:
+                subscription_metadata['cue'] = cue
 
-    # ... and finally render using the right composer. Note
-    # that the message is already queued when we render it.
-    composer = composers[format]
-    return composer.render(sub, zip(transformed_items, raw_items))
+            # If there was a collector but no items, we'll skip
+            # this subscription:
+            if not items and len(collector_items) == 0:
+                return None
+        else:
+            # If there's no collector, we go on with an empty
+            # items list:
+            collector_items = ()
 
+        raw_items = tuple(items) + tuple(collector_items)
+
+        # First format all items...
+        format = subscription_metadata['format']
+        formatted_items = [getIFormatAdapter(item, request, format)()
+                           for item in raw_items]
+
+        # ... then transform them ...
+        transformed_items = []
+        for formatted_item, raw_item in zip(formatted_items, raw_items):
+            for name, transform in component.getAdapters(
+                (raw_item,), interfaces.ITransform):
+                formatted_item = transform(formatted_item, subscription)
+            transformed_items.append(formatted_item)
+
+        # ... and finally render using the right composer. Note
+        # that the message is already queued when we render it.
+        composer = composers[format]
+        return composer.render(subscription, zip(transformed_items, raw_items))
+
+    def __call__(self, request, items=(), use_collector=True):
+        queued_messages = 0
+        for subscription in self.channel.subscriptions.values():
+            message = self.render_message(
+                request, subscription, items, use_collector)
+            if message is not None:
+                queued_messages +=1
+        return queued_messages
+
+
+@deprecate("""\
+render_message has become IMessageAssemble.render_message in version
+0.6.  Please update your code to use the IMessageAssemble adapter on
+IChannel instead.
+""")
+def render_message(channel, request, subscription, items, use_collector):
+    return interfaces.IMessageAssemble(channel).render_message(
+        request, subscription, items, use_collector)
+
+@deprecate("""\
+assemble_messages has become IMessageAssemble.__call__ in version 0.6.
+Please update your code to use the IMessageAssemble adapter on
+IChannel instead.
+""")
 def assemble_messages(channel, request, items=(), use_collector=True):
-    queued_messages = 0
-    for subscription in channel.subscriptions.values():
-        message = render_message(
-            channel, request, subscription, items, use_collector)
-        if message is not None:
-            queued_messages +=1
-    return queued_messages
+    return interfaces.IMessageAssemble(channel)(request, items, use_collector)
 
 class AbstractPeriodicScheduler(object):
     interface.implements(interfaces.IScheduler)
@@ -98,7 +135,7 @@ class AbstractPeriodicScheduler(object):
 
     def trigger(self, channel, request):
         self.triggered_last = datetime.datetime.now()
-        return assemble_messages(channel, request)
+        return interfaces.IMessageAssemble(channel)(request)
 
     def __eq__(self, other):
         return (isinstance(other, AbstractPeriodicScheduler) and
@@ -137,16 +174,16 @@ class TimedScheduler(persistent.Persistent, AbstractPeriodicScheduler):
     def trigger(self, channel, request, manual=True):
         count = 0
         now = datetime.datetime.now()
+        assembler = interfaces.IMessageAssemble(channel)
         if self.active or manual:
             self.triggered_last = now
             for when, content in tuple(self.items):
                 if manual or when < now:
                     self.items.remove((when, content))
                     if content is not None:
-                        count += assemble_messages(
-                            channel, request, (content(),))
+                        count += assembler(request, (content(),))
                     else:
-                        count += assemble_messages(channel, request)
+                        count += assembler(request)
         return count
 
     def __eq__(self, other):

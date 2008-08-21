@@ -12,6 +12,8 @@
   <adapter factory=".scheduler.UnicodeFormatter"
            for="unicode zope.publisher.interfaces.browser.IBrowserRequest" />
 
+  <adapter factory=".scheduler.MessageAssemble" />
+
   <adapter factory=".subscribe.catalog_data" />
 
   <!-- Vocabularies stuff -->

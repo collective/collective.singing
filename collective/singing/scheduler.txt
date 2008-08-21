@@ -25,7 +25,7 @@ Schedulers have an overwritten ``__eq__`` special method for comparison:
   False
 
 Schedulers implement a ``tick`` method that'll call
-``assemble_messages`` when it needs to:
+``IMessageAssemble`` when it needs to:
 
   >>> from zope.publisher.browser import TestRequest
   >>> request = TestRequest()
@@ -39,7 +39,7 @@ Nothing happened because our scheduler is inactive by default:
   >>> daily.tick(None, request) # doctest: +ELLIPSIS
   Traceback (innermost last):
   ...
-  AttributeError: ...
+  TypeError: ...
 
 Daily won't need to trigger that function when its ``triggered_last``
 attribute is set to now:
@@ -53,7 +53,7 @@ We can override the check by calling ``trigger``:
   >>> daily.trigger(None, request) # doctest: +ELLIPSIS
   Traceback (innermost last):
   ...
-  AttributeError: ...
+  TypeError: ...
 
 If the ``triggered_last`` time is set to one day ago, the alarm will
 go off:
@@ -63,25 +63,34 @@ go off:
   >>> daily.tick(None, request) # doctest: +ELLIPSIS
   Traceback (innermost last):
   ...
-  AttributeError: ...
+  TypeError: ...
 
 The ``ManualScheduler`` can be programmed to send out items on a
 certain date.  For this, it holds a list of tuples of the form
 ``(datetime.datetime, weak reference)``, where the datetime object
 specifies when to send the item out, and the weak reference is an
-optional callable that'll be passed to the ``assemble_messages``
-function for inclusion in the send-out:
+optional callable that'll be passed to the ``IMessageAssemble``
+component for inclusion in the send-out:
 
   >>> timed = scheduler.TimedScheduler()
   >>> timed.items.append((datetime.datetime.now(), None))
 
-Let's patch the ``assemble_messages`` function to see what happens:
+Let's provide our own ``IMessageAssemble`` adapter to see what
+happens:
 
-  >>> def assemble_messages(channel, request, items=(), use_collector=True):
-  ...     print "Sending out %r." % (items,)
-  ...     return 1
-  >>> save_assemble_messages = scheduler.assemble_messages
-  >>> scheduler.assemble_messages = assemble_messages
+  >>> from zope import interface, component
+  >>> class MessageAssemble(object):
+  ...     interface.implements(interfaces.IMessageAssemble)
+  ...     component.adapts(interfaces.IChannel)
+  ... 
+  ...     def __init__(self, channel):
+  ...         self.channel = channel
+  ... 
+  ...     def __call__(self, request, items=(), use_collector=True):
+  ...         print "Sending out %r." % (items,)
+  ...         return 1
+
+  >>> component.provideAdapter(MessageAssemble, adapts=[interface.Interface])
 
   >>> timed.tick(None, request)
   Sending out ().
@@ -119,20 +128,22 @@ look at the date, and just send:
   >>> timed.items
   []
 
-  >>> scheduler.assemble_messages = save_assemble_messages
+IMessageAssemble
+----------------
 
-assemble_messages
------------------
+The ``IMessageAssemble`` is used by the schedulers to do the actual
+send-outs.  See ``collective.singing.interfaces.IMessageAssemble`` for
+more details.
 
-``assemble_messages`` takes an ``IChannel`` as its first argument;
-it'll look up the channel's collector (if any) and the composer and
-render messages.
+``IMessageAssemble.__call__`` will look up the channel's collector (if
+any) and the composer and render messages.
 
 At this point, we'll provide our own ``IChannel``, ``IComposer`` and
-``ISubscription`` implementations to test that ``assemble_messages``
-does the right thing:
+``ISubscription`` implementations to test that the default
+``IMessageAssemble`` implementation does the right thing:
 
   >>> class Channel(object):
+  ...     interface.implements(interfaces.IChannel)
   ...     def __init__(self, composers, subscriptions, collector=None):
   ...         self.composers = composers
   ...         self.subscriptions = subscriptions
@@ -157,17 +168,18 @@ does the right thing:
   ...     composers={'my-format': Composer()},
   ...     subscriptions={'my-subscription': subscription})
 
-Note that the ``assemble_messages`` function returns the number of
-messages that were created:
+Note that the ``IMessageAssemble.__call__`` method returns the number
+of messages that were created:
 
-  >>> scheduler.assemble_messages(channel, request)
+  >>> component.provideAdapter(scheduler.MessageAssemble)
+  >>> interfaces.IMessageAssemble(channel)(request)
   Rendering message with () for <Subscription 'daniel'>
   1
 
 If our subscription were in pending state, nothing would happen:
 
   >>> subscription.metadata['pending'] = True
-  >>> scheduler.assemble_messages(channel, request)
+  >>> interfaces.IMessageAssemble(channel)(request)
   0
   >>> subscription.metadata['pending'] = False
 
@@ -175,7 +187,7 @@ If our subscription were for a format that's unknown, an error is
 raised:
 
   >>> subscription.metadata['format'] = 'bar'
-  >>> scheduler.assemble_messages(channel, request) # doctest: +ELLIPSIS
+  >>> interfaces.IMessageAssemble(channel)(request) # doctest: +ELLIPSIS
   Traceback (innermost last):
   ...
   KeyError: 'bar'
@@ -206,7 +218,6 @@ A ``UnicodeFormatter`` defined in the ``scheduler`` module returns
 for our ``my-format`` composer to render both strings and Subscription
 objects to unicode:
 
-  >>> from zope import component
   >>> from zope.publisher.interfaces.browser import IBrowserRequest
   
   >>> component.provideAdapter(scheduler.UnicodeFormatter,
@@ -214,7 +225,7 @@ objects to unicode:
   >>> component.provideAdapter(scheduler.UnicodeFormatter,
   ...                          adapts=(Subscription, IBrowserRequest))
 
-  >>> scheduler.assemble_messages(channel, request)
+  >>> interfaces.IMessageAssemble(channel)(request)
   Collecting items for <Subscription 'daniel'> with cue None
   Rendering message with (u'some', u'items', u'for', u"<Subscription 'daniel'>") for <Subscription 'daniel'>
   1
@@ -222,7 +233,7 @@ objects to unicode:
 Note that the second we call this, the cue we returned in the previous
 call to ``get_items`` will be passed to the collector:
 
-  >>> scheduler.assemble_messages(channel, request)
+  >>> interfaces.IMessageAssemble(channel)(request)
   Collecting items for <Subscription 'daniel'> with cue 'somecue'
   Rendering message with (u'some', u'items', u'for', u"<Subscription 'daniel'>") for <Subscription 'daniel'>
   1
@@ -231,7 +242,7 @@ If the collector decides to return no items, no messages will be
 rendered:
 
   >>> channel.collector.items = ()
-  >>> scheduler.assemble_messages(channel, request)
+  >>> interfaces.IMessageAssemble(channel)(request)
   Collecting items for <Subscription 'daniel'> with cue 'somecue'
   0
 
@@ -253,19 +264,20 @@ out:
 
   >>> component.provideAdapter(Grappa4LifeTransform, name=u'grappa-transform')
   >>> channel.collector.items = ('We', 'love', 'life')
-  >>> scheduler.assemble_messages(channel, request)
+  >>> interfaces.IMessageAssemble(channel)(request)
   Collecting items for <Subscription 'daniel'> with cue 'somecue'
   Rendering message with (u'We', u'love', u'Grappa', u'for', u"<Subscription 'daniel'>") for <Subscription 'daniel'>
   1
 
-We can have more than one transform, but we cannot depend on the order they are applied in:
+We can have more than one transform, but we cannot depend on the order
+they are applied in:
 
   >>> class We4FrogsTransform(Grappa4LifeTransform):
   ...     sub = u'We'
   ...     stitute = u'Frogs'
   >>> component.provideAdapter(We4FrogsTransform, name=u'frogs_transform')
   >>> channel.collector.items = ('We', 'love', 'life')
-  >>> scheduler.assemble_messages(channel, request)
+  >>> interfaces.IMessageAssemble(channel)(request)
   Collecting items for <Subscription 'daniel'> with cue 'somecue'
   Rendering message with (u'Frogs', u'love', u'Grappa', u'for', u"<Subscription 'daniel'>") for <Subscription 'daniel'>
   1
@@ -273,13 +285,37 @@ We can have more than one transform, but we cannot depend on the order they are 
 We can supply our own items to assemble_messages:
 
   >>> items = ('Vincenzo', 'likes', 'life', 'and', 'singing')
-  >>> scheduler.assemble_messages(channel, request, items)
+  >>> interfaces.IMessageAssemble(channel)(request, items)
   Collecting items for <Subscription 'daniel'> with cue 'somecue'
   Rendering message with (u'Vincenzo', u'likes', u'Grappa', u'and', u'singing', u'Frogs', u'love', u'Grappa', u'for', u"<Subscription 'daniel'>") for <Subscription 'daniel'>
   1
 
 ... and choose not to include the collector items:
   
-  >>> scheduler.assemble_messages(channel, request, items, use_collector=False)
+  >>> interfaces.IMessageAssemble(channel)(request, items, use_collector=False)
   Rendering message with (u'Vincenzo', u'likes', u'Grappa', u'and', u'singing') for <Subscription 'daniel'>
   1
+
+We can also ask the ``IMessageAssemble`` component to not pass on the
+'cue' or set it:
+
+  >>> channel.collector.items = ('Solitude',)
+  >>> subscription.metadata['cue']
+  'somecue'
+  >>> assembler = interfaces.IMessageAssemble(channel)
+  >>> assembler(request)
+  Collecting items for <Subscription 'daniel'> with cue 'somecue'
+  Rendering message with (u'Solitude', u'for', u"<Subscription 'daniel'>") for <Subscription 'daniel'>
+  1
+  >>> assembler.use_cue = False
+  >>> assembler(request)
+  Collecting items for <Subscription 'daniel'> with cue None
+  Rendering message with (u'Solitude', u'for', u"<Subscription 'daniel'>") for <Subscription 'daniel'>
+  1
+  >>> subscription.metadata['cue'] = 'bar'
+  >>> assembler(request)
+  Collecting items for <Subscription 'daniel'> with cue None
+  Rendering message with (u'Solitude', u'for', u"<Subscription 'daniel'>") for <Subscription 'daniel'>
+  1
+  >>> subscription.metadata['cue']
+  'bar'
