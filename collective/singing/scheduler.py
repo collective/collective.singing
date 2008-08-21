@@ -62,7 +62,7 @@ class MessageAssemble(object):
                 use_cue = None
 
             collector_items, cue = collector.get_items(use_cue, subscription)
-            if self.use_cue is True:
+            if self.use_cue:
                 subscription_metadata['cue'] = cue
 
             # If there was a collector but no items, we'll skip
