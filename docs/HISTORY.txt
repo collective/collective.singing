@@ -4,6 +4,12 @@ History
 Version 0.6.1 - unreleased
 --------------------------
 
+- Use DumbWriters word wrapping to ensure that no text line
+  is longer than plain_text_maxcols characters. [saily]
+
+- Using HTMLParser.anchorlist to append all links found in 
+  a message at the bottom of the text/plain message. [saily]
+
 Version 0.6.0 - 2008-08-21
 --------------------------
 

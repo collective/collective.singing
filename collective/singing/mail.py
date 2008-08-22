@@ -21,17 +21,31 @@ def create_html_mail(subject, html, text=None, from_addr=None, to_addr=None,
     """Create a mime-message that will render HTML in popular
     MUAs, text in better ones.
     """
+    # Use DumbWriters word wrapping to ensure that no text line
+    # is longer than plain_text_maxcols characters.
+    plain_text_maxcols = 72
+    
     html = html.encode(encoding)
     if text is None:
         # Produce an approximate textual rendering of the HTML string,
         # unless you have been given a better version as an argument
         textout = StringIO.StringIO()
-        formtext = formatter.AbstractFormatter(formatter.DumbWriter(textout))
+        formtext = formatter.AbstractFormatter(formatter.DumbWriter(
+                        textout, plain_text_maxcols))
         parser = htmllib.HTMLParser(formtext)
         parser.feed(html)
         parser.close()
-        text = textout.getvalue()
-        del textout, formtext, parser
+        
+        # append the anchorlist at the bottom of a message
+        # to keep the message readable. 
+        counter = 0
+        anchorlist  = "\n\n" + ("-" * plain_text_maxcols) + "\n\n"
+        for item in parser.anchorlist:
+            counter += 1
+            anchorlist += "[%d] %s\n" % (counter, item)
+        
+        text = textout.getvalue() + anchorlist
+        del textout, formtext, parser, anchorlist
     else:
         text = text.encode(encoding)
         
