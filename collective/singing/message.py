@@ -34,10 +34,10 @@ def dispatch(message):
     except ConflictError:
         raise
     except Exception, e:
-        # TODO: log
         status = u'error'
         msg = traceback.format_exc(e)
-
+        logger.error(msg)
+        
     message.status_message = msg
     message.status = status
     return message.status, message.status_message
