@@ -36,7 +36,7 @@ def dispatch(message):
     except Exception, e:
         status = u'error'
         msg = traceback.format_exc(e)
-        logger.error(msg)
+        logger.exception("Error while dispatching message.")
         
     message.status_message = msg
     message.status = status

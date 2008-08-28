@@ -4,6 +4,11 @@ History
 Version 0.6.1 - unreleased
 --------------------------
 
+- Add zope.sendmail as a dependency so that we get the latest and
+  greates release. [nouri]
+
+- IMailDelivery expects ``toaddrs`` to be a list of addresses. [nouri]
+
 - Use DumbWriters word wrapping to ensure that no text line
   is longer than plain_text_maxcols characters. [saily]
 

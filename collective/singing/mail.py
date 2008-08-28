@@ -96,7 +96,7 @@ class Dispatch(object):
       ...
       ...     def send(self, from_, to, message):
       ...         print 'From: ', from_
-      ...         print 'To: ', to
+      ...         print 'To: ', ', '.join(to)
       ...         print 'Message follows:'
       ...         print message
 
@@ -142,9 +142,34 @@ class Dispatch(object):
         msg = self.message
         delivery = component.getUtility(zope.sendmail.interfaces.IMailDelivery)
         try:
-            delivery.send(msg['From'], msg['To'], msg.as_string())
+            delivery.send(msg['From'], self._split(msg['To']), msg.as_string())
         except Exception, e:
             # TODO: log
             return u'error', traceback.format_exc(e)
         else:
             return u'sent', None
+
+    @staticmethod
+    def _split(value):
+        """
+          >>> split = Dispatch._split
+          >>> split('"Daniel flash, Nouri" <daniel.nouri@gmail.com>')
+          ['"Daniel flash, Nouri" <daniel.nouri@gmail.com>']
+          >>> split('Daniel Nouri <daniel.nouri@gmail.com>, '
+          ...       'Daniel Widerin <daniel.widerin@kombinat.at>')
+          ['Daniel Nouri <daniel.nouri@gmail.com>', 'Daniel Widerin <daniel.widerin@kombinat.at>']
+          >>> split('"Daniel flash, dance Nouri" <daniel.nouri@gmail.com>,'
+          ...       '"Daniel Saily Widerin" <daniel.widerin@kombinat.at>')
+          ['"Daniel flash, dance Nouri" <daniel.nouri@gmail.com>', '"Daniel Saily Widerin" <daniel.widerin@kombinat.at>']
+        """
+        items = []
+        last_index = 0
+        for i, c in enumerate(value):
+            if c == ',':
+                if value[:i].count('"') % 2 == 0:
+                    items.append(value[last_index:i].strip())
+                    last_index = i + 1
+        last_item = value[last_index:]
+        if last_item.strip():
+            items.append(last_item.strip())
+        return items

@@ -32,6 +32,7 @@ setup(name='collective.singing',
 
       install_requires=[
           'setuptools',
+          'zope.sendmail',
           'zope.app.catalog',
           'zc.queue',
           'zc.lockfile',
