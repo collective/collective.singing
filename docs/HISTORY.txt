@@ -1,7 +1,10 @@
 History
 =======
 
-Version 0.6.1 - unreleased
+Version 0.6.2 - unreleased
+--------------------------
+
+Version 0.6.1 - 2008-08-28
 --------------------------
 
 - Add zope.sendmail as a dependency so that we get the latest and
