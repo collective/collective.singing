@@ -17,7 +17,7 @@ import zope.sendmail.interfaces
 from collective.singing import interfaces
 
 def create_html_mail(subject, html, text=None, from_addr=None, to_addr=None,
-                     encoding='UTF-8'):
+                     headers=None, encoding='UTF-8'):
     """Create a mime-message that will render HTML in popular
     MUAs, text in better ones.
     """
@@ -57,7 +57,10 @@ def create_html_mail(subject, html, text=None, from_addr=None, to_addr=None,
     msg['From'] = from_addr
     msg['To'] = to_addr
     msg['Date'] = formatdate(localtime=True)
-    msg["Message-ID"]=email.Utils.make_msgid()
+    msg["Message-ID"] = email.Utils.make_msgid()
+    if headers:
+        for key, value in headers.items():
+            msg[key] = value
     msg.preamble = 'This is a multi-part message in MIME format.'
 
     alternatives = MIMEMultipart('alternative')

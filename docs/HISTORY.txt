@@ -4,6 +4,9 @@ History
 Version 0.6.2 - unreleased
 --------------------------
 
+- Add 'headers' argument to ``mail.create_html_mail`` to allow the
+  injection of more e-mail headers. [nouri]
+
 Version 0.6.1 - 2008-08-28
 --------------------------
 
