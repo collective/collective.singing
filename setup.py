@@ -36,7 +36,7 @@ setup(name='collective.singing',
           'zope.app.catalog',
           'zc.queue',
           'zc.lockfile',
-          'plone.z3cform>=0.3dev',
+          'plone.z3cform>=0.5.1',
       ],
       
       entry_points="""
