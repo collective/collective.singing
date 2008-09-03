@@ -1,7 +1,10 @@
 History
 =======
 
-Version 0.6.2 - unreleased
+Version 0.6.3 - unreleased
+--------------------------
+
+Version 0.6.2 - 2008-09-03
 --------------------------
 
 - Add 'headers' argument to ``mail.create_html_mail`` to allow the
