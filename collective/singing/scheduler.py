@@ -1,4 +1,5 @@
 import datetime
+import logging
 
 import persistent
 import persistent.list
@@ -8,6 +9,8 @@ from zope.deprecation.deprecation import deprecate
 
 from collective.singing import interfaces
 from collective.singing import MessageFactory as _
+
+logger = logging.getLogger('collective.singing')
 
 class UnicodeFormatter(object):
     interface.implements(interfaces.IFormatItem)
@@ -97,6 +100,7 @@ class MessageAssemble(object):
     def __call__(self, request, items=(), use_collector=True):
         queued_messages = 0
         for subscription in self.channel.subscriptions.values():
+            logger.debug("Rendering message for %r." % subscription)
             message = self.render_message(
                 request, subscription, items, use_collector)
             if message is not None:
