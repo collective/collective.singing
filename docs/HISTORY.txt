@@ -1,7 +1,10 @@
 History
 =======
 
-Version 0.6.3 - unreleased
+Version 0.6.4 - unreleased
+--------------------------
+
+Version 0.6.3 - 2008-09-11
 --------------------------
 
 - Register the SubscriptionSearchableText adapter so that the fulltext
