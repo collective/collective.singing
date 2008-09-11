@@ -15,6 +15,7 @@
   <adapter factory=".scheduler.MessageAssemble" />
 
   <adapter factory=".subscribe.catalog_data" />
+  <adapter factory=".subscribe.SubscriptionSearchableText" />
 
   <!-- Vocabularies stuff -->
   <utility component=".vocabularies.channel_vocabulary"

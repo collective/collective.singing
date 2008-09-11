@@ -4,6 +4,9 @@ History
 Version 0.6.3 - unreleased
 --------------------------
 
+- Register the SubscriptionSearchableText adapter so that the fulltext
+  index is actually populated. [nouri]
+
 Version 0.6.2 - 2008-09-03
 --------------------------
 
