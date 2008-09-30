@@ -1,7 +1,7 @@
 from zope import component
 from interfaces import IChannelLookup
 
-def channel_lookup(only_subscribeable=False):
+def channel_lookup(only_subscribeable=False, only_sendable=False):
     """Lookup all channels.
 
     This method looks up all ``IChannelLookup`` utilities and returns
@@ -16,6 +16,8 @@ def channel_lookup(only_subscribeable=False):
 
     if only_subscribeable:
         return [c for c in channels if c.subscribeable]
+    if only_sendable:
+        return [c for c in channels if c.sendable]
     return channels
 
 def lookup(name):

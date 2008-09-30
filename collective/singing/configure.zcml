@@ -20,7 +20,10 @@
   <!-- Vocabularies stuff -->
   <utility component=".vocabularies.channel_vocabulary"
            name="collective.singing.vocabularies.ChannelVocabulary" />
-  
+  <utility component=".vocabularies.subscribeable_channel_vocabulary"
+           name="collective.singing.vocabularies.SubscribeableChannelVocabulary" />
+  <utility component=".vocabularies.sendable_channel_vocabulary"
+           name="collective.singing.vocabularies.SendableChannelVocabulary" />
   
   <i18n:registerTranslations directory="locales"/>
 

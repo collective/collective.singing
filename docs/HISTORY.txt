@@ -4,6 +4,13 @@ History
 Version 0.6.4 - unreleased
 --------------------------
 
+- Added optional checking for channel attr 'sendable' to
+  channel_lookup. Sending of a content item from the
+  sendnewsletter view in dancing uses this feature, to be able
+  to supress some channels. Also added vocabularies that contain
+  only sendable or only subscribeable channels.
+  [tmog]
+
 Version 0.6.3 - 2008-09-11
 --------------------------
 
