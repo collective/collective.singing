@@ -114,7 +114,7 @@ class MessageQueues(persistent.dict.PersistentDict):
         self._messages_sent.change(sent)
         return sent, failed
 
-    def flush(self, queue_names=('error', 'sent')):
+    def clear(self, queue_names=('error', 'sent')):
         for name in queue_names:
             queue = self[name]
             try:

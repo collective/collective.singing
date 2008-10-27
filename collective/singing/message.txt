@@ -238,7 +238,7 @@ Our dispatcher can also return 'error' as a status to the same effect:
   >>> msg.status_changed > before
   True
 
-We can reset the 'error' and 'sent' queues by calling the ``flush``
+We can reset the 'error' and 'sent' queues by calling the ``clear``
 method on the queue object:
 
   >>> msg = message.Message(payload="Zao sin",
@@ -248,11 +248,11 @@ method on the queue object:
   error: 1 messages
   retry: 1 messages
   sent: 2 messages
-  >>> queue.flush()
+  >>> queue.clear()
   >>> count()
   retry: 1 messages
 
-The number of messages sent is not reset through a ``flush``:
+The number of messages sent is not reset through a ``clear``:
 
   >>> queue.messages_sent
   2

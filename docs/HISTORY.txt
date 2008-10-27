@@ -11,6 +11,10 @@ Version 0.6.4 - unreleased
   only sendable or only subscribeable channels.
   [tmog]
 
+  - Relabelled buttons on the stats page to use the term 'clear' rather than
+  'flush'. Also renamed related handlers and method.
+
+
 Version 0.6.3 - 2008-09-11
 --------------------------
 
