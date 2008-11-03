@@ -297,25 +297,43 @@ We can supply our own items to assemble_messages:
   1
 
 We can also ask the ``IMessageAssemble`` component to not pass on the
-'cue' or set it:
+'cue' or set it.  ``use_cue`` controls if the cue is passed, while
+``update_cue`` controls whether we want the cue to be updated with the
+cue that the collector returns.
+
+This is what happens by default:
 
   >>> channel.collector.items = ('Solitude',)
-  >>> subscription.metadata['cue']
-  'somecue'
+  >>> subscription.metadata['cue'] = 'anothercue'
   >>> assembler = interfaces.IMessageAssemble(channel)
   >>> assembler(request)
-  Collecting items for <Subscription 'daniel'> with cue 'somecue'
+  Collecting items for <Subscription 'daniel'> with cue 'anothercue'
   Rendering message with (u'Solitude', u'for', u"<Subscription 'daniel'>") for <Subscription 'daniel'>
   1
+  >>> subscription.metadata['cue']
+  'somecue'
+
+Let's not pass on the queue this time by setting ``use_cue`` to
+``False``.  Note that the cue will still be updated:
+
   >>> assembler.use_cue = False
-  >>> assembler(request)
-  Collecting items for <Subscription 'daniel'> with cue None
-  Rendering message with (u'Solitude', u'for', u"<Subscription 'daniel'>") for <Subscription 'daniel'>
-  1
-  >>> subscription.metadata['cue'] = 'bar'
+  >>> subscription.metadata['cue'] = 'anothercue'
   >>> assembler(request)
   Collecting items for <Subscription 'daniel'> with cue None
   Rendering message with (u'Solitude', u'for', u"<Subscription 'daniel'>") for <Subscription 'daniel'>
   1
   >>> subscription.metadata['cue']
-  'bar'
+  'somecue'
+
+This time, we'll request the cue to be updated, but not to be used.
+We do this by setting ``update_cue`` to ``False``:
+
+  >>> subscription.metadata['cue'] = 'anothercue'
+  >>> assembler.use_cue = True
+  >>> assembler.update_cue = False
+  >>> assembler(request)
+  Collecting items for <Subscription 'daniel'> with cue 'anothercue'
+  Rendering message with (u'Solitude', u'for', u"<Subscription 'daniel'>") for <Subscription 'daniel'>
+  1
+  >>> subscription.metadata['cue']
+  'anothercue'

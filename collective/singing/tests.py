@@ -60,6 +60,11 @@ def test_suite():
         doctest.DocFileSuite('README.txt'),
 
         doctest.DocFileSuite(
+            'async.txt',
+            setUp=testing.setUp, tearDown=testing.tearDown,
+        ),
+
+        doctest.DocFileSuite(
             'collector.txt',
             setUp=testing.setUp, tearDown=testing.tearDown,
         ),

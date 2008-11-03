@@ -41,6 +41,7 @@ class MessageAssemble(object):
     component.adapts(interfaces.IChannel)
 
     use_cue = True
+    update_cue = True
 
     def __init__(self, channel):
         self.channel = channel
@@ -65,7 +66,7 @@ class MessageAssemble(object):
                 use_cue = None
 
             collector_items, cue = collector.get_items(use_cue, subscription)
-            if self.use_cue:
+            if self.update_cue:
                 subscription_metadata['cue'] = cue
 
             # If there was a collector but no items, we'll skip

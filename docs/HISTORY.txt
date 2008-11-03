@@ -4,6 +4,16 @@ History
 Version 0.6.5 - unreleased
 --------------------------
 
+- Add ``async`` module that allows to queue jobs for asynchronous
+  execution.  Creating this was necessary because ``zc.async`` is not
+  available for all Zope versions that ``collective.dancing`` aims to
+  work with.  :-( [nouri]
+
+- Allow for more finer grained control of cue in
+  ``IMessageAssemble.render_message``.  This allows a preview function
+  to request the cue to be used but not to be set when rendering a
+  preview. [nouri]
+
 Version 0.6.4 - 2008-10-29
 --------------------------
 
