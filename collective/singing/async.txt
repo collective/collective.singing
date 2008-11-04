@@ -1,0 +1,102 @@
+Async
+=====
+
+The ``async`` module implements a poor man's job queue, with jobs that
+are executed asynchronously.  We implement this because ``zc.async``
+is not available for all Zope versions that ``collective.dancing``
+aims to work with.  :-(
+
+The API consists of two concepts: jobs and queues.
+
+Queue
+-----
+
+The queue consists of two simple lists, one for jobs to be executed
+and one for jobs that are finished:
+
+  >>> from collective.singing import async
+  >>> queue = async.Queue()
+  >>> queue.pending, queue.finished
+  ([], [])
+
+In addition to that, a queue has a method ``process`` that will
+attempt to process all pending jobs and put them in the list of
+finished jobs.  The only interface that jobs promise to have at this
+point is that they're callable:
+
+  >>> def call():
+  ...     print "Job called."
+  >>> queue.pending.append(call)
+  >>> queue.pending, queue.finished # doctest: +ELLIPSIS
+  ([<function call ...>], [])
+  >>> queue.process()
+  Job called.
+  1
+  >>> queue.pending, queue.finished # doctest: +ELLIPSIS
+  ([], [<function call ...>])
+
+Note that the ``process`` method returns the number of jobs that were
+(successfully) executed.  Note that the queue does not do any
+exception handling whatsoever.  If you need to handle exceptions
+gracefully, consider writing your own function to replace ``process``.
+
+Job
+---
+
+A Job can be instantiated with a callable, and optional arguments to
+that callable.  Those will simply be bassed to the callable when the
+job is executed, i.e. called itself:
+
+  >>> def call(*args, **kwargs):
+  ...     print 'args:', args
+  ...     print 'kwargs:', kwargs
+  ...     return args
+  >>> job = async.Job(call)
+  >>> job()
+  args: ()
+  kwargs: {}
+  >>> job = async.Job(call, 1, 2, default=None)
+  >>> job()
+  args: (1, 2)
+  kwargs: {'default': None}
+
+A job will record the return value of the executed function and the
+date and time it was executed:
+
+  >>> job.executed # doctest: +ELLIPSIS
+  datetime.datetime(...)
+  >>> job.value
+  (1, 2)
+
+A job that wasn't executed yet has an execution time of None and no
+``value``:
+
+  >>> job = async.Job(call)
+  >>> job.executed is None
+  True
+  >>> job.value # doctest: +ELLIPSIS
+  Traceback (most recent call last):
+  ...
+  AttributeError: 'Job' object has no attribute 'value'
+
+A Job may also have a title.  That title is the empty string by
+default:
+
+  >>> job.title
+  u''
+
+get_queue
+---------
+
+The ``get_queue`` convenience function defined in the ``async`` module
+allows one to retrieve a queue given a unique id.  The queue will be
+created if it doesn't exist yet.  Internally, queues are registered as
+local utilities in the nearest site manager:
+
+  >>> queue = async.get_queue('my.very.special.queue')
+  >>> async.get_queue('my.very.special.queue') is queue
+  True
+  >>> async.get_queue('my.not.so.special.queue') is queue
+  False
+  >>> isinstance(queue, async.Queue)
+  True
