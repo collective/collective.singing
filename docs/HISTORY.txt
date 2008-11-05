@@ -1,7 +1,10 @@
 History
 =======
 
-Version 0.6.5 - unreleased
+Version 0.6.6 - Unreleased
+--------------------------
+
+Version 0.6.5 - 2008-11-05
 --------------------------
 
 - Used ``i18ndude`` to find all untranslated msgid's. Some line-numbers were
