@@ -4,7 +4,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
-"POT-Creation-Date: 2008-09-05 09:17+0000\n"
+"POT-Creation-Date: 2008-11-05 14:49+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI +ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -25,7 +25,7 @@ msgstr ""
 msgid "Collector (what)"
 msgstr ""
 
-#: ./collective/singing/scheduler.py:148
+#: ./collective/singing/scheduler.py:153
 msgid "Daily scheduler"
 msgstr ""
 
@@ -53,7 +53,7 @@ msgstr ""
 msgid "Information submitted successfully."
 msgstr ""
 
-#: ./collective/singing/scheduler.py:156
+#: ./collective/singing/scheduler.py:161
 msgid "Manual scheduler"
 msgstr ""
 
@@ -109,7 +109,7 @@ msgstr ""
 msgid "There's already a subscription for ${name}"
 msgstr ""
 
-#: ./collective/singing/scheduler.py:163
+#: ./collective/singing/scheduler.py:168
 msgid "Timed scheduler"
 msgstr ""
 
@@ -121,7 +121,7 @@ msgstr ""
 msgid "Unique identifier for this channel across the site."
 msgstr ""
 
-#: ./collective/singing/scheduler.py:152
+#: ./collective/singing/scheduler.py:157
 msgid "Weekly scheduler"
 msgstr ""
 

@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Singing & Dancing\n"
-"POT-Creation-Date: 2008-09-05 09:17+0000\n"
+"POT-Creation-Date: 2008-11-05 14:49+0000\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Daniel Widerin <daniel.widerin@kombinat.at>\n"
 "Language-Team: David Picó Vila <david.pico.vila@gmail.com>\n"
@@ -21,7 +21,7 @@ msgstr "E-Mail Adresse"
 msgid "Collector (what)"
 msgstr "Sammler"
 
-#: collective/singing/scheduler.py:148
+#: collective/singing/scheduler.py:153
 msgid "Daily scheduler"
 msgstr "Täglich"
 
@@ -49,7 +49,7 @@ msgstr ""
 msgid "Information submitted successfully."
 msgstr "Informationen wurden übermittelt."
 
-#: collective/singing/scheduler.py:156
+#: collective/singing/scheduler.py:161
 msgid "Manual scheduler"
 msgstr "Manuell"
 
@@ -105,7 +105,7 @@ msgstr "Mindestens ein Fehler ist aufgetreten."
 msgid "There's already a subscription for ${name}"
 msgstr "Es existiert bereits ein Abonnement für ${name}."
 
-#: collective/singing/scheduler.py:163
+#: collective/singing/scheduler.py:168
 msgid "Timed scheduler"
 msgstr "Bestimmter Zeitpunkt"
 
@@ -117,7 +117,7 @@ msgstr "Titel"
 msgid "Unique identifier for this channel across the site."
 msgstr "Eindeutige Bezeichnung für diesen Kanal"
 
-#: collective/singing/scheduler.py:152
+#: collective/singing/scheduler.py:157
 msgid "Weekly scheduler"
 msgstr "Wöchentlich"
 

@@ -4,6 +4,11 @@ History
 Version 0.6.5 - unreleased
 --------------------------
 
+- Used ``i18ndude`` to find all untranslated msgid's. Some line-numbers were
+  corrected, but nothing changed in ``collective.singing``.  There were some
+  updates in collective.dancing, so all guy's please help updating 
+  collective.dancing's po files.  [saily]
+
 - Add ``async`` module that allows to queue jobs for asynchronous
   execution.  Creating this was necessary because ``zc.async`` is not
   available for all Zope versions that ``collective.dancing`` aims to
