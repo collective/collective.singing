@@ -1,0 +1,132 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: collective.singing\n"
+"POT-Creation-Date: 2008-09-05 09:17+0000\n"
+"PO-Revision-Date: 2008-11-12 17:36+0200\n"
+"Last-Translator: G. Gozadinos <ggozad@qiweb.net>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0\n"
+"Language-Code: el\n"
+"Language-Name: Ελληνικά\n"
+"Preferred-Encodings: utf-8 latin1\n"
+"Domain: collective.singing\n"
+
+#: ./collective/singing/browser/subscribe.py:220
+msgid "Address"
+msgstr "Διεύθυνση"
+
+#: ./collective/singing/interfaces.py:232
+msgid "Collector (what)"
+msgstr "Συλλέκτης (τι)"
+
+#: ./collective/singing/scheduler.py:148
+msgid "Daily scheduler"
+msgstr "Ημερήσιος προγραμματισμός"
+
+#: ./collective/singing/interfaces.py:222
+msgid "Description"
+msgstr "Περιγραφή"
+
+#: ./collective/singing/browser/subscribe.py:130
+msgid "Fill in the information below to subscribe."
+msgstr "Συμπληρώστε τις παρακάτω πληροφορίες για να γραφτείτε"
+
+#: ./collective/singing/browser/subscribe.py:113
+msgid "Filters"
+msgstr "Φίλτρα"
+
+#: ./collective/singing/browser/wizard.py:102
+msgid "Finish"
+msgstr "Τέλος"
+
+#: ./collective/singing/browser/subscribe.py:43
+msgid "Format"
+msgstr "Μορφή"
+
+#: ./collective/singing/browser/wizard.py:26
+msgid "Information submitted successfully."
+msgstr "Η πληροφορία μεταφέρθηκε σωστά"
+
+#: ./collective/singing/scheduler.py:156
+msgid "Manual scheduler"
+msgstr "Χειροκίνητος προγραμματισμός"
+
+#: ./collective/singing/browser/wizard.py:84
+msgid "Proceed"
+msgstr "Προχωρήστε"
+
+#: ./collective/singing/browser/subscribe.py:212
+msgid "Retrieve a link to your personalized subscription settings"
+msgstr "Ανακτήστε ένα σύνδεσμο προς τις προσωπικές σας ρυθμίσεις εγγραφής"
+
+#: ./collective/singing/interfaces.py:226
+msgid "Scheduler (when)"
+msgstr "Προγραμματισμός (πότε)"
+
+#: ./collective/singing/browser/subscribe.py:225
+msgid "Send"
+msgstr "Αποστολή"
+
+#: ./collective/singing/browser/subscribe.py:76
+msgid "Send my subscription details"
+msgstr "Αποστολή των λεπτομερειών εγγραφής μου"
+
+#: ./collective/singing/collector.py:28
+msgid "Subjects"
+msgstr "Υποκείμενα"
+
+#: ./collective/singing/collector.py:25
+msgid "Subjects collector"
+msgstr "Συλλέκτης υποκειμένων"
+
+#: ./collective/singing/browser/subscribe.py:131
+msgid "Thanks for your subscription; we sent you a message for confirmation."
+msgstr "Ευχαριστούμε για την εγγραφή σας, σας στέλνουμε ένα μήνυμα για επιβεβαίωση."
+
+#: ./collective/singing/browser/subscribe.py:106
+msgid "Thanks.  We sent you a message."
+msgstr "Ευχαριστούμε. Σας στείλαμε μήνυμα."
+
+#: ./collective/singing/browser/subscribe.py:221
+msgid "The address you're already subscribed with"
+msgstr "Η διεύθυνση με την οποία είστε ήδη εγγεγραμμένος/η"
+
+#: ./collective/singing/interfaces.py:244
+msgid "The channel's subscriptions"
+msgstr "Οι εγγραφές του καναλιού"
+
+#: ./collective/singing/browser/wizard.py:27
+msgid "There were errors."
+msgstr "Υπήρξαν σφάλματα"
+
+#: ./collective/singing/subscribe.py:203
+msgid "There's already a subscription for ${name}"
+msgstr "Υπάρχει ήδη μια εγγραφή του/της ${name}"
+
+#: ./collective/singing/scheduler.py:163
+msgid "Timed scheduler"
+msgstr "Χρονικός προγραμματισμός"
+
+#: ./collective/singing/interfaces.py:218
+msgid "Title"
+msgstr "Τίτλος"
+
+#: ./collective/singing/interfaces.py:214
+msgid "Unique identifier for this channel across the site."
+msgstr "Μοναδικό στοιχείο ταυτότητας αυτού του καναλιού σε όλη την ιστοσελίδα"
+
+#: ./collective/singing/scheduler.py:152
+msgid "Weekly scheduler"
+msgstr "Εβδομαδιαίος προγραμματισμός"
+
+#: ./collective/singing/browser/subscribe.py:134
+msgid "You are already subscribed."
+msgstr "Είστε ήδη εγγεγραμμένος/η"
+
+#: ./collective/singing/browser/subscribe.py:95
+msgid "Your subscription isn't known to us."
+msgstr "Η εγγραφή σας δεν υπάρχει"
+
