@@ -211,9 +211,39 @@ We're now subscribed to the channel:
 Trying to subscribe again for the same format and e-mail address will
 produce a form error:
 
-  >>> html = subscribe() # doctest: +NORMALIZE_WHITESPACE
+  >>> html = subscribe()
   >>> "You are already subscribed" in html
   True
+
+Another language
+----------------
+
+The subscription add form will keep track of the preferred user's
+language as defined by the ``IUserPreferredLanguages`` adapter.  Let's
+define such an adapter:
+
+  >>> from zope.i18n.interfaces import IUserPreferredLanguages
+  >>> from zope.publisher.interfaces import IRequest
+  >>> class MyUserPreferredLanguages(object):
+  ...     component.adapts(IRequest)
+  ...     interface.implements(IUserPreferredLanguages)
+  ... 
+  ...     def __init__(self, request):
+  ...         pass
+  ...     def getPreferredLanguages(self):
+  ...         return ['ba', 'bm']
+  ... 
+  >>> component.provideAdapter(MyUserPreferredLanguages)
+
+  >>> request.form['composer.widgets.email'] = u'hanno@testingunderground.com'
+  >>> html = subscribe()
+  This is your dispatcher speaking:  This is a message to hanno@testingunderground.com to confirm their subscription.
+  >>> 'Thanks for your subscription' in html
+  True
+  >>> sub = [s for s in channel.subscriptions.values()
+  ...        if s.composer_data['email'].startswith('hanno')][0]
+  >>> sub.metadata['languages']
+  ['ba', 'bm']
 
 Another format
 --------------
@@ -259,16 +289,16 @@ We can now "finish" by providing an e-mail address:
   True
 
   >>> len(channel.subscriptions)
-  2
+  3
 
   >>> html = [sub for sub in channel.subscriptions.values()
-  ...         if sub.metadata['format'] == 'html'][0]
+  ...         if sub.metadata['format'] == 'html' and
+  ...         sub.composer_data['email'].startswith('daniel')][0]
   >>> plaintext = [sub for sub in channel.subscriptions.values()
-  ...              if sub.metadata['format'] == 'plaintext'][0]
+  ...              if sub.metadata['format'] == 'plaintext' and
+  ...              sub.composer_data['email'].startswith('daniel')][0]
 
-We need to adapt the subscription objects to ``IComposerData`` and
-``ICollectorData`` to confirm that the data we entered is actually
-stored:
+The data we entered was stored correctly:
 
   >>> dict(html.collector_data)
   {'colour': 'red'}
@@ -332,8 +362,8 @@ delete our subscriptions from the channel:
   >>> request.form['secret'] = u'daniel@testingunderground.com'
   >>> unsubscribe = Unsubscribe(channel, request)
   >>> len(channel.subscriptions)
-  2
+  3
   >>> unsubscribe() # doctest: +ELLIPSIS
   u'...You have been unsubscribed...'
   >>> len(channel.subscriptions)
-  0
+  1

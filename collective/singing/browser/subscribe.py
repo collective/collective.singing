@@ -2,6 +2,7 @@ import datetime
 
 from zope import component
 from zope import schema
+import zope.i18n.interfaces
 import zope.schema.interfaces
 import zope.schema.vocabulary
 import zope.publisher.browser
@@ -178,6 +179,18 @@ class Subscribe(wizard.Wizard):
             self.finished = False
             self.current_step.updateActions()
             return
+
+        # Set the language of the subscription.  This is the only
+        # place we can assume that the language of the request is the
+        # language of the subscription:
+        try:
+            languages = zope.i18n.interfaces.IUserPreferredLanguages(
+                self.request).getPreferredLanguages()
+        except TypeError, e:
+            # No such adapter available
+            pass
+        else:
+            subscription.metadata['languages'] = languages
 
         # Ask the composer to render a confirmation message
         composer = self.context.composers[self.format()]

@@ -4,6 +4,9 @@ History
 Version 0.6.6 - Unreleased
 --------------------------
 
+- Add the subscriber languages to subscription metadata at
+  subscription time.  [nouri]
+
 Version 0.6.5 - 2008-11-05
 --------------------------
 
