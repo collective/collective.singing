@@ -4,6 +4,8 @@ History
 Version 0.6.7 - Unreleased
 --------------------------
 
+- Added french translation.
+
 Version 0.6.6 - 2008-11-13
 --------------------------
 
