@@ -1,8 +1,17 @@
 History
 =======
 
-Version 0.6.7 - Unreleased
+Version 0.6.8 - Unreleased
 --------------------------
+
+Version 0.6.7 - 2008-12-03
+--------------------------
+
+- Part of Czech translation.  
+  [naro]
+
+- Some refactoring in order to allow for more customized subscription forms.
+  [nouri]
 
 - Added french translation.
 
