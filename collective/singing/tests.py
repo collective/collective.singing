@@ -3,9 +3,12 @@ from zope.testing import doctest
 from zope.component import testing
 
 from collective.singing import subscribe
-
+import queue
+from zc.queue.tests import ConflictResolvingMappingStorage
 count = 0
 root = None
+
+
 
 def subscription_added(obj, event):
     global count
@@ -87,6 +90,11 @@ def test_suite():
         doctest.DocFileSuite(
             'browser/converters.txt',
             setUp=testing.setUp, tearDown=testing.tearDown,
+        ),
+
+        doctest.DocFileSuite(
+            'queue.txt',
+            globs={'Queue':lambda: queue.CompositeQueue(2)}
         ),
 
        doctest.DocTestSuite(

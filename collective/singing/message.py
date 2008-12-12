@@ -16,6 +16,8 @@ import zope.lifecycleevent
 import zc.queue.interfaces
 import zc.lockfile
 
+import queue
+
 from collective.singing import interfaces
 
 logger = logging.getLogger('collective.singing')
@@ -68,15 +70,45 @@ class Message(object):
 
         return property(get, set)
 
+
+class SizedCompositeQueue(zc.queue.CompositeQueue):
+    def __init__(self, compositeSize=15, subfactory=zc.queue._queue.BucketQueue):
+        super(SizedCompositeQueue, self).__init__(compositeSize, subfactory)
+        self.size = 0
+
+    def pull(self, index=0):
+        item = super(SizedCompositeQueue, self).pull(index)
+        if item:
+            self.size -= 1
+        return item
+
+    def put(self, item):
+        super(SizedCompositeQueue, self).put(item)
+        self.size += 1
+
+    def last_item(self):
+        # Use instead of [-1]
+        # Saves iterating through all items! 
+        try:
+            last_queue = -1
+            while not len(self._data[last_queue]):
+                last_queue -= 1
+            return self._data[last_queue][-1]
+        except IndexError:
+            return None
+    
+    def __len__(self):
+        return self.size
+
 class MessageQueues(persistent.dict.PersistentDict):
     interface.implements(interfaces.IMessageQueues)
 
     def __init__(self, *args, **kwargs):
         super(MessageQueues, self).__init__(*args, **kwargs)
         for status in interfaces.MESSAGE_STATES:
-            self[status] = zc.queue.CompositeQueue()
+            self[status] = queue.CompositeQueue()
         self._messages_sent = Length()
-
+        
     @property
     def messages_sent(self):
         return self._messages_sent()

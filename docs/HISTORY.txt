@@ -4,6 +4,14 @@ History
 Version 0.6.8 - Unreleased
 --------------------------
 
+- MessageQueues are now collective.singing.queue.CompositeQueue - an
+  optimized version of zc.queue.CompositeQueue. This offers a _much_
+  faster __len__ and  faster access to last queue element.
+  Tests are stolen from zc.queue with added length checking everywhere.
+  This maybe belongs directly in zc.queue, but adding stuff in zc namespace
+  is not for me. ;-)  
+  [tmog]
+  
 Version 0.6.7 - 2008-12-03
 --------------------------
 
