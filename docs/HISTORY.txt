@@ -1,7 +1,10 @@
 History
 =======
 
-Version 0.6.8 - Unreleased
+Version 0.6.9 - Unreleased
+--------------------------
+
+Version 0.6.8 - 2009-01-02
 --------------------------
 
 - MessageQueues are now collective.singing.queue.CompositeQueue - an
