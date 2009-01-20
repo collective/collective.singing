@@ -1,8 +1,15 @@
 History
 =======
 
-Version 0.6.9 - Unreleased
+Version 0.6.10 - Unreleased
 --------------------------
+
+Version 0.6.9 - 2009-01-20
+--------------------------
+
+- Pinned zope.app.catalog version to pre 3.6.0 to avoid issue in
+  https://bugs.launchpad.net/singing-dancing/+bug/301082
+  [tmog]
 
 Version 0.6.8 - 2009-01-02
 --------------------------
