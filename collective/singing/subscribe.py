@@ -209,9 +209,17 @@ class Subscriptions(zope.app.container.btree.BTreeContainer):
         data = ISubscriptionCatalogData(subscription)
         del self[u'%s-%s' % (data.key, data.format)]
 
+def subscriptions_data(channel):
+    """ Get the actual subscriptions of a channel,
+    in case the 'subscriptions' attribute is a property decorated
+    function."""
+    if hasattr(channel, '_subscriptions'):
+        return channel._subscriptions
+    return channel.subscriptions
+
 def _catalog_subscription(subscription):
     intids = component.getUtility(zope.app.intid.interfaces.IIntIds)
-    subscription.channel.subscriptions._catalog.index_doc(
+    subscriptions_data(subscription.channel)._catalog.index_doc(
         intids.getId(subscription), subscription)
 
 @component.adapter(collective.singing.interfaces.ISubscription,
@@ -230,4 +238,4 @@ def subscription_modified(obj, event):
                    zope.app.intid.interfaces.IIntIdRemovedEvent)
 def subscription_removed(obj, event):
     intids = component.getUtility(zope.app.intid.interfaces.IIntIds)
-    obj.channel.subscriptions._catalog.unindex_doc(intids.getId(obj))
+    subscriptions_data(obj.channel)._catalog.unindex_doc(intids.getId(obj))

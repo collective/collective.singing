@@ -4,6 +4,12 @@ History
 Version 0.6.10 - Unreleased
 --------------------------
 
+- Changed eventhandlers for subscriptions indexing to look for
+  the Subscriptions object in 'channel._subscriptions' first.
+  This allows for a property decorated 'subscriptions' function
+  that keeps data in '_subscriptions'.
+  [tmog]
+
 Version 0.6.9 - 2009-01-20
 --------------------------
 
