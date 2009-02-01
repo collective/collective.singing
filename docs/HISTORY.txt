@@ -4,6 +4,12 @@ History
 Version 0.6.11 - Unreleased
 ---------------------------
 
+- Removed version pinning of zope.app.catalog to <= 3.6.0.  This is
+  handled through our external extends file now.  See
+  https://svn.plone.org/svn/collective/collective.dancing/buildout-extends/0.8.7.cfg
+  and http://pypi.python.org/pypi/collective.dancing#installation
+  [nouri]
+
 Version 0.6.10 - 2009-02-01
 ---------------------------
 
