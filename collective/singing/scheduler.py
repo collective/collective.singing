@@ -46,11 +46,13 @@ class MessageAssemble(object):
     def __init__(self, channel):
         self.channel = channel
 
-    def render_message(self,
-                       request, subscription, items=(), use_collector=True):
+    def render_message(self, request, subscription,
+                       items=(), use_collector=True, override_vars=None):
         channel = self.channel
         collector = channel.collector
         composers = channel.composers
+        if override_vars is None:
+            override_vars = {}
 
         subscription_metadata = subscription.metadata
         if subscription_metadata.get('pending'):
@@ -96,14 +98,16 @@ class MessageAssemble(object):
         # ... and finally render using the right composer. Note
         # that the message is already queued when we render it.
         composer = composers[format]
-        return composer.render(subscription, zip(transformed_items, raw_items))
+        return composer.render(subscription, zip(transformed_items, raw_items), override_vars)
 
-    def __call__(self, request, items=(), use_collector=True):
+    def __call__(self, request, items=(), use_collector=True, override_vars=None):
+        if override_vars is None:
+            override_vars = {}
         queued_messages = 0
         for subscription in self.channel.subscriptions.values():
             logger.debug("Rendering message for %r." % subscription)
             message = self.render_message(
-                request, subscription, items, use_collector)
+                request, subscription, items, use_collector, override_vars)
             if message is not None:
                 queued_messages +=1
         return queued_messages
@@ -182,13 +186,14 @@ class TimedScheduler(persistent.Persistent, AbstractPeriodicScheduler):
         assembler = interfaces.IMessageAssemble(channel)
         if self.active or manual:
             self.triggered_last = now
-            for when, content in tuple(self.items):
+            for when, content, override_vars in tuple(self.items):
                 if manual or when < now:
-                    self.items.remove((when, content))
+                    self.items.remove((when, content, override_vars))
                     if content is not None:
-                        count += assembler(request, (content(),))
+                        count += assembler(request, (content(),),
+                                           override_vars=override_vars)
                     else:
-                        count += assembler(request)
+                        count += assembler(request, override_vars=override_vars)
         return count
 
     def __eq__(self, other):

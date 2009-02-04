@@ -73,7 +73,7 @@ optional callable that'll be passed to the ``IMessageAssemble``
 component for inclusion in the send-out:
 
   >>> timed = scheduler.TimedScheduler()
-  >>> timed.items.append((datetime.datetime.now(), None))
+  >>> timed.items.append((datetime.datetime.now(), None, {}))
 
 Let's provide our own ``IMessageAssemble`` adapter to see what
 happens:
@@ -86,7 +86,8 @@ happens:
   ...     def __init__(self, channel):
   ...         self.channel = channel
   ... 
-  ...     def __call__(self, request, items=(), use_collector=True):
+  ...     def __call__(self, request, items=(), use_collector=True, override_vars=None):
+  ...         if override_vars is None: override_vars={}
   ...         print "Sending out %r." % (items,)
   ...         return 1
 
@@ -108,16 +109,16 @@ Let's add another item for now, with a content reference, and one for
 in the future.  We expect the items scheduled for later to stay in the
 queue:
 
-  >>> timed.items.append((datetime.datetime.now(), lambda: u'Hello'))
+  >>> timed.items.append((datetime.datetime.now(), lambda: u'Hello', {}))
   >>> timed.items.append(
-  ...     (datetime.datetime.now() + datetime.timedelta(days=1), None))
+  ...     (datetime.datetime.now() + datetime.timedelta(days=1), None, {}))
   >>> timed.tick(None, request)
   Sending out (u'Hello',).
   1
   >>> timed.tick(None, request)
   0
   >>> timed.items # doctest: +ELLIPSIS
-  [(datetime.datetime(...), None)]
+  [(datetime.datetime(...), None, {})]
 
 In contrast to the ``tick`` function, the manual ``trigger`` won't
 look at the date, and just send:
@@ -157,7 +158,8 @@ At this point, we'll provide our own ``IChannel``, ``IComposer`` and
   ...         return '<Subscription %r>' % self.name
 
   >>> class Composer(object):
-  ...     def render(self, subscription, items=()):
+  ...     def render(self, subscription, items=(), override_vars=None):
+  ...	      if override_vars is None: override_vars={}
   ...         formatted = tuple([item[0] for item in items])
   ...         print "Rendering message with %r for %r" % (
   ...             formatted, subscription)

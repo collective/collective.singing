@@ -69,7 +69,7 @@ class IComposer(interface.Interface):
         schema=IInterface,
         )
 
-    def render(subscription, items=()):
+    def render(subscription, items=(), override_vars=None):
         """Given a subscription and a list of items, I will create an
         IMessage and return it.
 
@@ -254,7 +254,7 @@ class IMessageAssemble(interface.Interface):
     """An adapter on the channel that's usually invoked by a scheduler
     to render and queue new messages.
     """
-    def __call__(request, items=(), use_collector=True):
+    def __call__(request, items=(), use_collector=True, override_vars=None):
         """Process all subscribers.
 
           o ``items`` is the items added manually
@@ -264,7 +264,7 @@ class IMessageAssemble(interface.Interface):
 
         Returns the number of queued messages."""
 
-    def render_message(request, subscription, items=(), use_collector=True):
+    def render_message(request, subscription, items=(), use_collector=True, override_vars=None):
         """Render and queue messages for an individual subscription.
 
           o ``subscription`` is an ISubscription
