@@ -1,0 +1,135 @@
+# --- PLEASE EDIT THE LINES BELOW CORRECTLY ---
+# SOME DESCRIPTIVE TITLE.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"POT-Creation-Date: 2008-11-05 14:49+0000\n"
+"PO-Revision-Date: 2009-03-06 16:38+0100\n"
+"Last-Translator: Mikel Larreategi <mlarreategi@codesyntax.com>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0\n"
+"Language-Code: eu\n"
+"Language-Name: Basque\n"
+"Preferred-Encodings: utf-8 latin1\n"
+"Domain: collective.singing\n"
+
+#: ./collective/singing/browser/subscribe.py:220
+msgid "Address"
+msgstr "Helbidea"
+
+#: ./collective/singing/interfaces.py:232
+msgid "Collector (what)"
+msgstr "Informazio-bilduma (zer)"
+
+#: ./collective/singing/scheduler.py:153
+msgid "Daily scheduler"
+msgstr "Eguneroko bidalketa"
+
+#: ./collective/singing/interfaces.py:222
+msgid "Description"
+msgstr "Deskribapena"
+
+#: ./collective/singing/browser/subscribe.py:130
+msgid "Fill in the information below to subscribe."
+msgstr "Bete ezazu beheko informazioa buletinera harpidetzeko."
+
+#: ./collective/singing/browser/subscribe.py:113
+msgid "Filters"
+msgstr "Filtroak"
+
+#: ./collective/singing/browser/wizard.py:102
+msgid "Finish"
+msgstr "Amaitu"
+
+#: ./collective/singing/browser/subscribe.py:43
+msgid "Format"
+msgstr "Formatua"
+
+#: ./collective/singing/browser/wizard.py:26
+msgid "Information submitted successfully."
+msgstr "Informazioa ondo bidali da"
+
+#: ./collective/singing/scheduler.py:161
+msgid "Manual scheduler"
+msgstr "Eskuzko bidalketa"
+
+#: ./collective/singing/browser/wizard.py:84
+msgid "Proceed"
+msgstr "Aurrera"
+
+#: ./collective/singing/browser/subscribe.py:212
+msgid "Retrieve a link to your personalized subscription settings"
+msgstr "Zure harpidetza kudeatzeko lotura lortu"
+
+#: ./collective/singing/interfaces.py:226
+msgid "Scheduler (when)"
+msgstr "Antolaketa (noiz)"
+
+#: ./collective/singing/browser/subscribe.py:225
+msgid "Send"
+msgstr "Bidali"
+
+#: ./collective/singing/browser/subscribe.py:76
+msgid "Send my subscription details"
+msgstr "Nire harpidetzari buruzkoak ikusi"
+
+#: ./collective/singing/collector.py:28
+msgid "Subjects"
+msgstr "Gaiak"
+
+#: ./collective/singing/collector.py:25
+msgid "Subjects collector"
+msgstr "Gaien informazio-bilduma"
+
+#: ./collective/singing/browser/subscribe.py:131
+msgid "Thanks for your subscription; we sent you a message for confirmation."
+msgstr "Eskerrik asko zure harpidetzagatik; harpidetza konfirmatzeko mezu bat bidali dizugu."
+
+#: ./collective/singing/browser/subscribe.py:106
+msgid "Thanks.  We sent you a message."
+msgstr "Eskerrik asko. Mezu bat bidali dizugu."
+
+#: ./collective/singing/browser/subscribe.py:221
+msgid "The address you're already subscribed with"
+msgstr "Harpidetza eginda daukazun helbidea"
+
+#: ./collective/singing/interfaces.py:244
+msgid "The channel's subscriptions"
+msgstr "Buletinaren harpidetzak."
+
+#: ./collective/singing/browser/wizard.py:27
+msgid "There were errors."
+msgstr "Erroreak egon dira"
+
+#: ./collective/singing/subscribe.py:203
+msgid "There's already a subscription for ${name}"
+msgstr "Badago ${name}-ren harpidetza bat"
+
+#: ./collective/singing/scheduler.py:168
+msgid "Timed scheduler"
+msgstr "Antolatutako bidalketa"
+
+#: ./collective/singing/interfaces.py:218
+msgid "Title"
+msgstr "Izenburua"
+
+#: ./collective/singing/interfaces.py:214
+msgid "Unique identifier for this channel across the site."
+msgstr "Webgunean zehar buletin hau identifikatzeko erabiliko den identifikadora"
+
+#: ./collective/singing/scheduler.py:157
+msgid "Weekly scheduler"
+msgstr "Astekako bidalketa"
+
+#: ./collective/singing/browser/subscribe.py:134
+msgid "You are already subscribed."
+msgstr "Aurretik harpidetuta zaude."
+
+#: ./collective/singing/browser/subscribe.py:95
+msgid "Your subscription isn't known to us."
+msgstr "Ez zaude harpidetuta."
+
