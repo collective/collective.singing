@@ -1,7 +1,10 @@
 History
 =======
 
-Version 0.6.11 - Unreleased
+Version 0.6.12 - Unreleased
+---------------------------
+
+Version 0.6.11 - 2009-03-11
 ---------------------------
 
 - Added optional keyword argument 'override_vars' to IComposer.render and
