@@ -30,6 +30,14 @@ Schedulers implement a ``tick`` method that'll call
   >>> from zope.publisher.browser import TestRequest
   >>> request = TestRequest()
 
+Our request needs to be annotatable. 
+
+  >>> from zope.annotation.attribute import AttributeAnnotations
+  >>> from zope import component
+  >>> component.provideAdapter(
+  ...     AttributeAnnotations, (TestRequest,))
+
+
   >>> daily = scheduler.DailyScheduler()
   >>> daily.tick(None, request)
 
@@ -279,6 +287,12 @@ they are applied in:
   ...     stitute = u'Frogs'
   >>> component.provideAdapter(We4FrogsTransform, name=u'frogs_transform')
   >>> channel.collector.items = ('We', 'love', 'life')
+
+We do have to create a new request here. Caching in the MessageAssembler assumes that transforms
+are not changed within the same request.
+
+  >>> request = TestRequest()
+
   >>> interfaces.IMessageAssemble(channel)(request)
   Collecting items for <Subscription 'daniel'> with cue 'somecue'
   Rendering message with (u'Frogs', u'love', u'Grappa', u'for', u"<Subscription 'daniel'>") for <Subscription 'daniel'>

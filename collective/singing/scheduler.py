@@ -2,13 +2,15 @@ import datetime
 import logging
 
 import persistent
-import persistent.list
+
 from zope import interface
 from zope import component
 from zope.deprecation.deprecation import deprecate
 
 from collective.singing import interfaces
 from collective.singing import MessageFactory as _
+
+from plone.memoize import request
 
 logger = logging.getLogger('collective.singing')
 
@@ -20,6 +22,11 @@ class UnicodeFormatter(object):
 
     def __call__(self):
         return unicode(self.item)
+
+@request.cache(get_key=lambda fun, obj, req, format: (obj, format))
+def format_item(obj, request, format):
+    logger.info('Formatting item: (%s, %s, %s)' % (obj, request, format))
+    return getIFormatAdapter(obj, request, format)()
 
 def getIFormatAdapter(obj, request, format):
     """Return item formatter for the specified format.
@@ -84,7 +91,7 @@ class MessageAssemble(object):
 
         # First format all items...
         format = subscription_metadata['format']
-        formatted_items = [getIFormatAdapter(item, request, format)()
+        formatted_items = [format_item(item, request, format)
                            for item in raw_items]
 
         # ... then transform them ...

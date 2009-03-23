@@ -4,6 +4,11 @@ History
 Version 0.6.12 - Unreleased
 ---------------------------
 
+- Added caching of item formatting via plone.memoize.request.
+  This really(!) speeds up message generation, especially when
+  sending 'full' items from 'send as newsletter'.
+  [tmog]
+
 Version 0.6.11 - 2009-03-11
 ---------------------------
 
