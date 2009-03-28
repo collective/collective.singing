@@ -1,0 +1,803 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: collective.singing\n"
+"POT-Creation-Date: 2008-11-05 14:49+0000\n"
+"PO-Revision-Date: 2009-03-28 15:27+0100\n"
+"Last-Translator: \n"
+"Language-Team: József Jároli <jaroli@yahoo.com>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Is-Fallback-For: hu\n"
+"X-Poedit-Language: Hungarian\n"
+"X-Poedit-SourceCharset: utf-8\n"
+
+#: collective/dancing/browser/portlets/channelsubscribe.py:288
+msgid "${channel} options"
+msgstr "${channel} beállításai"
+
+#: collective/dancing/browser/sendnewsletter.py:151
+msgid "${name} does not support scheduling."
+msgstr "${name} nem támogatja az ütemezést"
+
+#: collective/dancing/browser/channel.py:557
+msgid "${numberadded} subscriptions updated successfully!"
+msgstr "${numberadded} feliratkozás sikeresen frissítésre került."
+
+#: collective/dancing/browser/channel.py:551
+msgid "${numberadded} subscriptions updated successfully, ${numberremoved} removed!"
+msgstr "${numberadded} feliratkozás sikeresen frissítésre került, ${numberremoved} pedig eltávolításra!"
+
+#: collective/dancing/browser/channel.py:541
+msgid "${numberadded} subscriptions updated successfully. ${numberremoved} removed. ${numbernotadded} could not be added. (${errorcandidates})"
+msgstr "${numberadded} feliratkozás sikeresen frissítésre került, ${numbernotadded} feliratkozást nem lehetett hozzáadni. (${errorcandidates})"
+
+#: collective/dancing/browser/scheduler.py:33
+msgid "${number} messages queued."
+msgstr "${number} üzenet a várólistán."
+
+#: collective/dancing/browser/sendnewsletter.py:133
+msgid "${num} message(s) queued."
+msgstr "${num} üzenet a várólistán."
+
+#: collective/dancing/browser/stats.py:117
+msgid "${sent} message(s) sent, ${failed} failure(s)."
+msgstr "${sent} üzenet elküldve, ${failed} elküldése pedig sikertelen volt."
+
+#: collective/dancing/browser/collector.py:183
+msgid "Add"
+msgstr "Hozzáad"
+
+#: collective/dancing/browser/portlets/channelsubscribe.py:451
+msgid "Add Channel Subscribe Portlet"
+msgstr "Hírlevél csatornára feliratkozás portlet hozzáadása"
+
+#: collective/dancing/browser/channel.py:94
+msgid "Add or edit channels that will use collectors to gather and email specific sets of information from your site, to subscribed email addresses, at scheduled times."
+msgstr "Új csatornák hozzáadása vagy szerkesztése, melyek a hírlevél-gyűjtők használatával  e-mailben fogják elküldeni az oldalról származó információk meghatározott részét a feliratkozottak e-mail címeira, előre beállított időközönként."
+
+#: collective/dancing/browser/interfaces.py:23
+msgid "Address to send the preview to"
+msgstr "E-mail cím, ahová az előnézet kerül elküldésre"
+
+#: collective/dancing/browser/stats.py:137
+msgid "All finished jobs cleared"
+msgstr "Minden befejezett feladat törölve"
+
+#: collective/dancing/browser/stats.py:129
+msgid "All pending jobs processed"
+msgstr "Minden függőben lévő feladat végrehajtva"
+
+#: collective/dancing/browser/stats.py:161
+msgid "All sent and failed messages deleted"
+msgstr "Az összes elküldött és kézbesítetlen üzenet törölve"
+
+#. Default: "Already subscribed?"
+#: collective/dancing/browser/subscriptions.pt:33
+msgid "Already subscribed?"
+msgstr "Már feliratkozott?"
+
+#: collective/dancing/browser/interfaces.py:17
+msgid "Append automatically collected content in this send-out"
+msgstr "Automatikusan hozzáadja a gyűjtött tartalmat a küldendő hírlevélhez"
+
+#: collective/dancing/browser/scheduler.py:23
+msgid "Apply"
+msgstr "Elfogad"
+
+#: collective/dancing/browser/subscribe.py:176
+msgid "Apply changes"
+msgstr "Változások elfogadása"
+
+#: collective/dancing/browser/portlets/channelsubscribe.py:401
+msgid "Back to portlets"
+msgstr "Vissza a portletekhez"
+
+#. Default: "Below you see a list the newsletters we offer. If you are already subscribed to some of these you can fill out the form at the end of this page to be sent a link to where you can edit your existing subscriptions."
+#: collective/dancing/browser/subscriptions.pt:10
+msgid "Below you see a list the newsletters we offer. If you are already subscribed to some of these you can fill out the form at the end of this page to be sent a link to where you can edit your existing subscriptions."
+msgstr "Az alább az oldal által nyújtott hírleveleket látja. Ha már valamelyikre feliratkozott ezek közül, akkor az oldal alján található űrlap kitöltésével egy speciális linket küldhetünk Önnek, ahol jelenlegi feliratkozásait változtathatja meg."
+
+#. Default: "Best regards"
+#: collective/dancing/browser/composer-html-forgot.pt:30
+msgid "Best regards"
+msgstr "Üdvözlettel"
+
+#: collective/dancing/interfaces.py:56
+msgid "CSS Stylesheet"
+msgstr "CSS stíluslap"
+
+#. Default: "Change your subscriptions with ${site-title}"
+#: collective/dancing/browser/composer-html-forgot.pt:16
+msgid "Change your subscriptions with ${site-title}"
+msgstr "${site-title} oldal hírlevél-feliratkozásainak szerkesztése"
+
+#: collective/dancing/browser/channel.py:169
+msgid "Channel administration"
+msgstr "Csatornaadminisztráció"
+
+#: collective/dancing/browser/stats.py:131
+msgid "Clear finished jobs"
+msgstr "Elvégzett feladatok törlése"
+
+#: collective/dancing/browser/stats.py:97
+msgid "Clear queued messages"
+msgstr "Várólistás üzenetek törlése"
+
+#. Default: "Click here to manage your subscriptions with ${site-title}:"
+#: collective/dancing/browser/composer-html-forgot.pt:21
+msgid "Click here to manage your subscriptions with ${site-title}:"
+msgstr "Kattintson ide a(z) ${site-title} oldalon eszközölt hírlevél-feliratkozásai megváltoztatásához"
+
+#: collective/dancing/browser/portlets/channelsubscribe.py:50
+msgid "Click here to select collector options to be automatically enabled, when subscribing from this portlet."
+msgstr "Kattintson ide a jelen portlet segítségével történő feliratkozás esetén automatikusan aktivált hírlevél-gyűjtő opciók kiválasztásához."
+
+#: collective/dancing/browser/portlets/channelsubscribe.py:58
+msgid "Click here to show the portlet footer."
+msgstr "Kattintson ide a portlet láblécének kijelzéséhez"
+
+#. Default: "Click here to unsubscribe."
+#: collective/dancing/browser/composer-html.pt:39
+msgid "Click here to unsubscribe."
+msgstr "Kattintson ide a leiratkozáshoz."
+
+#: collective/dancing/browser/collector.py:65
+msgid "Collector administration"
+msgstr "Hírlevél-gyűjtő adminisztrálása"
+
+#: collective/dancing/browser/composer.py:42
+msgid "Composer for format : ${format}"
+msgstr "Hírlevél-összeállítő a következő formátumhoz: ${format}"
+
+#: collective/dancing/browser/channel.py:686
+msgid "Composers"
+msgstr "Hírlevél-összeállítók"
+
+#: collective/dancing/composer.py:243
+msgid "Confirm your subscription with ${channel-title}"
+msgstr "Erősítse meg a(z) '${channel-title}' hírlevél-csatornára történt feliratkozását."
+
+#: collective/dancing/browser/subscribe.py:78
+msgid "Confirming your subscription"
+msgstr "Feliratkozás megerősítése"
+
+#. Default: "Date of execution"
+#: collective/dancing/browser/jobs.pt:25
+msgid "Date of execution"
+msgstr "Végrehajtás dátuma"
+
+#: collective/dancing/browser/portlets/channelsubscribe.py:47
+msgid "Description of the rendered portlet"
+msgstr "A megjelenített portlet leírása."
+
+#. Default: "Displays a form that lets you send this content item as a newsletter."
+#: collective/dancing/profiles/default/actions.xml
+msgid "Displays a form that lets you send this content item as a newsletter."
+msgstr "Megjelenít egy űrlapot, mely lehetővé teszi e tartalom elem hírlevélként történő elküldését."
+
+#: collective/dancing/browser/channel.py:574
+msgid "Download"
+msgstr "Letölt"
+
+#: collective/dancing/composer.py:71
+msgid "E-mail address"
+msgstr "E-mail cím"
+
+#: collective/dancing/browser/channel.py:685
+msgid "Edit"
+msgstr "Szerkeszt"
+
+#: collective/dancing/browser/collector.py:331
+msgid "Edit ${collector}"
+msgstr "${collector} szerkesztése"
+
+#: collective/dancing/browser/scheduler.py:90
+msgid "Edit ${selector} for ${channel}"
+msgstr "A ${channel} csatornához tartozó ${selector} szerkesztése"
+
+#: collective/dancing/browser/channel.py:660
+msgid "Edit Channel ${channel}"
+msgstr "${channel} szerkesztése"
+
+#: collective/dancing/browser/portlets/channelsubscribe.py:370
+msgid "Edit Channel Subscribe Portlet"
+msgstr "Hírlevél-csatornára feliratkozás portlet szerkesztése"
+
+#: collective/dancing/browser/subscribe.py:27
+msgid "Edit existing subscriptions"
+msgstr "Meglévő feliratkozások szerkesztése"
+
+#: collective/dancing/browser/channel.py:354
+msgid "Edit the properties of the channel."
+msgstr "A hírlevél-csatorna tulajdonságainak szerkesztése"
+
+#: collective/dancing/browser/composer.py:33
+msgid "Edit the properties of the composer."
+msgstr "A hírlevél-összeállító tulajdonságainak szerkesztése."
+
+#: collective/dancing/browser/query.py:12
+msgid "Enter a search query to find content."
+msgstr "Adja meg a tartalom felleléséhez szükséges keresőkifejezést."
+
+#: collective/dancing/browser/channel.py:406
+msgid "Error importing subscriber file."
+msgstr "Ismeretlen hiba lépett fel a feliratkozásokat tartalmazó fájl importálásánál."
+
+#: collective/dancing/browser/stats.py:42
+msgid "Failed messages"
+msgstr "Kézbesíthetetlen üzenetek"
+
+#: collective/dancing/browser/channel.py:502
+msgid "File has not correct format."
+msgstr "A fájlformátum nem megfelelő."
+
+#: collective/dancing/browser/channel.py:498
+msgid "File was not given."
+msgstr "Nem adott meg fájlt."
+
+#: collective/dancing/browser/subscribe.py:29
+msgid "Fill out the form below to receive an email with a link from which you can edit your subscriptions."
+msgstr "Töltse ki az alábbi űrlapot, és egy e-mailt küldünk Önnek, mely tartalmazni fog egy speciális linket, mely segítségével a feliratkozásai kezelését lehetővé tevő oldalra juthat."
+
+#: collective/dancing/browser/subscribe.py:52
+msgid "Fill out the form below to subscribe to ${channel}. Note that this is for new subscriptions. Click here to <a href=\"${url}\">edit your subscriptions</a>."
+msgstr "Töltse ki az alábbi űrlapot a(z) '${channel}' hírlevél-csatornára történő feliratkozáshoz.<br /> Kattintson ide a <a href=\"${url}\">feliratkozásai szerkesztéséhez</a>."
+
+#: collective/dancing/browser/portlets/channelsubscribe.py:42
+msgid "Find the channel you want to enable direct subscription to"
+msgstr "Keresse ki a hírlevél-csatornát, melyre engedélyezni szeretné a közvetlen feliratkozást."
+
+#. Default: "Finished jobs"
+#: collective/dancing/browser/jobs.pt:19
+msgid "Finished jobs"
+msgstr "Elvégzett feladatok"
+
+#: collective/dancing/browser/portlets/channelsubscribe.py:53
+msgid "Footer text"
+msgstr "Lábléc szövege"
+
+#: collective/dancing/interfaces.py:28
+msgid "From address"
+msgstr "Feladó e-mail címe"
+
+#: collective/dancing/interfaces.py:23
+msgid "From name"
+msgstr "Feladó neve"
+
+#: collective/dancing/browser/channel.py:329
+msgid "Generate"
+msgstr "Legenerál"
+
+#: collective/dancing/composer.py:89
+msgid "HTML E-Mail"
+msgstr "HTML e-mail"
+
+#: collective/dancing/interfaces.py:44
+msgid "Header text"
+msgstr "Fejléc szövege"
+
+#: collective/dancing/browser/channel.py:448
+msgid "If selected and a subscriber exists in the database, but is not part of the uploaded file, the subscriber will be removed from the list."
+msgstr "Az opció kiválasztása esetén ha a feliratkozó létezik az adatbázisban, de nem található meg a feltöltött fájlban, akkor törlésre kerül a listából."
+
+#: collective/dancing/browser/interfaces.py:16
+msgid "Include collector items"
+msgstr "Hírlevél-gyűjtő elemek beszúrása"
+
+#: collective/dancing/browser/subscribe.py:276
+msgid "Information on how to confirm your subscription has been sent to you."
+msgstr "A feliratkozás megerősítéséhez szükséges információt elküldtük e-mail címére."
+
+#: collective/dancing/browser/collector.py:191
+msgid "Item added successfully."
+msgstr "Az elem sikeresen hozzáadva."
+
+#: collective/dancing/browser/collector.py:202
+msgid "Item successfully deleted."
+msgstr "Az elem sikeresen törölve."
+
+#: collective/dancing/browser/collector.py:235
+msgid "Item successfully moved."
+msgstr "Az elem sikeresen mozgatva."
+
+#: collective/dancing/browser/query.py:11
+msgid "Items"
+msgstr "Elemek"
+
+#. Default: "Job title"
+#: collective/dancing/browser/jobs.pt:23
+msgid "Job title"
+msgstr "Feladat elnevezése"
+
+#: collective/dancing/browser/stats.py:33
+msgid "Last Change"
+msgstr "Utolsó változás"
+
+#: collective/dancing/browser/channel.py:216
+msgid "Manage or add subscriptions."
+msgstr "Feliratkozások kezelése és hozzáadása"
+
+#. Default: "Manage your subscriptions"
+#: collective/dancing/browser/composer-html-forgot.pt:24
+msgid "Manage your subscriptions"
+msgstr "Feliratkozások kezelése"
+
+#: collective/dancing/interfaces.py:33
+msgid "Message subject"
+msgstr "Üzenet tárgya"
+
+#: collective/dancing/browser/sendnewsletter.py:86
+msgid "Messages queued for delivery."
+msgstr "Az üzenetek a kézbesítés várólistájára kerültek."
+
+#: collective/dancing/browser/stats.py:37
+msgid "Messages successfully sent"
+msgstr "Az üzenetek sikeresen elküldve."
+
+#: collective/dancing/browser/stats.py:31
+msgid "Messages waiting to be sent"
+msgstr "Elküldésre váró üzenetek"
+
+#: collective/dancing/browser/stats.py:43
+msgid "Messages with errors"
+msgstr "Üzenetek hibákkal"
+
+#: collective/dancing/browser/stats.py:49
+msgid "Messages with errors in the retry queue"
+msgstr "Hibákkal rendeklező üzenetek a várólistán"
+
+#: collective/dancing/browser/collector.py:238
+msgid "Move block down"
+msgstr "Blokk lejjebb mozgatása"
+
+#: collective/dancing/browser/collector.py:231
+msgid "Move block up"
+msgstr "Blokk feljebb mozgatása"
+
+#: collective/dancing/browser/subscribe.py:289
+msgid "My subscriptions"
+msgstr "Feliratkozásaim"
+
+#: collective/dancing/browser/stats.py:30
+msgid "New messages"
+msgstr "Új üzenetek"
+
+#: collective/dancing/channel.py:100
+msgid "Newsletter"
+msgstr "Hírlevél"
+
+#: collective/dancing/browser/stats.py:169
+msgid "Newsletter statistics"
+msgstr "Hírlevél statisztikák"
+
+#: collective/dancing/browser/preview.py:66
+msgid "No items found."
+msgstr "Nincs találat."
+
+#: collective/dancing/browser/scheduler.py:36
+msgid "No messages queued."
+msgstr "Nincs várólistás üzenet"
+
+#: collective/dancing/browser/channel.py:601
+msgid "Only some of your changes were saved"
+msgstr "Változtatásai közül csak néhány került mentésre"
+
+#. Default: "Pending jobs"
+#: collective/dancing/browser/jobs.pt:9
+msgid "Pending jobs"
+msgstr "Függő feladatok"
+
+#. Default: "Please confirm your subscription"
+#: collective/dancing/browser/composer-html-confirm.pt:14
+msgid "Please confirm your subscription"
+msgstr "Kérjük, erősítse meg feliratkozását"
+
+#: collective/dancing/browser/sendnewsletter.py:155
+msgid "Please fill in a date."
+msgstr "Kérjük, adjon meg egy dátumot."
+
+#: collective/dancing/browser/stats.py:90
+msgid "Please select items to remove."
+msgstr "Kérjük, válassza ki a törlendő elemeket."
+
+#: collective/dancing/browser/stats.py:99
+msgid "Please select items with new messages to clear."
+msgstr "Kérjük, válaszza ki az elemeket, melyek üzeneteit törölni szeretné."
+
+#: collective/dancing/browser/sendnewsletter.py:97
+msgid "Please select precisely one channel for preview."
+msgstr "Kérjük, válaszon egyetlen hírlevél csatornát az előnézethez."
+
+#: collective/dancing/browser/stats.py:108
+msgid "Please select which channel's queued e-mails you'd like to send."
+msgstr "Kérjük, válassza ki, mely hírlevél-csatorna e-mailjai kerüljenek elküldésre."
+
+#: collective/dancing/browser/portlets/channelsubscribe.py:46
+msgid "Portlet description"
+msgstr "Portlet leírása"
+
+#: collective/dancing/browser/portlets/channelsubscribe.py:38
+msgid "Portlet header"
+msgstr "Portlet fejléce"
+
+#: collective/dancing/browser/channel.py:687
+msgid "Preview"
+msgstr "Előnézet"
+
+#: collective/dancing/browser/portlets/channelsubscribe.py:207
+msgid "Proceed"
+msgstr "Tovább"
+
+#: collective/dancing/browser/stats.py:120
+msgid "Process jobs"
+msgstr "Feladatok végrehajtása"
+
+#: collective/dancing/browser/collector.py:199
+msgid "Remove block"
+msgstr "Blokk törlése"
+
+#: collective/dancing/browser/scheduler.py:78
+msgid "Remove entries"
+msgstr "Elemek törlése"
+
+#: collective/dancing/browser/channel.py:447
+msgid "Remove non-existing"
+msgstr "Nem létező elemek törlése"
+
+#: collective/dancing/browser/stats.py:88
+msgid "Remove old messages"
+msgstr "Régi üzenetek törlése"
+
+#: collective/dancing/interfaces.py:39
+msgid "Reply-to address"
+msgstr "Válasz fogadására szolgáló (Reply-to) e-mail cím"
+
+#: collective/dancing/browser/stats.py:48
+msgid "Retry messages"
+msgstr "Üzenetek újrázása"
+
+#: collective/dancing/collector.py:70
+msgid "Rich text"
+msgstr "Formázott szöveg"
+
+#: collective/dancing/browser/channel.py:617
+msgid "Save"
+msgstr "ment"
+
+#: collective/dancing/browser/sendnewsletter.py:143
+msgid "Schedule distribution"
+msgstr "Időzítés eloszlása"
+
+#: collective/dancing/browser/interfaces.py:30
+msgid "Scheduled time"
+msgstr "Időzítés ideje"
+
+#: collective/dancing/browser/channel.py:187
+msgid "Search"
+msgstr "Keres"
+
+#: collective/dancing/browser/channel.py:184
+msgid "Search subscribers"
+msgstr "Felirtakozottak keresése"
+
+#: collective/dancing/collector.py:211
+msgid "Sections"
+msgstr "Szekciók"
+
+#: collective/dancing/browser/channel.py:319
+msgid "See an in-browser preview of the newsletter."
+msgstr "Hírlevél előnézetének megtekintése a böngészőben."
+
+#: collective/dancing/browser/sendnewsletter.py:65
+msgid "Send"
+msgstr "Küld"
+
+#: collective/dancing/browser/sendnewsletter.py:79
+msgid "Send \"${context}\" through ${channels}."
+msgstr "\"${context}\" elküldése a(z) \"${channels}\" hírlevél csatornán keresztül."
+
+#: collective/dancing/browser/sendnewsletter.py:169
+msgid "Send ${item} as newsletter"
+msgstr "'${item}' hírlevélként történő elküldése"
+
+#. Default: "Send as newsletter"
+#: collective/dancing/profiles/default/actions.xml
+msgid "Send as newsletter"
+msgstr "Küldd hírlevélként"
+
+#: collective/dancing/browser/sendnewsletter.py:108
+msgid "Send preview"
+msgstr "Előnézet elküldése"
+
+#: collective/dancing/browser/stats.py:106
+msgid "Send queued messages now"
+msgstr "Várólistás üzenetek azonnali elküldése"
+
+#: collective/dancing/browser/stats.py:36
+msgid "Sent messages"
+msgstr "Elküldött üzenetek"
+
+#. Default: "Should you be already subscribed to one of our lists, please use this form to retrieve a link to your personalized subscription page:"
+#: collective/dancing/browser/subscriptions.pt:34
+msgid "Should you be already subscribed to one of our lists, please use this form to retrieve a link to your personalized subscription page:"
+msgstr "Ha már feliratkozott valamelyik hírlevél-csatornára, akkor kérjük, használja ezt az űrlapot a személyes, feliratkozásai kezelésére szolgáló oldal eléréséhez:"
+
+#: collective/dancing/browser/portlets/channelsubscribe.py:57
+msgid "Show footer"
+msgstr "Lábléc megjelenítése"
+
+#: collective/dancing/browser/sendnewsletter.py:88
+msgid "Show preview"
+msgstr "Előnézet megjelenítése"
+
+#: collective/dancing/browser/controlpanel.py:19
+msgid "Singing & Dancing configuration"
+msgstr "Singing & Dancing konfigurálása"
+
+#: collective/dancing/channel.py:114
+msgid "Standard Channel"
+msgstr "Sztenderd hírlevél-csatorna"
+
+#. Default: "Status"
+#: collective/dancing/browser/jobs.pt:24
+msgid "Status"
+msgstr "Státusz"
+
+#: collective/dancing/browser/subscribe.py:231
+msgid "Subscribe"
+msgstr "Feliratkozás"
+
+#: collective/dancing/browser/portlets/channelsubscribe.py:49
+msgid "Subscribe directly from portlet"
+msgstr "Közvetlen feliratkozás portleten keresztül"
+
+#: collective/dancing/browser/subscribe.py:61
+msgid "Subscribe to ${channel}"
+msgstr "Feliratkozás a(z) ${channel} hírlevél-csatornára"
+
+#: collective/dancing/browser/channel.py:438
+msgid "Subscribers"
+msgstr "Feliratkozottak"
+
+#: collective/dancing/browser/channel.py:576
+msgid "Subscribers exported."
+msgstr "Feliratkozások exportálva"
+
+#: collective/dancing/browser/channel.py:682
+msgid "Subscriptions"
+msgstr "Feliratkozások"
+
+#: collective/dancing/browser/stats.py:102
+msgid "Successfully cleared queued messages in channels."
+msgstr "A csatornákban várólistán levő üzenetek törölve."
+
+#: collective/dancing/browser/stats.py:93
+msgid "Successfully removed old messages from channels."
+msgstr "A csatornákban található régi üzenetek törölve."
+
+#: collective/dancing/browser/sendnewsletter.py:164
+msgid "Successfully scheduled distribution."
+msgstr "Az időzítés beállítva."
+
+#: collective/dancing/browser/portlets/channelsubscribe.py:54
+msgid "Text in footer - if omitted the channel title is used"
+msgstr "A lábléc szövege. Hiánya esetén a hírlevél-csatorna címe jelenik meg."
+
+#: collective/dancing/interfaces.py:45
+msgid "Text to appear at the beginning of every message. You may use a number of variables here including ${subject}."
+msgstr "Az üzenetek elején megjelenő szöveg. Használhat jónéhány változót, mint például a ${subject}."
+
+#: collective/dancing/interfaces.py:52
+msgid "Text to appear at the end of every message"
+msgstr "Az üzenetek végén megjelenő szöveg."
+
+#: collective/dancing/browser/portlets/channelsubscribe.py:41
+msgid "The channel to enable subscriptions to."
+msgstr "A hírlevél-csatorna, ahol engedélyezi a feliratkozást."
+
+#: collective/dancing/browser/interfaces.py:10
+msgid "The channel to send this through"
+msgstr "A csatorna, melyen keresztül elküldésre kerül"
+
+#: collective/dancing/interfaces.py:29
+msgid "The from addess that will appear in messages sent from this composer."
+msgstr "A Feladó címe, mely jelen hírlevél összeállító által küldött üzenetek feladójaként fog megjelenni."
+
+#: collective/dancing/interfaces.py:40
+msgid "The reply-to addess that will appear in messages sent from this composer."
+msgstr "A választ fogadó (Reply-to) cím, mely jelen hírlevél összeállító által küldött üzenetekre adott válaszokat fogja fogadni."
+
+#: collective/dancing/interfaces.py:24
+msgid "The sender name that will appear in messages sent from this composer."
+msgstr "A Feladó neve, mely jelen hírlevél összeállító által küldött üzenetek feladójaként fog megjelenni."
+
+#: collective/dancing/interfaces.py:57
+msgid "The stylesheet will be applied to the document."
+msgstr "A síluslap alkalmazásra fog kerülni."
+
+#: collective/dancing/browser/subscribe.py:254
+msgid "There seems to be an error with the information you entered."
+msgstr "A megadott információk hibásak."
+
+#: collective/dancing/browser/portlets/channelsubscribe.py:198
+msgid "There were some errors."
+msgstr "Hiba lépett fel."
+
+#: collective/dancing/browser/interfaces.py:31
+msgid "This is only required if you click 'Schedule distribution' below"
+msgstr "Csak akkor kötelező, ha a 'Időzítés eloszlása' opciót választja alább"
+
+#: collective/dancing/browser/interfaces.py:24
+msgid "This is only required if you click 'Send preview' below"
+msgstr "Csak akkor kötelező, ha az 'Előnézet elküldése' opciót választja alább"
+
+#: collective/dancing/browser/portlets/channelsubscribe.py:407
+msgid "This portlet allows a visitor to subscribe to a specific newsletter channel."
+msgstr "Ez a portlet lehetővé teszi, hogy a látogató feliratkozzon egy adott hírlevél-csatornára."
+
+#: collective/dancing/browser/collector.py:91
+msgid "Title"
+msgstr "Cím"
+
+#: collective/dancing/browser/portlets/channelsubscribe.py:39
+msgid "Title of the rendered portlet"
+msgstr "Adja meg a portlet címét."
+
+#. Default: "To confirm your subscription with ${channel}, please click here: ${url}"
+#: collective/dancing/browser/composer-html-confirm.pt:20
+msgid "To confirm your subscription with ${channel}, please click here: ${url}"
+msgstr "A (z) ${channel} hírlevél-csatornára történt feliratkozás megerősítéséhez kérjük, kattintson ide: ${url}"
+
+#: collective/dancing/browser/stats.py:25
+msgid "Total messages sent"
+msgstr "Összes elküldött üzenet"
+
+#: collective/dancing/browser/stats.py:26
+msgid "Total number of messages sent successsfully"
+msgstr "Összes sikeresen elküldött üzenet száma"
+
+#: collective/dancing/browser/scheduler.py:28
+msgid "Trigger now"
+msgstr "Aktiválja most"
+
+#: collective/dancing/browser/channel.py:107
+msgid "Type"
+msgstr "Típus"
+
+#: collective/dancing/browser/channel.py:530
+msgid "Unknown"
+msgstr "Ismeretlen"
+
+#: collective/dancing/browser/subscribe.py:106
+msgid "Unsubscribe"
+msgstr "Leiratkozás"
+
+#: collective/dancing/browser/subscribe.py:188
+msgid "Unsubscribe from newsletter"
+msgstr "Leiratkozás a hírlevélről"
+
+#: collective/dancing/browser/channel.py:655
+msgid "Up to Channels administration"
+msgstr "Fel a hírlevél-csatornák adminisztrálásához"
+
+#: collective/dancing/browser/collector.py:335
+msgid "Up to Collector administration"
+msgstr "Fel a hírlevél-gyűjtők adminisztrálásához"
+
+#: collective/dancing/browser/controlpanel.py:12
+msgid "Up to Singing & Dancing configuration"
+msgstr "Fel a Singing & Dancing konfigurálásához"
+
+#: collective/dancing/browser/controlpanel.py:22
+msgid "Up to Site Setup"
+msgstr "Fel a oldalbeállításhoz"
+
+#: collective/dancing/browser/channel.py:432
+msgid "Upload"
+msgstr "Feltölt"
+
+#: collective/dancing/browser/channel.py:439
+msgid "Upload a CSV file with a list of subscribers here. Subscribers already present in the database will be overwritten. Each line should contain: ${columns}."
+msgstr "Töltsön fel egy, a feliratkozottak listáját tartalmazó CSV fájlt itt. A már meglévő feliratkozottak adatai felülírásra kerülnek. Minden sornak tartalmaznia kell ezt: ${columns}."
+
+#: collective/dancing/browser/channel.py:581
+msgid "Upload list of subscribers."
+msgstr "Feliratkozottak listájának feltöltése."
+
+#: collective/dancing/browser/portlets/channelsubscribe.py:146
+msgid "You are already subscribed to this newsletter. Click here to <a href=\"${url}\">edit your subscriptions</a>."
+msgstr "Már feliratkozott erre a hírlevélre. Kattintson ide a <a href=\"${url}\">feliratkozásai szerkesztéséhez</a>."
+
+#: collective/dancing/browser/subscribe.py:203
+msgid "You are already subscribed. Fill out the form at the end of this page to be sent a link from where you can edit your subscription."
+msgstr "Már feliratkozott. Töltse ki a lap alján található űrlapot, és egy speciális linket küldünk Önnek, ami elvezeti Önt a feliratkozásai szerkesztésére szolgáló speciális oldalra."
+
+#. Default: "You are currently subscribed to these newsletters:"
+#: collective/dancing/browser/subscriptions.pt:21
+msgid "You are currently subscribed to these newsletters:"
+msgstr "Jelenleg a következő hírlevelekre iratkozott fel:"
+
+#: collective/dancing/browser/subscribe.py:118
+msgid "You aren't subscribed to this channel."
+msgstr "Nem iratkozott fel még erre a hírlevél-csatornára."
+
+#. Default: "You can subscribe to these newsletters:"
+#: collective/dancing/browser/subscriptions.pt:28
+msgid "You can subscribe to these newsletters:"
+msgstr "A következő hírlevelekre iratkozhat fel:"
+
+#: collective/dancing/browser/subscribe.py:80
+msgid "You confirmed your subscription successfully."
+msgstr "Sikeresen megerősítette feliratkozását."
+
+#: collective/dancing/interfaces.py:34
+msgid "You may use a number of variables here, like ${site-title}."
+msgstr "Jónéhány változót használhat itt, mint pl. a ${site-title}."
+
+#: collective/dancing/browser/subscribe.py:271
+msgid "You subscribed successfully."
+msgstr "Sikeresen feliratkozott."
+
+#: collective/dancing/browser/subscribe.py:116
+msgid "You unsubscribed successfully."
+msgstr "Sikeresen leiratkozott."
+
+#. Default: "You're receiving this e-mail because you're registered for the ${channel} newsletter."
+#: collective/dancing/browser/composer-html.pt:35
+msgid "You're receiving this e-mail because you're registered for the ${channel} newsletter."
+msgstr "Ön azért kapta ezt az e-mailt, mert feliratkozott a(z) '${channel}' hírlevélre."
+
+#: collective/dancing/composer.py:43
+msgid "Your e-mail address is invalid"
+msgstr "E-mail címe érvénytelen"
+
+#: collective/dancing/browser/subscribe.py:19
+msgid "Your email address is already subscribed. Click the \"Send my subscription details\" button below."
+msgstr "Ezzel az e-mail címmel már feliratkozott. Kattintson a  \"Feliratkozásaim részleinek elküldése\" gombra."
+
+#: collective/dancing/browser/subscribe.py:81
+msgid "Your subscription isn't known to us."
+msgstr "Feliratkozása nem ismert számunkra."
+
+#: collective/dancing/browser/subscribe.py:142
+msgid "Your subscription was updated."
+msgstr "Feliratkozásának adatai frissítve."
+
+#. Default: "A Channel is a hub of configuration.  It doesn't do anything by itself.  Rather, it provides a number of components to configure and work with.  It is also the container of subscriptions to it."
+#: collective/dancing/browser/controlpanel-links.pt:7
+msgid "description_channel_administration"
+msgstr "A hírlevél-csatorna a konfiguráció központi eleme, önmagában semmit sem csinál, hanem számos további komponens konfigurálását teszi lehetővé. Emellett tárolja a feliratkozásokat is."
+
+#. Default: "Collectors are useful for automatic newsletters.  They are responsible for assembling a list of items for publishing."
+#: collective/dancing/browser/controlpanel-links.pt:18
+msgid "description_collector_administration"
+msgstr "A hírlevél-gyűjtők automatikus hírlevelek küldéséhez hasznosak: az elküldésre kerülő elemek összegyűjtését végzik."
+
+#. Default: "View newsletter statistics"
+#: collective/dancing/browser/controlpanel-links.pt:28
+msgid "description_statistics_administration"
+msgstr "Hírlevél-statisztikák megtekintése"
+
+#. Default: "Channel administration"
+#: collective/dancing/browser/controlpanel-links.pt:3
+msgid "label_channel_administration"
+msgstr "Hírlevél-csatornák adminisztrálása"
+
+#. Default: "Collector administration"
+#: collective/dancing/browser/controlpanel-links.pt:13
+msgid "label_collector_administration"
+msgstr "Hírlevél-gyűjtők adminisztrálása"
+
+#. Default: "Statistics"
+#: collective/dancing/browser/controlpanel-links.pt:23
+msgid "label_statistics_administration"
+msgstr "Statisztikák"
+
+#~ msgid "Flush new messages"
+#~ msgstr "Új üzenetek törlése"
+#~ msgid "\"${channel}\" subscriptions administration"
+#~ msgstr "\"${channel}\" feliratkozásainak adminisztrálása"
+#~ msgid "${address} is not subscribed to ${channel}."
+#~ msgstr "${address} nem iratkozott fel a(z) ${channel} hírlevélre."
+
