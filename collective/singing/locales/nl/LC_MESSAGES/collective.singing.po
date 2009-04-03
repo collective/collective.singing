@@ -1,24 +1,23 @@
+# Wim Boucquaert <wim@infrae.com>, 2009.
+#
+#
 msgid ""
 msgstr ""
-"Project-Id-Version: PACKAGE VERSION\n"
+"Project-Id-Version: collective.singing trunk\n"
+"Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2007-12-27 13:42+0000\n"
-"PO-Revision-Date: 2008-04-22 23:40+0100\n"
-"Last-Translator: Wim Boucquaert <wim@infrae.com>\n"
-"Language-Team: LANGUAGE <LL@li.org>\n"
+"PO-Revision-Date: 2009-04-03 19:03+0100\n"
+"Last-Translator: Duco Dokter and Wietze Helmantel <info@gw20e.com>\n"
+"Language-Team: Dutch <info@gw20e.com>\n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=utf-8\n"
+"Content-Type: text/plain; charset=iso-8859-15\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0\n"
-"Language-Code: nl\n"
-"Language-Name: Nederlands\n"
-"Preferred-Encodings: utf-8 latin1\n"
-"Domain: collective.singing\n"
-"X-Is-Fallback-For: nl-be nl-nl\n"
 
 #: /browser/subscribe.py:106
 #: /browser/subscribe.py:241
 msgid "Thanks.  We sent you a message."
-msgstr "Bedankt. We verzonden je een bericht."
+msgstr "Bedankt. We hebben je een bericht gestuurd."
 
 #: /browser/subscribe.py:113
 msgid "Filters"
@@ -26,19 +25,19 @@ msgstr "Filters"
 
 #: /browser/subscribe.py:130
 msgid "Fill in the information below to subscribe."
-msgstr "Vul onderstaande informatie in om je in te schrijven."
+msgstr "Vul het inschrijfformulier in."
 
 #: /browser/subscribe.py:131
 msgid "Thanks for your subscription; we sent you a message for confirmation."
-msgstr "Bedankt voor je inschrijving, je zal een e-mail bericht ontvangen ter bevestiging."
+msgstr "Bedankt voor je inschrijving. Je ontvangt een e-mail ter bevestiging."
 
 #: /browser/subscribe.py:134
 msgid "You are already subscribed."
-msgstr "Je bent reeds ingeschreven."
+msgstr "Je bent al ingeschreven."
 
 #: /browser/subscribe.py:212
 msgid "Retrieve a link to your personalized subscription settings"
-msgstr "Een link ontvangen met je inschrijvings instellingen"
+msgstr "Ontvang een link naar de instellingen van je abonnement."
 
 #: /browser/subscribe.py:217
 msgid "Address"
@@ -54,16 +53,16 @@ msgstr "Verzenden"
 
 #: /browser/subscribe.py:42
 msgid "Format"
-msgstr "Formaat"
+msgstr "Opmaak"
 
 #: /browser/subscribe.py:75
 msgid "Send my subscription details"
-msgstr "Verzend mijn inschrijvings details"
+msgstr "Verstuur mijn inschrijfgegevens"
 
 #: /browser/subscribe.py:95
 #: /browser/subscribe.py:244
 msgid "Your subscription isn't known to us."
-msgstr "Je inschrijving is onbekend bij ons."
+msgstr "Je inschrijving is bij ons onbekend."
 
 #: /browser/wizard.py:102
 msgid "Finish"
@@ -71,11 +70,11 @@ msgstr "Afronden"
 
 #: /browser/wizard.py:26
 msgid "Information submitted successfully."
-msgstr "Informatie succesvol verzonden."
+msgstr "Je informatie is succesvol verzonden."
 
 #: /browser/wizard.py:27
 msgid "There were errors."
-msgstr "Er traden fouten op."
+msgstr "Er is iets misgegaan."
 
 #: /browser/wizard.py:84
 msgid "Proceed"
@@ -83,7 +82,7 @@ msgstr "Ga verder"
 
 #: /interfaces.py:258
 msgid "Unique identifier for this channel across the site."
-msgstr "Unieke indentifactor voor dit kanaal doorheen de site."
+msgstr "Unieke identificatie van dit kanaal voor deze site."
 
 #: /interfaces.py:262
 msgid "Title"
@@ -95,15 +94,15 @@ msgstr "Beschrijving"
 
 #: /interfaces.py:270
 msgid "Scheduler (when)"
-msgstr "Planner (wanneeer)"
+msgstr "Planner"
 
 #: /interfaces.py:276
 msgid "Collector (what)"
-msgstr "Collector (wat)"
+msgstr "Collectie"
 
 #: /interfaces.py:288
 msgid "The channel's subscriptions"
-msgstr "De kanaal inschrijvingen"
+msgstr "De inschrijvingen voor dit kanaal"
 
 #: /scheduler.py:108
 msgid "Daily scheduler"
