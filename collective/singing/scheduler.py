@@ -138,6 +138,87 @@ def assemble_messages(channel, request, items=(), use_collector=True):
     return interfaces.IMessageAssemble(channel)(request, items, use_collector)
 
 class AbstractPeriodicScheduler(object):
+
+    """
+      >>> from datetime import datetime, date, time, timedelta
+
+      >>> class TestScheduler(AbstractPeriodicScheduler):
+      ...     @property
+      ...     def now(self):
+      ...         return self._now
+      ...     def assemble_messages(self, channel, request):
+      ...         return self.triggered_last
+
+      >>> def reset(scheduler):
+      ...     scheduler.active = True
+      ...     scheduler.delta = timedelta(days=7)
+      ...     scheduler.triggered_last = datetime(2009, 3, 1, 17, 0)
+
+      >>> scheduler = TestScheduler()
+      >>> reset(scheduler)
+
+Delta not reached, triggered_last stays the same.
+
+      >>> last = scheduler.triggered_last
+      >>> scheduler._now = datetime(2009, 3, 1, 17, 15)
+      >>> scheduler.tick(None, None)
+      >>> last == scheduler.triggered_last
+      True
+      
+      >>> scheduler._now = datetime(2009, 3, 4, 17, 0)
+      >>> scheduler.tick(None, None)
+      >>> last == scheduler.triggered_last
+      True
+
+      >>> scheduler._now = datetime(2009, 3, 8, 16, 59)
+      >>> scheduler.tick(None, None)
+      >>> last == scheduler.triggered_last
+      True
+
+Delta reached.
+
+      >>> scheduler._now = datetime(2009, 3, 8, 17, 15)
+      >>> scheduler.tick(None, None)
+      datetime.datetime(2009, 3, 8, 17, 0)
+
+      >>> reset(scheduler)
+      >>> scheduler._now = datetime(2009, 3, 8, 17, 0)
+      >>> scheduler.tick(None, None)
+      datetime.datetime(2009, 3, 8, 17, 0)
+
+Only the date changes when sending.
+
+      >>> reset(scheduler)
+      >>> scheduler._now = datetime(2009, 3, 9, 18, 15)
+      >>> scheduler.tick(None, None)
+      datetime.datetime(2009, 3, 8, 17, 0)
+
+      >>> reset(scheduler)
+      >>> scheduler._now = datetime(2009, 3, 12, 18, 15)
+      >>> scheduler.tick(None, None)
+      datetime.datetime(2009, 3, 8, 17, 0)
+
+If last call is more the delta ago, the interveening sends will
+of course  be skipped.
+
+      >>> reset(scheduler)
+      >>> scheduler._now = datetime(2009, 3, 26, 18, 15)
+      >>> scheduler.tick(None, None)
+      datetime.datetime(2009, 3, 22, 17, 0)
+
+Trigging a manual scheduler (with no delta) always sets it's triggered_last to now.
+
+      >>> reset(scheduler)
+      >>> scheduler.delta = timedelta()
+      >>> scheduler._now = datetime(2009, 3, 26, 18, 15)
+      >>> scheduler.tick(None, None)
+      datetime.datetime(2009, 3, 26, 18, 15)
+      
+      >>> scheduler._now = datetime(2009, 3, 26, 18, 16)
+      >>> scheduler.tick(None, None)
+      datetime.datetime(2009, 3, 26, 18, 16)
+
+    """
     interface.implements(interfaces.IScheduler)
 
     triggered_last = datetime.datetime(1970, 1, 1)
@@ -145,13 +226,27 @@ class AbstractPeriodicScheduler(object):
     delta = None
 
     def tick(self, channel, request):
-        now = datetime.datetime.now()
-        if self.active and (now - self.triggered_last >= self.delta):
+        if self.active and (self.now - self.triggered_last >= self.delta):
             return self.trigger(channel, request)
 
+    @property
+    def now(self):
+        return datetime.datetime.now()
+
     def trigger(self, channel, request):
-        self.triggered_last = datetime.datetime.now()
-        return interfaces.IMessageAssemble(channel)(request)
+        now = self.now
+        
+        if self.delta:
+            # triggered_last will be set in steps of delta
+            while now - self.triggered_last >= self.delta:
+                self.triggered_last = self.triggered_last + self.delta
+        else:
+            self.triggered_last = now
+        
+        return self.assemble_messages(channel, request)
+
+    def assemble_messages(self, channel, request):
+        return interfaces.IMessageAssemble(channel)(request)        
 
     def __eq__(self, other):
         return (isinstance(other, AbstractPeriodicScheduler) and

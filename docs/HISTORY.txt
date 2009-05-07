@@ -4,6 +4,14 @@ History
 Version 0.6.12 - Unreleased
 ---------------------------
 
+- Triggering a periodic scheduler that has a delta now always updates
+  trickered_last by a product of that delta. This means the periodic
+  schedulers now no longer suffer from the time "drift" that resulted
+  from always saving the precise triggering time to their triggered_last
+  attribute. 
+  [tmog]
+
+
 - Added caching of item formatting via plone.memoize.request.
   This really(!) speeds up message generation, especially when
   sending 'full' items from 'send as newsletter'.

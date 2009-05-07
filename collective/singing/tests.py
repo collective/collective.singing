@@ -107,4 +107,9 @@ def test_suite():
            setUp=testing.setUp, tearDown=testing.tearDown,
            ),
 
+        doctest.DocTestSuite(
+           'collective.singing.scheduler',
+           setUp=testing.setUp, tearDown=testing.tearDown,
+           ),
+
         ])
