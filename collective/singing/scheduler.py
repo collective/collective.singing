@@ -70,7 +70,8 @@ class MessageAssemble(object):
 
             # Optionally use and set cue
             if self.use_cue:
-                use_cue = subscription_metadata.get('cue')
+                use_cue = subscription_metadata.get(
+                    'cue', subscription_metadata.get('date'))
             else:
                 use_cue = None
 

@@ -4,6 +4,11 @@ History
 Version 0.6.12 - Unreleased
 ---------------------------
 
+- Subscription creation date is now used as que when the subscription has
+  no real cue. I.e. the first time a new subscription is used.
+  I was amazed to find this was not already the case.
+  [tmog]
+
 - Triggering a periodic scheduler that has a delta now always updates
   trickered_last by a product of that delta. This means the periodic
   schedulers now no longer suffer from the time "drift" that resulted
