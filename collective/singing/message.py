@@ -148,12 +148,7 @@ class MessageQueues(persistent.dict.PersistentDict):
 
     def clear(self, queue_names=('error', 'sent')):
         for name in queue_names:
-            queue = self[name]
-            try:
-                while True:
-                    queue.pull()
-            except IndexError:
-                pass
+            self[name] = self[name].__class__()
 
 class MessageChanged(zope.lifecycleevent.ObjectModifiedEvent):
     interface.implements(interfaces.IMessageChanged)

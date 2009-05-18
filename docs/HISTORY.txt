@@ -4,6 +4,11 @@ History
 Version 0.6.12 - Unreleased
 ---------------------------
 
+- Optimization for clearing a MessageQueue. We now simple create a fresh
+  queue instead of pull()'ing all items (pulling is quite expensive with
+  CompositeQueue).
+  [tmog]
+
 - Subscription creation date is now used as que when the subscription has
   no real cue. I.e. the first time a new subscription is used.
   I was amazed to find this was not already the case.
