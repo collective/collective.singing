@@ -1,7 +1,10 @@
 History
 =======
 
-Version 0.6.12 - Unreleased
+Version 0.6.13 - Unreleased
+---------------------------
+
+Version 0.6.12 - 2009-06-11
 ---------------------------
 
 - Optimization for clearing a MessageQueue. We now simple create a fresh
@@ -20,7 +23,6 @@ Version 0.6.12 - Unreleased
   from always saving the precise triggering time to their triggered_last
   attribute. 
   [tmog]
-
 
 - Added caching of item formatting via plone.memoize.request.
   This really(!) speeds up message generation, especially when
