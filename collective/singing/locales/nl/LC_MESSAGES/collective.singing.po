@@ -1,11 +1,10 @@
 # Wim Boucquaert <wim@infrae.com>, 2009.
-#
-#
+# 
+# 
 msgid ""
 msgstr ""
 "Project-Id-Version: collective.singing trunk\n"
-"Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-12-27 13:42+0000\n"
+"POT-Creation-Date: 2009-06-25 10:17+0000\n"
 "PO-Revision-Date: 2009-04-03 19:03+0100\n"
 "Last-Translator: Duco Dokter and Wietze Helmantel <info@gw20e.com>\n"
 "Language-Team: Dutch <info@gw20e.com>\n"
@@ -13,102 +12,125 @@ msgstr ""
 "Content-Type: text/plain; charset=iso-8859-15\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0\n"
+"Language-Code: en\n"
+"Language-Name: English\n"
+"Preferred-Encodings: utf-8 latin1\n"
+"Domain: DOMAIN\n"
+"Report-Msgid-Bugs-To: \n"
 
-#: /browser/subscribe.py:106
-#: /browser/subscribe.py:241
-msgid "Thanks.  We sent you a message."
-msgstr "Bedankt. We hebben je een bericht gestuurd."
-
-#: /browser/subscribe.py:113
-msgid "Filters"
-msgstr "Filters"
-
-#: /browser/subscribe.py:130
-msgid "Fill in the information below to subscribe."
-msgstr "Vul het inschrijfformulier in."
-
-#: /browser/subscribe.py:131
-msgid "Thanks for your subscription; we sent you a message for confirmation."
-msgstr "Bedankt voor je inschrijving. Je ontvangt een e-mail ter bevestiging."
-
-#: /browser/subscribe.py:134
-msgid "You are already subscribed."
-msgstr "Je bent al ingeschreven."
-
-#: /browser/subscribe.py:212
-msgid "Retrieve a link to your personalized subscription settings"
-msgstr "Ontvang een link naar de instellingen van je abonnement."
-
-#: /browser/subscribe.py:217
+#: ./browser/subscribe.py:228
 msgid "Address"
 msgstr "Adres"
 
-#: /browser/subscribe.py:218
-msgid "The address you're already subscribed with"
-msgstr "Het adres waarmee je reeds ingeschreven bent"
-
-#: /browser/subscribe.py:222
-msgid "Send"
-msgstr "Verzenden"
-
-#: /browser/subscribe.py:42
-msgid "Format"
-msgstr "Opmaak"
-
-#: /browser/subscribe.py:75
-msgid "Send my subscription details"
-msgstr "Verstuur mijn inschrijfgegevens"
-
-#: /browser/subscribe.py:95
-#: /browser/subscribe.py:244
-msgid "Your subscription isn't known to us."
-msgstr "Je inschrijving is bij ons onbekend."
-
-#: /browser/wizard.py:102
-msgid "Finish"
-msgstr "Afronden"
-
-#: /browser/wizard.py:26
-msgid "Information submitted successfully."
-msgstr "Je informatie is succesvol verzonden."
-
-#: /browser/wizard.py:27
-msgid "There were errors."
-msgstr "Er is iets misgegaan."
-
-#: /browser/wizard.py:84
-msgid "Proceed"
-msgstr "Ga verder"
-
-#: /interfaces.py:258
-msgid "Unique identifier for this channel across the site."
-msgstr "Unieke identificatie van dit kanaal voor deze site."
-
-#: /interfaces.py:262
-msgid "Title"
-msgstr "Titel"
-
-#: /interfaces.py:266
-msgid "Description"
-msgstr "Beschrijving"
-
-#: /interfaces.py:270
-msgid "Scheduler (when)"
-msgstr "Planner"
-
-#: /interfaces.py:276
+#: ./interfaces.py:232
 msgid "Collector (what)"
 msgstr "Collectie"
 
-#: /interfaces.py:288
-msgid "The channel's subscriptions"
-msgstr "De inschrijvingen voor dit kanaal"
-
-#: /scheduler.py:108
+#: ./scheduler.py:260
 msgid "Daily scheduler"
 msgstr "Dagelijkse planner"
 
-#: /scheduler.py:112
+#: ./interfaces.py:222
+msgid "Description"
+msgstr "Beschrijving"
+
+#: ./browser/subscribe.py:131
+msgid "Fill in the information below to subscribe."
+msgstr "Vul het inschrijfformulier in."
+
+#: ./browser/subscribe.py:114
+msgid "Filters"
+msgstr "Filters"
+
+#: ./browser/wizard.py:102
+msgid "Finish"
+msgstr "Afronden"
+
+#: ./browser/subscribe.py:44
+msgid "Format"
+msgstr "Opmaak"
+
+#: ./browser/wizard.py:26
+msgid "Information submitted successfully."
+msgstr "Je informatie is succesvol verzonden."
+
+#: ./scheduler.py:268
+msgid "Manual scheduler"
+msgstr ""
+
+#: ./browser/wizard.py:84
+msgid "Proceed"
+msgstr "Ga verder"
+
+#: ./browser/subscribe.py:220
+msgid "Retrieve a link to your personalized subscription settings"
+msgstr "Ontvang een link naar de instellingen van je abonnement."
+
+#: ./interfaces.py:226
+msgid "Scheduler (when)"
+msgstr "Planner"
+
+#: ./browser/subscribe.py:233
+msgid "Send"
+msgstr "Verzenden"
+
+#: ./browser/subscribe.py:77
+msgid "Send my subscription details"
+msgstr "Verstuur mijn inschrijfgegevens"
+
+#: ./collector.py:28
+msgid "Subjects"
+msgstr ""
+
+#: ./collector.py:25
+msgid "Subjects collector"
+msgstr ""
+
+#: ./browser/subscribe.py:132
+msgid "Thanks for your subscription; we sent you a message for confirmation."
+msgstr "Bedankt voor je inschrijving. Je ontvangt een e-mail ter bevestiging."
+
+#: ./browser/subscribe.py:107
+msgid "Thanks.  We sent you a message."
+msgstr "Bedankt. We hebben je een bericht gestuurd."
+
+#: ./browser/subscribe.py:229
+msgid "The address you're already subscribed with"
+msgstr "Het adres waarmee je reeds ingeschreven bent"
+
+#: ./interfaces.py:244
+msgid "The channel's subscriptions"
+msgstr "De inschrijvingen voor dit kanaal"
+
+#: ./browser/wizard.py:27
+msgid "There were errors."
+msgstr "Er is iets misgegaan."
+
+#: ./subscribe.py:203
+msgid "There's already a subscription for ${name}"
+msgstr ""
+
+#: ./scheduler.py:275
+msgid "Timed scheduler"
+msgstr ""
+
+#: ./interfaces.py:218
+msgid "Title"
+msgstr "Titel"
+
+#: ./interfaces.py:214
+msgid "Unique identifier for this channel across the site."
+msgstr "Unieke identificatie van dit kanaal voor deze site."
+
+#: ./scheduler.py:264
 msgid "Weekly scheduler"
 msgstr "Wekelijkse planner"
+
+#: ./browser/subscribe.py:135
+msgid "You are already subscribed."
+msgstr "Je bent al ingeschreven."
+
+#: ./browser/subscribe.py:96
+msgid "Your subscription isn't known to us."
+msgstr "Je inschrijving is bij ons onbekend."
 

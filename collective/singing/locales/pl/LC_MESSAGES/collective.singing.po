@@ -1,111 +1,135 @@
 msgid ""
 msgstr ""
-"POT-Creation-Date: Tue Apr 22 23:38:56 2008\n"
+"Project-Id-Version: PACKAGE VERSION\n"
+"POT-Creation-Date: 2009-06-25 10:17+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: Barbara Struk <barbara.struk@gmail.com>\n"
 "Language-Team: Silva i18n team <walco@infrae.com>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0\n"
+"Language-Code: en\n"
+"Language-Name: English\n"
+"Preferred-Encodings: utf-8 latin1\n"
+"Domain: DOMAIN\n"
 "Generated-By: zope/app/translation_files/extract.py\n"
 
-#: /browser/subscribe.py:106
-#: /browser/subscribe.py:241
-msgid "Thanks.  We sent you a message."
-msgstr "Dziękujemy. Wysłaliśmy Tobie wiadomość."
-
-#: /browser/subscribe.py:113
-msgid "Filters"
-msgstr "Filtry"
-
-#: /browser/subscribe.py:130
-msgid "Fill in the information below to subscribe."
-msgstr "Wypełnij poniższe informacje aby subskrybować."
-
-#: /browser/subscribe.py:131
-msgid "Thanks for your subscription; we sent you a message for confirmation."
-msgstr "Dziękujemy za Twoją subskrybcję; wysłaliśmy Tobie wiadomość z potwierdzeniem."
-
-#?
-#: /browser/subscribe.py:134
-msgid "You are already subscribed."
-msgstr "Jesteś już subskrybentem."
-
-#: /browser/subscribe.py:212
-msgid "Retrieve a link to your personalized subscription settings"
-msgstr "Pobierz link do Twoich spersonalizowanych ustawień subskrypcji"
-
-#: /browser/subscribe.py:217
+#: ./browser/subscribe.py:228
 msgid "Address"
 msgstr "Adres"
 
-#?
-#: /browser/subscribe.py:218
-msgid "The address you're already subscribed with"
-msgstr "Adres, pod którym Twoja subskrybcja już istnieje "
-
-#: /browser/subscribe.py:222
-msgid "Send"
-msgstr "Wyślij"
-
-#: /browser/subscribe.py:42
-msgid "Format"
-msgstr "Format"
-
-#: /browser/subscribe.py:75
-msgid "Send my subscription details"
-msgstr "Wyślij szczegóły mojej subskrybcji"
-
-#: /browser/subscribe.py:95
-#: /browser/subscribe.py:244
-msgid "Your subscription isn't known to us."
-msgstr "Twoja subskrybcja nie jest nam znana."
-
-#: /browser/wizard.py:102
-msgid "Finish"
-msgstr "Zakończ"
-
-#: /browser/wizard.py:26
-msgid "Information submitted successfully."
-msgstr "Informacja przesłana pomyślnie."
-
-#: /browser/wizard.py:27
-msgid "There were errors."
-msgstr "Wystąpiły błędy."
-
-#: /browser/wizard.py:84
-msgid "Proceed"
-msgstr "Kontynuuj"
-
-#: /interfaces.py:258
-msgid "Unique identifier for this channel across the site."
-msgstr "Unikalny identyfikator tego kanału dla całej witryny"
-
-#: /interfaces.py:262
-msgid "Title"
-msgstr "Tytuł"
-
-#: /interfaces.py:266
-msgid "Description"
-msgstr "Opis"
-
-#: /interfaces.py:270
-msgid "Scheduler (when)"
-msgstr "Planista"
-
-#: /interfaces.py:276
+#: ./interfaces.py:232
 msgid "Collector (what)"
 msgstr "Kolekcjoner"
 
-#: /interfaces.py:288
-msgid "The channel's subscriptions"
-msgstr "Subskrybcje kanału"
-
-#: /scheduler.py:108
+#: ./scheduler.py:260
 msgid "Daily scheduler"
 msgstr "Dzienny planista"
 
-#: /scheduler.py:112
+#: ./interfaces.py:222
+msgid "Description"
+msgstr "Opis"
+
+#: ./browser/subscribe.py:131
+msgid "Fill in the information below to subscribe."
+msgstr "Wypełnij poniższe informacje aby subskrybować."
+
+#: ./browser/subscribe.py:114
+msgid "Filters"
+msgstr "Filtry"
+
+#: ./browser/wizard.py:102
+msgid "Finish"
+msgstr "Zakończ"
+
+#: ./browser/subscribe.py:44
+msgid "Format"
+msgstr "Format"
+
+#: ./browser/wizard.py:26
+msgid "Information submitted successfully."
+msgstr "Informacja przesłana pomyślnie."
+
+#: ./scheduler.py:268
+msgid "Manual scheduler"
+msgstr ""
+
+#: ./browser/wizard.py:84
+msgid "Proceed"
+msgstr "Kontynuuj"
+
+#: ./browser/subscribe.py:220
+msgid "Retrieve a link to your personalized subscription settings"
+msgstr "Pobierz link do Twoich spersonalizowanych ustawień subskrypcji"
+
+#: ./interfaces.py:226
+msgid "Scheduler (when)"
+msgstr "Planista"
+
+#: ./browser/subscribe.py:233
+msgid "Send"
+msgstr "Wyślij"
+
+#: ./browser/subscribe.py:77
+msgid "Send my subscription details"
+msgstr "Wyślij szczegóły mojej subskrybcji"
+
+#: ./collector.py:28
+msgid "Subjects"
+msgstr ""
+
+#: ./collector.py:25
+msgid "Subjects collector"
+msgstr ""
+
+#: ./browser/subscribe.py:132
+msgid "Thanks for your subscription; we sent you a message for confirmation."
+msgstr "Dziękujemy za Twoją subskrybcję; wysłaliśmy Tobie wiadomość z potwierdzeniem."
+
+#: ./browser/subscribe.py:107
+msgid "Thanks.  We sent you a message."
+msgstr "Dziękujemy. Wysłaliśmy Tobie wiadomość."
+
+# ?
+#: ./browser/subscribe.py:229
+msgid "The address you're already subscribed with"
+msgstr "Adres, pod którym Twoja subskrybcja już istnieje "
+
+#: ./interfaces.py:244
+msgid "The channel's subscriptions"
+msgstr "Subskrybcje kanału"
+
+#: ./browser/wizard.py:27
+msgid "There were errors."
+msgstr "Wystąpiły błędy."
+
+#: ./subscribe.py:203
+msgid "There's already a subscription for ${name}"
+msgstr ""
+
+#: ./scheduler.py:275
+msgid "Timed scheduler"
+msgstr ""
+
+#: ./interfaces.py:218
+msgid "Title"
+msgstr "Tytuł"
+
+#: ./interfaces.py:214
+msgid "Unique identifier for this channel across the site."
+msgstr "Unikalny identyfikator tego kanału dla całej witryny"
+
+#: ./scheduler.py:264
 msgid "Weekly scheduler"
 msgstr "Tygodniowy planista"
+
+# ?
+#: ./browser/subscribe.py:135
+msgid "You are already subscribed."
+msgstr "Jesteś już subskrybentem."
+
+#: ./browser/subscribe.py:96
+msgid "Your subscription isn't known to us."
+msgstr "Twoja subskrybcja nie jest nam znana."
 

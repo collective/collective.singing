@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2008-11-05 14:49+0000\n"
+"POT-Creation-Date: 2009-06-25 10:17+0000\n"
 "PO-Revision-Date: 2008-05-07 10:21+0100\n"
 "Last-Translator: Radim Novotny <novotny.radim@gmail.com>\n"
 "Language-Team: Corenet <info@corenet.cz>\n"
@@ -15,119 +15,119 @@ msgstr ""
 "Domain: DOMAIN\n"
 "Generated-By: zope/app/translation_files/extract.py\n"
 
-#: ./collective/singing/browser/subscribe.py:220
+#: ./browser/subscribe.py:228
 msgid "Address"
 msgstr "E-mail"
 
-#: ./collective/singing/interfaces.py:232
+#: ./interfaces.py:232
 msgid "Collector (what)"
 msgstr "Sběrač (co)"
 
-#: ./collective/singing/scheduler.py:153
+#: ./scheduler.py:260
 msgid "Daily scheduler"
 msgstr "Denní plánovač"
 
-#: ./collective/singing/interfaces.py:222
+#: ./interfaces.py:222
 msgid "Description"
 msgstr "Popis"
 
-#: ./collective/singing/browser/subscribe.py:130
+#: ./browser/subscribe.py:131
 msgid "Fill in the information below to subscribe."
 msgstr "K dokončení přihlášení vyplňte prosím následující informace."
 
-#: ./collective/singing/browser/subscribe.py:113
+#: ./browser/subscribe.py:114
 msgid "Filters"
 msgstr "Filtry"
 
-#: ./collective/singing/browser/wizard.py:102
+#: ./browser/wizard.py:102
 msgid "Finish"
 msgstr "Dokončit"
 
-#: ./collective/singing/browser/subscribe.py:43
+#: ./browser/subscribe.py:44
 msgid "Format"
 msgstr "Formát"
 
-#: ./collective/singing/browser/wizard.py:26
+#: ./browser/wizard.py:26
 msgid "Information submitted successfully."
 msgstr "Nastavení bylo uloženo."
 
-#: ./collective/singing/scheduler.py:161
+#: ./scheduler.py:268
 msgid "Manual scheduler"
 msgstr ""
 
-#: ./collective/singing/browser/wizard.py:84
+#: ./browser/wizard.py:84
 msgid "Proceed"
 msgstr "Další"
 
-#: ./collective/singing/browser/subscribe.py:212
+#: ./browser/subscribe.py:220
 msgid "Retrieve a link to your personalized subscription settings"
 msgstr "Odkaz na osobní stránku nastavení."
 
-#: ./collective/singing/interfaces.py:226
+#: ./interfaces.py:226
 msgid "Scheduler (when)"
 msgstr "Plánovač (kdy)"
 
-#: ./collective/singing/browser/subscribe.py:225
+#: ./browser/subscribe.py:233
 msgid "Send"
 msgstr "Odeslat"
 
-#: ./collective/singing/browser/subscribe.py:76
+#: ./browser/subscribe.py:77
 msgid "Send my subscription details"
 msgstr "Odeslat mé přihlašovací údaje"
 
-#: ./collective/singing/collector.py:28
+#: ./collector.py:28
 msgid "Subjects"
 msgstr ""
 
-#: ./collective/singing/collector.py:25
+#: ./collector.py:25
 msgid "Subjects collector"
 msgstr ""
 
-#: ./collective/singing/browser/subscribe.py:131
+#: ./browser/subscribe.py:132
 msgid "Thanks for your subscription; we sent you a message for confirmation."
 msgstr "Děkujeme za vaše přihlášení k odběru. Byla vám odeslána zpráva pro protvrzení přihlášení."
 
-#: ./collective/singing/browser/subscribe.py:106
+#: ./browser/subscribe.py:107
 msgid "Thanks.  We sent you a message."
 msgstr "Byla vám odeslána zpráva. Děkujeme."
 
-#: ./collective/singing/browser/subscribe.py:221
+#: ./browser/subscribe.py:229
 msgid "The address you're already subscribed with"
 msgstr "E-mail adresa, která byla použita při přhlášení."
 
-#: ./collective/singing/interfaces.py:244
+#: ./interfaces.py:244
 msgid "The channel's subscriptions"
 msgstr "Seznam přihlášení"
 
-#: ./collective/singing/browser/wizard.py:27
+#: ./browser/wizard.py:27
 msgid "There were errors."
 msgstr "Prosím, opravte vyznačené chyby."
 
-#: ./collective/singing/subscribe.py:203
+#: ./subscribe.py:203
 msgid "There's already a subscription for ${name}"
 msgstr ""
 
-#: ./collective/singing/scheduler.py:168
+#: ./scheduler.py:275
 msgid "Timed scheduler"
 msgstr ""
 
-#: ./collective/singing/interfaces.py:218
+#: ./interfaces.py:218
 msgid "Title"
 msgstr "Nadpis"
 
-#: ./collective/singing/interfaces.py:214
+#: ./interfaces.py:214
 msgid "Unique identifier for this channel across the site."
 msgstr "Unikátní identifikátor tohoto kanálu v celém portálu"
 
-#: ./collective/singing/scheduler.py:157
+#: ./scheduler.py:264
 msgid "Weekly scheduler"
 msgstr "Týdenní plánovač"
 
-#: ./collective/singing/browser/subscribe.py:134
+#: ./browser/subscribe.py:135
 msgid "You are already subscribed."
 msgstr "Takové přihlášení již existuje."
 
-#: ./collective/singing/browser/subscribe.py:95
+#: ./browser/subscribe.py:96
 msgid "Your subscription isn't known to us."
 msgstr "Taková registrace není známa."
 

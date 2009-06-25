@@ -1,13 +1,12 @@
 # translation of collective.singing
 # <kevin.samuel@pilotsystems.net>, 2008.
 # <>, 2008.
-#
-#
+# 
+# 
 msgid ""
 msgstr ""
 "Project-Id-Version: collective.singing 0.1\n"
-"Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-09-05 09:17+0000\n"
+"POT-Creation-Date: 2009-06-25 10:17+0000\n"
 "PO-Revision-Date: 2008-11-19 17:43+0100\n"
 "Last-Translator: Daniel Widerin <daniel.widerin@kombinat.at>\n"
 "Language-Team: French\n"
@@ -15,120 +14,125 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0\n"
+"Language-Code: en\n"
+"Language-Name: English\n"
+"Preferred-Encodings: utf-8 latin1\n"
+"Domain: DOMAIN\n"
+"Report-Msgid-Bugs-To: \n"
 
-#: ./collective/singing/browser/subscribe.py:220
+#: ./browser/subscribe.py:228
 msgid "Address"
 msgstr "Adresse"
 
-#: ./collective/singing/interfaces.py:232
+#: ./interfaces.py:232
 msgid "Collector (what)"
 msgstr "Collection (quoi)"
 
-#: ./collective/singing/scheduler.py:148
+#: ./scheduler.py:260
 msgid "Daily scheduler"
 msgstr "Planification hebdomadaire"
 
-#: ./collective/singing/interfaces.py:222
+#: ./interfaces.py:222
 msgid "Description"
 msgstr "Description"
 
-#: ./collective/singing/browser/subscribe.py:130
+#: ./browser/subscribe.py:131
 msgid "Fill in the information below to subscribe."
 msgstr "Complétez les informations ci-dessous afin de vous abonner."
 
-#: ./collective/singing/browser/subscribe.py:113
+#: ./browser/subscribe.py:114
 msgid "Filters"
 msgstr "Filtres"
 
-#: ./collective/singing/browser/wizard.py:102
+#: ./browser/wizard.py:102
 msgid "Finish"
 msgstr "Terminer"
 
-#: ./collective/singing/browser/subscribe.py:43
+#: ./browser/subscribe.py:44
 msgid "Format"
 msgstr "Format"
 
-#: ./collective/singing/browser/wizard.py:26
+#: ./browser/wizard.py:26
 msgid "Information submitted successfully."
 msgstr "L'information a été enregistrée avec succès."
 
-#: ./collective/singing/scheduler.py:156
+#: ./scheduler.py:268
 msgid "Manual scheduler"
 msgstr "Planification manuelle"
 
-#: ./collective/singing/browser/wizard.py:84
+#: ./browser/wizard.py:84
 msgid "Proceed"
 msgstr "Éxécuter"
 
-#: ./collective/singing/browser/subscribe.py:212
+#: ./browser/subscribe.py:220
 msgid "Retrieve a link to your personalized subscription settings"
 msgstr "Récupérez un lien vers la page configuration de vos préférences pour cette inscription."
 
-#: ./collective/singing/interfaces.py:226
+#: ./interfaces.py:226
 msgid "Scheduler (when)"
 msgstr "Planification (quand)"
 
-#: ./collective/singing/browser/subscribe.py:225
+#: ./browser/subscribe.py:233
 msgid "Send"
 msgstr "Envoyer"
 
-#: ./collective/singing/browser/subscribe.py:76
+#: ./browser/subscribe.py:77
 msgid "Send my subscription details"
 msgstr "Envoyer le récapitulatif de mon abonnement"
 
-#: ./collective/singing/collector.py:28
+#: ./collector.py:28
 msgid "Subjects"
 msgstr "Sujets"
 
-#: ./collective/singing/collector.py:25
+#: ./collector.py:25
 msgid "Subjects collector"
 msgstr "Collection de sujets"
 
-#: ./collective/singing/browser/subscribe.py:131
+#: ./browser/subscribe.py:132
 msgid "Thanks for your subscription; we sent you a message for confirmation."
 msgstr "Merci de votre abonnement. Nous vous avons envoyé un message en guise de confirmation."
 
-#: ./collective/singing/browser/subscribe.py:106
+#: ./browser/subscribe.py:107
 msgid "Thanks.  We sent you a message."
 msgstr "Merci. Nous vous avons envoyé un message."
 
-#: ./collective/singing/browser/subscribe.py:221
+#: ./browser/subscribe.py:229
 msgid "The address you're already subscribed with"
 msgstr "L'adresse avec laquelle vous êtes déjà abonné"
 
-#: ./collective/singing/interfaces.py:244
+#: ./interfaces.py:244
 msgid "The channel's subscriptions"
 msgstr "Abonnement aux canaux de diffusion"
 
-#: ./collective/singing/browser/wizard.py:27
+#: ./browser/wizard.py:27
 msgid "There were errors."
 msgstr "Des erreurs sont survenues"
 
-#: ./collective/singing/subscribe.py:203
+#: ./subscribe.py:203
 msgid "There's already a subscription for ${name}"
 msgstr "Il existe déjà un abonnement pour ${name}"
 
-#: ./collective/singing/scheduler.py:163
+#: ./scheduler.py:275
 msgid "Timed scheduler"
 msgstr "Planification"
 
-#: ./collective/singing/interfaces.py:218
+#: ./interfaces.py:218
 msgid "Title"
 msgstr "Titre"
 
-#: ./collective/singing/interfaces.py:214
+#: ./interfaces.py:214
 msgid "Unique identifier for this channel across the site."
 msgstr "Identifiant unique pour ce canal de diffusion valable pour tout le site."
 
-#: ./collective/singing/scheduler.py:152
+#: ./scheduler.py:264
 msgid "Weekly scheduler"
 msgstr "Planification hebdomadaire"
 
-#: ./collective/singing/browser/subscribe.py:134
+#: ./browser/subscribe.py:135
 msgid "You are already subscribed."
 msgstr "Vous êtes déjà inscrit"
 
-#: ./collective/singing/browser/subscribe.py:95
+#: ./browser/subscribe.py:96
 msgid "Your subscription isn't known to us."
 msgstr "Abonnement inconnu."
 

@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
-"POT-Creation-Date: 2008-04-21 14:20+0000\n"
+"POT-Creation-Date: 2009-06-25 10:17+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI +ZONE\n"
 "Last-Translator: Jakob Bartholdy Bruun <jakob@headnet.dk>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -14,43 +14,27 @@ msgstr ""
 "Preferred-Encodings: utf-8 latin1\n"
 "Domain: collective.singing\n"
 
-#: ./browser/crud.py:252
-msgid "Add"
-msgstr "Tilføj"
-
-#: ./browser/subscribe.py:217
+#: ./browser/subscribe.py:228
 msgid "Address"
 msgstr "E-mail"
 
-#: ./browser/crud.py:194
-msgid "Apply changes"
-msgstr "Anvend ændringer"
-
-#: ./interfaces.py:276
+#: ./interfaces.py:232
 msgid "Collector (what)"
 msgstr "Indsamler (hvad)"
 
-#: ./scheduler.py:108
+#: ./scheduler.py:260
 msgid "Daily scheduler"
 msgstr "Daglig udsendelse"
 
-#: ./browser/crud.py:229
-msgid "Delete"
-msgstr "Slet"
-
-#: ./interfaces.py:266
+#: ./interfaces.py:222
 msgid "Description"
 msgstr "Beskrivelse"
 
-#: ./browser/crud.py:177
-msgid "Edit"
-msgstr "Rediger"
-
-#: ./browser/subscribe.py:130
+#: ./browser/subscribe.py:131
 msgid "Fill in the information below to subscribe."
 msgstr "Udfyld felterne for at tilmelde dig."
 
-#: ./browser/subscribe.py:113
+#: ./browser/subscribe.py:114
 msgid "Filters"
 msgstr "Filtre"
 
@@ -58,7 +42,7 @@ msgstr "Filtre"
 msgid "Finish"
 msgstr "Tilmeld"
 
-#: ./browser/subscribe.py:42
+#: ./browser/subscribe.py:44
 msgid "Format"
 msgstr "Format"
 
@@ -66,63 +50,51 @@ msgstr "Format"
 msgid "Information submitted successfully."
 msgstr "Vi har modtaget dine oplysninger."
 
-#: ./browser/crud.py:270
-msgid "Item added successfully."
-msgstr "Elementet er nu tilføjet."
-
-#: ./browser/crud.py:198
-msgid "No changes made."
-msgstr "Ingen ændringer foretaget"
-
-#: ./browser/crud.py:239
-msgid "Please select items to delete."
-msgstr "Vælg elementer, der skal slettes."
+#: ./scheduler.py:268
+msgid "Manual scheduler"
+msgstr ""
 
 #: ./browser/wizard.py:84
 msgid "Proceed"
 msgstr "Fortsæt"
 
-#: ./browser/subscribe.py:212
+#: ./browser/subscribe.py:220
 msgid "Retrieve a link to your personalized subscription settings"
 msgstr "Få tilsendt et link til side med dine tilmeldinger"
 
-#: ./interfaces.py:270
+#: ./interfaces.py:226
 msgid "Scheduler (when)"
 msgstr "Udsender (hvornår)"
 
-#: ./browser/subscribe.py:222
+#: ./browser/subscribe.py:233
 msgid "Send"
 msgstr "Send"
 
-#: ./browser/subscribe.py:75
+#: ./browser/subscribe.py:77
 msgid "Send my subscription details"
 msgstr "Send link til mine abonnementer"
 
-#: ./browser/crud.py:197
-msgid "Some of your changes could not be applied."
-msgstr "Nogle af dine ændringer kunne ikke anvendes."
+#: ./collector.py:28
+msgid "Subjects"
+msgstr ""
 
-#: ./browser/crud.py:233
-msgid "Successfully deleted items."
-msgstr "Elementerne er nu slettet."
+#: ./collector.py:25
+msgid "Subjects collector"
+msgstr ""
 
-#: ./browser/crud.py:196
-msgid "Successfully updated"
-msgstr "Opdateret."
-
-#: ./browser/subscribe.py:131
+#: ./browser/subscribe.py:132
 msgid "Thanks for your subscription; we sent you a message for confirmation."
 msgstr "Tak for din tilmelding; vi har sendt en mail med anmodning om godkendelse."
 
-#: ./browser/subscribe.py:106
+#: ./browser/subscribe.py:107
 msgid "Thanks.  We sent you a message."
 msgstr "Tak. Vi har sendt en e-mail til dig."
 
-#: ./browser/subscribe.py:218
+#: ./browser/subscribe.py:229
 msgid "The address you're already subscribed with"
 msgstr "Den e-mail-adresse, du allerede er tilmeldt med"
 
-#: ./interfaces.py:288
+#: ./interfaces.py:244
 msgid "The channel's subscriptions"
 msgstr "Kanalens abonnenter"
 
@@ -130,37 +102,31 @@ msgstr "Kanalens abonnenter"
 msgid "There were errors."
 msgstr "Et eller flere af felterne var ikke udfyldt korrekt."
 
-#: ./interfaces.py:262
+#: ./subscribe.py:203
+msgid "There's already a subscription for ${name}"
+msgstr ""
+
+#: ./scheduler.py:275
+msgid "Timed scheduler"
+msgstr ""
+
+#: ./interfaces.py:218
 msgid "Title"
 msgstr "Titel"
 
-#: ./interfaces.py:258
+#: ./interfaces.py:214
 msgid "Unique identifier for this channel across the site."
 msgstr "Unik id for denne kanal - gælder over hele sitet."
 
-#: ./scheduler.py:112
+#: ./scheduler.py:264
 msgid "Weekly scheduler"
 msgstr "Ugentlig udsendelse"
 
-#: ./browser/subscribe.py:134
+#: ./browser/subscribe.py:135
 msgid "You are already subscribed."
 msgstr "Du abonnerer allerede"
 
-#: ./browser/subscribe.py:95
+#: ./browser/subscribe.py:96
 msgid "Your subscription isn't known to us."
 msgstr "Systemet kender ikke dit abonnement."
-
-#. Default: "(Required)"
-#: ./browser/macros.pt:56
-msgid "label_required"
-msgstr "Påkrævet"
-
-#: ./browser/crud.py:136
-msgid "select"
-msgstr "Vælg"
-
-#. Default: "Required"
-#: ./browser/macros.pt:56
-msgid "title_required"
-msgstr "Påkrævet"
 
