@@ -1,0 +1,134 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: collective.singing\n"
+"POT-Creation-Date: 2009-06-25 10:17+0000\n"
+"PO-Revision-Date: 2009-09-01 17:02+0200\n"
+"Last-Translator: Vladimir Iliev <vladimir.iliev@gmail.com>\n"
+"Language-Team: plone i18n\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0\n"
+"Language-Code: bg\n"
+"Language-Name: Bulgarian\n"
+"Preferred-Encodings: utf-8 latin1\n"
+"Domain: DOMAIN\n"
+"X-Poedit-Language: Bulgarian\n"
+"X-Poedit-Country: BULGARIA\n"
+
+#: ./browser/subscribe.py:228
+msgid "Address"
+msgstr "Адрес"
+
+#: ./interfaces.py:232
+msgid "Collector (what)"
+msgstr "Колектор (какво)"
+
+#: ./scheduler.py:260
+msgid "Daily scheduler"
+msgstr "Ежедневно изпращане"
+
+#: ./interfaces.py:222
+msgid "Description"
+msgstr "Описание"
+
+#: ./browser/subscribe.py:131
+msgid "Fill in the information below to subscribe."
+msgstr "Въведете информацията по-долу за да се абонирате."
+
+#: ./browser/subscribe.py:114
+msgid "Filters"
+msgstr "Филтри"
+
+#: ./browser/wizard.py:102
+msgid "Finish"
+msgstr "Край"
+
+#: ./browser/subscribe.py:44
+msgid "Format"
+msgstr "Формат"
+
+#: ./browser/wizard.py:26
+msgid "Information submitted successfully."
+msgstr "Информацията беше въведена успешно."
+
+#: ./scheduler.py:268
+msgid "Manual scheduler"
+msgstr "Ръчно изпращане"
+
+#: ./browser/wizard.py:84
+msgid "Proceed"
+msgstr "Напред"
+
+#: ./browser/subscribe.py:220
+msgid "Retrieve a link to your personalized subscription settings"
+msgstr "Получаване на връзка към настройки на вашия абонамент."
+
+#: ./interfaces.py:226
+msgid "Scheduler (when)"
+msgstr "Изпращане (кога)"
+
+#: ./browser/subscribe.py:233
+msgid "Send"
+msgstr "Изпращане"
+
+#: ./browser/subscribe.py:77
+msgid "Send my subscription details"
+msgstr "Изпращане на на информация за моя абонамент"
+
+#: ./collector.py:28
+msgid "Subjects"
+msgstr "Теми"
+
+#: ./collector.py:25
+msgid "Subjects collector"
+msgstr ""
+
+#: ./browser/subscribe.py:132
+msgid "Thanks for your subscription; we sent you a message for confirmation."
+msgstr "Благодарим ви че се абонирахте; изпратихме ви съобщение от което да потвърдите."
+
+#: ./browser/subscribe.py:107
+msgid "Thanks.  We sent you a message."
+msgstr "Благодарим. Изпратихме ви съобщение."
+
+#: ./browser/subscribe.py:229
+msgid "The address you're already subscribed with"
+msgstr "Адреса на който сте абонирани"
+
+#: ./interfaces.py:244
+msgid "The channel's subscriptions"
+msgstr "Абонаменти за канал"
+
+#: ./browser/wizard.py:27
+msgid "There were errors."
+msgstr "Бяха открити грешки."
+
+#: ./subscribe.py:203
+msgid "There's already a subscription for ${name}"
+msgstr "Вече има абонамент за ${name}"
+
+#: ./scheduler.py:275
+msgid "Timed scheduler"
+msgstr "Периодично изпращане"
+
+#: ./interfaces.py:218
+msgid "Title"
+msgstr "Заглавие"
+
+#: ./interfaces.py:214
+msgid "Unique identifier for this channel across the site."
+msgstr "Уникален идентификатор на този канал за сайта."
+
+#: ./scheduler.py:264
+msgid "Weekly scheduler"
+msgstr "Седмично изпращане"
+
+#: ./browser/subscribe.py:135
+msgid "You are already subscribed."
+msgstr "Вие вече сте абониран(а)."
+
+#: ./browser/subscribe.py:96
+msgid "Your subscription isn't known to us."
+msgstr "Нямате абонамент."
+
