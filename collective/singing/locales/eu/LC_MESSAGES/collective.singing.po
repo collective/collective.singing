@@ -4,7 +4,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
-"POT-Creation-Date: 2009-06-25 10:17+0000\n"
+"POT-Creation-Date: 2009-09-21 16:13+0000\n"
 "PO-Revision-Date: 2009-03-06 16:38+0100\n"
 "Last-Translator: Mikel Larreategi <mlarreategi@codesyntax.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"

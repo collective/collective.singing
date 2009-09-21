@@ -6,9 +6,9 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: collective.singing 0.1\n"
-"POT-Creation-Date: 2009-06-25 10:17+0000\n"
+"POT-Creation-Date: 2009-09-21 16:13+0000\n"
 "PO-Revision-Date: 2008-11-19 17:43+0100\n"
-"Last-Translator: Daniel Widerin <daniel.widerin@kombinat.at>\n"
+"Last-Translator: Mathieu Pasquet <kiorky@cryptelium.net>\n"
 "Language-Team: French\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -30,7 +30,7 @@ msgstr "Collection (quoi)"
 
 #: ./scheduler.py:260
 msgid "Daily scheduler"
-msgstr "Planification hebdomadaire"
+msgstr "Planification quotidienne"
 
 #: ./interfaces.py:222
 msgid "Description"
@@ -90,7 +90,7 @@ msgstr "Collection de sujets"
 
 #: ./browser/subscribe.py:132
 msgid "Thanks for your subscription; we sent you a message for confirmation."
-msgstr "Merci de votre abonnement. Nous vous avons envoyé un message en guise de confirmation."
+msgstr "Merci de vous être abonné. Nous vous avons envoyé un message de confirmation."
 
 #: ./browser/subscribe.py:107
 msgid "Thanks.  We sent you a message."
