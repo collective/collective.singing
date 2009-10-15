@@ -222,6 +222,11 @@ class IChannel(interface.Interface):
         title=_(u"Description")
         )
 
+    subscribeable = schema.Bool(
+        title=_(u"Subscribeable"),
+        default=False
+        )
+
     scheduler = schema.Object(
         title=_(u"Scheduler (when)"),
         required=False,

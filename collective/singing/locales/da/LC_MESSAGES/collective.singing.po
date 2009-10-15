@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
-"POT-Creation-Date: 2009-09-21 16:13+0000\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI +ZONE\n"
+"POT-Creation-Date: 2009-10-15 08:34+0000\n"
+"PO-Revision-Date: 2009-10-15 10:35+0200\n"
 "Last-Translator: Jakob Bartholdy Bruun <jakob@headnet.dk>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -18,7 +18,7 @@ msgstr ""
 msgid "Address"
 msgstr "E-mail"
 
-#: ./interfaces.py:232
+#: ./interfaces.py:237
 msgid "Collector (what)"
 msgstr "Indsamler (hvad)"
 
@@ -62,7 +62,7 @@ msgstr "Fortsæt"
 msgid "Retrieve a link to your personalized subscription settings"
 msgstr "Få tilsendt et link til side med dine tilmeldinger"
 
-#: ./interfaces.py:226
+#: ./interfaces.py:231
 msgid "Scheduler (when)"
 msgstr "Udsender (hvornår)"
 
@@ -82,6 +82,10 @@ msgstr ""
 msgid "Subjects collector"
 msgstr ""
 
+#: ./interfaces.py:226
+msgid "Subscribeable"
+msgstr "Abonnerbar"
+
 #: ./browser/subscribe.py:132
 msgid "Thanks for your subscription; we sent you a message for confirmation."
 msgstr "Tak for din tilmelding; vi har sendt en mail med anmodning om godkendelse."
@@ -94,7 +98,7 @@ msgstr "Tak. Vi har sendt en e-mail til dig."
 msgid "The address you're already subscribed with"
 msgstr "Den e-mail-adresse, du allerede er tilmeldt med"
 
-#: ./interfaces.py:244
+#: ./interfaces.py:249
 msgid "The channel's subscriptions"
 msgstr "Kanalens abonnenter"
 
