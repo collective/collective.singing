@@ -17,7 +17,7 @@ msgstr ""
 "Language-Code: en\n"
 "Language-Name: English\n"
 "Preferred-Encodings: utf-8 latin1\n"
-"Domain: DOMAIN\n"
+"Domain: collective.singing\n"
 "Report-Msgid-Bugs-To: \n"
 
 #: ./browser/subscribe.py:228
@@ -68,7 +68,7 @@ msgstr "Éxécuter"
 msgid "Retrieve a link to your personalized subscription settings"
 msgstr "Récupérez un lien vers la page configuration de vos préférences pour cette inscription."
 
-#: ./interfaces.py:226
+#: ./interfaces.py:231
 msgid "Scheduler (when)"
 msgstr "Planification (quand)"
 
@@ -87,6 +87,10 @@ msgstr "Sujets"
 #: ./collector.py:25
 msgid "Subjects collector"
 msgstr "Collection de sujets"
+
+#: ./interfaces.py:226
+msgid "Subscribeable"
+msgstr "Ouvert à l'abonnement ?"
 
 #: ./browser/subscribe.py:132
 msgid "Thanks for your subscription; we sent you a message for confirmation."
