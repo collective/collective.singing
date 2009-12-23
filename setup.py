@@ -34,11 +34,12 @@ setup(name='collective.singing',
           'setuptools',
           'zope.sendmail',
           'zope.app.catalog',
+          'zope.app.i18n',
           'zc.queue',
           'zc.lockfile',
           'plone.z3cform>=0.5.1',
       ],
-      
+
       entry_points="""
       # -*- Entry points: -*-
       """,
