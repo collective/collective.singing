@@ -52,7 +52,7 @@ msgstr "Opmaak"
 
 #: ./browser/wizard.py:26
 msgid "Information submitted successfully."
-msgstr "Je informatie is succesvol verzonden."
+msgstr "Uw informatie is succesvol verzonden."
 
 #: ./scheduler.py:268
 msgid "Manual scheduler"
@@ -64,7 +64,7 @@ msgstr "Ga verder"
 
 #: ./browser/subscribe.py:220
 msgid "Retrieve a link to your personalized subscription settings"
-msgstr "Ontvang een link naar de instellingen van je abonnement."
+msgstr "Ontvang een link naar de instellingen van uw abonnement."
 
 #: ./interfaces.py:226
 msgid "Scheduler (when)"
@@ -88,15 +88,15 @@ msgstr "Onderwerpencollectie"
 
 #: ./browser/subscribe.py:132
 msgid "Thanks for your subscription; we sent you a message for confirmation."
-msgstr "Bedankt voor je inschrijving. Je ontvangt een e-mail ter bevestiging."
+msgstr "Bedankt voor uw inschrijving. U ontvangt een e-mail ter bevestiging."
 
 #: ./browser/subscribe.py:107
 msgid "Thanks.  We sent you a message."
-msgstr "Bedankt. We hebben je een bericht gestuurd."
+msgstr "Bedankt. We hebben u een bericht gestuurd."
 
 #: ./browser/subscribe.py:229
 msgid "The address you're already subscribed with"
-msgstr "Het adres waarmee je reeds ingeschreven bent"
+msgstr "Het adres waarmee u al ingeschreven bent"
 
 #: ./interfaces.py:244
 msgid "The channel's subscriptions"
@@ -128,9 +128,9 @@ msgstr "Wekelijkse planner"
 
 #: ./browser/subscribe.py:135
 msgid "You are already subscribed."
-msgstr "Je bent al ingeschreven."
+msgstr "U bent al ingeschreven."
 
 #: ./browser/subscribe.py:96
 msgid "Your subscription isn't known to us."
-msgstr "Je inschrijving is bij ons onbekend."
+msgstr "Uw inschrijving is bij ons onbekend."
 
