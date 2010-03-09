@@ -4,7 +4,10 @@ History
 Version 0.6.14 - Unreleased
 ---------------------------
 
-- Update french translation
+- Update Dutch translation.
+  [maurits]
+
+- Update French translation
   [toutpt]
 
 Version 0.6.13 - 2009-10-19
