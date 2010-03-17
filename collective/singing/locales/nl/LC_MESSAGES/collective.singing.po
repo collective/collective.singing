@@ -4,9 +4,9 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: collective.singing trunk\n"
-"POT-Creation-Date: 2009-09-21 16:13+0000\n"
-"PO-Revision-Date: 2010-03-09 13:19+0100\n"
-"Last-Translator: Maurits van Rees <m.van.rees@zestsoftware.nl>\n"
+"POT-Creation-Date: 2009-10-15 08:34+0000\n"
+"PO-Revision-Date: 2010-03-17 13:17+0100\n"
+"Last-Translator: Rob Gietema <rob@fourdigits.nl>\n"
 "Language-Team: Dutch <plone-nl@lists.plone.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=iso-8859-15\n"
@@ -22,7 +22,7 @@ msgstr ""
 msgid "Address"
 msgstr "Adres"
 
-#: ./interfaces.py:232
+#: ./interfaces.py:237
 msgid "Collector (what)"
 msgstr "Collectie"
 
@@ -66,7 +66,7 @@ msgstr "Ga verder"
 msgid "Retrieve a link to your personalized subscription settings"
 msgstr "Ontvang een link naar de instellingen van uw abonnement."
 
-#: ./interfaces.py:226
+#: ./interfaces.py:231
 msgid "Scheduler (when)"
 msgstr "Planner"
 
@@ -86,6 +86,10 @@ msgstr "Onderwerpen"
 msgid "Subjects collector"
 msgstr "Onderwerpencollectie"
 
+#: ./interfaces.py:226
+msgid "Subscribeable"
+msgstr "Inschrijfbaar"
+
 #: ./browser/subscribe.py:132
 msgid "Thanks for your subscription; we sent you a message for confirmation."
 msgstr "Bedankt voor uw inschrijving. U ontvangt een e-mail ter bevestiging."
@@ -98,7 +102,7 @@ msgstr "Bedankt. We hebben u een bericht gestuurd."
 msgid "The address you're already subscribed with"
 msgstr "Het adres waarmee u al ingeschreven bent"
 
-#: ./interfaces.py:244
+#: ./interfaces.py:249
 msgid "The channel's subscriptions"
 msgstr "De inschrijvingen voor dit kanaal"
 
