@@ -113,7 +113,7 @@ class CollectorDataForm(utils.OverridableTemplate, form.Form):
     prefix = 'collector'
     label = _(u"Filters")
     ignoreContext = True
-    
+
     @property
     def fields(self):
         collector = self.context.collector
@@ -134,11 +134,11 @@ class Subscribe(wizard.Wizard):
         u"we sent you a message for confirmation.")
     already_subscribed_message = _(u"You are already subscribed.")
 
-    @property 
+    @property
     def description(self):
         if hasattr(self.context, 'description'):
             return self.context.description
-    
+
     def format(self):
         return self.before_steps[0].widgets.extract()[0]['format']
 
@@ -218,10 +218,10 @@ class ForgotSecret(utils.OverridableTemplate, form.Form):
     index = viewpagetemplatefile.ViewPageTemplateFile('form.pt')
 
     label = _(u"Retrieve a link to your personalized subscription settings")
-    
+
     successMessage = _(u"Thanks.  We sent you a message.")
     notKnownMessage = _(u"Your subscription isn't known to us.")
-    
+
     fields = field.Fields(
         schema.TextLine(
             __name__='address',

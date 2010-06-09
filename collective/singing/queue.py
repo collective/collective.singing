@@ -24,14 +24,14 @@ class CompositeQueue(zc.queue.CompositeQueue):
                 queue -= 1
             return self._data[queue][-1]
         return super(CompositeQueue, self).__getitem__(index)
-    
+
     def __len__(self):
         return self.size
 
     def _p_resolveConflict(self, oldstate, committedstate, newstate):
         return resolveQueueConflict(oldstate, committedstate, newstate)
 
-    
+
 def resolveQueueConflict(oldstate, committedstate, newstate, bucket=False):
     # We only know how to merge _data and the size of the top-level queue.
     # If anything else is different, puke.

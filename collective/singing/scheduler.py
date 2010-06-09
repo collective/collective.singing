@@ -34,7 +34,7 @@ def getIFormatAdapter(obj, request, format):
     If a formatter for the specified format is not found, an
     attempt to look up an unspecified formatter is made.
     """
-    
+
     formatter = component.queryMultiAdapter(
         (obj, request), interfaces.IFormatItem, name=format)
 
@@ -165,7 +165,7 @@ Delta not reached, triggered_last stays the same.
       >>> scheduler.tick(None, None)
       >>> last == scheduler.triggered_last
       True
-      
+
       >>> scheduler._now = datetime(2009, 3, 4, 17, 0)
       >>> scheduler.tick(None, None)
       >>> last == scheduler.triggered_last
@@ -214,7 +214,7 @@ Trigging a manual scheduler (with no delta) always sets it's triggered_last to n
       >>> scheduler._now = datetime(2009, 3, 26, 18, 15)
       >>> scheduler.tick(None, None)
       datetime.datetime(2009, 3, 26, 18, 15)
-      
+
       >>> scheduler._now = datetime(2009, 3, 26, 18, 16)
       >>> scheduler.tick(None, None)
       datetime.datetime(2009, 3, 26, 18, 16)
@@ -236,18 +236,18 @@ Trigging a manual scheduler (with no delta) always sets it's triggered_last to n
 
     def trigger(self, channel, request):
         now = self.now
-        
+
         if self.delta:
             # triggered_last will be set in steps of delta
             while now - self.triggered_last >= self.delta:
                 self.triggered_last = self.triggered_last + self.delta
         else:
             self.triggered_last = now
-        
+
         return self.assemble_messages(channel, request)
 
     def assemble_messages(self, channel, request):
-        return interfaces.IMessageAssemble(channel)(request)        
+        return interfaces.IMessageAssemble(channel)(request)
 
     def __eq__(self, other):
         return (isinstance(other, AbstractPeriodicScheduler) and

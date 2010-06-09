@@ -7,9 +7,9 @@ def channel_lookup(only_subscribeable=False, only_sendable=False):
     This method looks up all ``IChannelLookup`` utilities and returns
     a combined list of available channels.
     """
-    
+
     channels = []
-    
+
     for utility in component.getAllUtilitiesRegisteredFor(IChannelLookup):
         result = utility()
         channels.extend(result)

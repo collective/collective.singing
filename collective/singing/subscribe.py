@@ -33,14 +33,14 @@ def secret(channel, composer, data, request):
         secret = rbs(request)
         if secret is not None:
             return secret
-    
+
     cbs = interfaces.IComposerBasedSecret(composer)
     return cbs.secret(data)
 
 def has_single_format(channel):
     """Returns format of a given channel's single composer, if the
     channel has only one composer; otherwise returns None.
-    
+
       >>> class channel:
       ...     composers = {'sms': object()}
       >>> has_single_format(channel) == 'sms'

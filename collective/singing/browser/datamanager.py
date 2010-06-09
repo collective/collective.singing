@@ -8,7 +8,7 @@ class SetToDictField(z3c.form.datamanager.AttributeField):
     """Puts a Set into a Dict field."""
 
     key_attr = 'name'
-        
+
     def get(self):
         """See z3c.form.interfaces.IDataManager"""
         # get the right adapter or context
@@ -31,5 +31,5 @@ class SetToDictField(z3c.form.datamanager.AttributeField):
             context = self.field.interface(context)
         dict = {}
         for item in value:
-            dict[getattr(item, self.key_attr)] = item          
+            dict[getattr(item, self.key_attr)] = item
         setattr(context, self.field.__name__, dict)

@@ -49,7 +49,7 @@ class Wizard(utils.OverridableTemplate, form.Form):
             boot = True
 
         self.update_steps()
-        
+
         # If we're viewing the form for the first time, let's set the
         # step to 0
         if boot:
@@ -73,7 +73,7 @@ class Wizard(utils.OverridableTemplate, form.Form):
             step = self.steps[index](self.context, self.request, self)
             step.update()
             self.before_steps.append(step)
-            
+
         self.current_step = self.steps[self.current_index](
             self.context, self.request, self)
         self.current_step.update()

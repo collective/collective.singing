@@ -52,16 +52,16 @@ class IComposer(interface.Interface):
     """Composers will typically provide a user interface that lets you
     modify the look of the message rendered through it.
     """
-    
+
     name = schema.TextLine(
         title=u"The Composer's format, e.g. 'html'",
         )
-    
+
 
     title = schema.TextLine(
         title=u"The Composer's title, e.g. 'HTML E-Mail'",
         )
-    
+
     schema = schema.Object(
         title=u"A schema instance for use in the subscription form",
         description=u"Values are stored via the IComposerData adapter per "
@@ -114,7 +114,7 @@ class IScheduler(interface.Interface):
     def tick(channel, request):
         """Check if messages need to be assembled and sent; return the
         number of messages queued or None.
-        
+
         This method is guaranteed to be called periodically.
         """
 
@@ -213,7 +213,7 @@ class IChannel(interface.Interface):
     name = schema.ASCIILine(
         title=_(u"Unique identifier for this channel across the site."),
         )
-    
+
     title = schema.TextLine(
         title=_(u"Title"),
         )
@@ -306,7 +306,7 @@ class IComposerBasedSecret(interface.Interface):
     """An adapter for composer that provides a secret based on the
     user's data used for the composer (see also 'IComposerData').
     """
-    
+
     def secret(data):
         """Return an ASCII secret.
 

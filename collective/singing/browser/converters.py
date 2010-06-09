@@ -2,7 +2,7 @@ from zope import component
 from zope import interface
 from zope import schema
 
-import z3c.form 
+import z3c.form
 from collective.singing.interfaces import IDynamicVocabularyCollection
 
 class DynamicVocabularyCollSeqConverter(

@@ -4,14 +4,14 @@
       xmlns:i18n="http://xml.zope.org/namespaces/i18n"
       i18n:domain="collective.singing"
       tal:omit-tag="">
-  
+
 <tal:widgets repeat="widget view/widgets/values">
   <div class="row"
        tal:define="hidden python:widget.mode == 'hidden'"
        tal:omit-tag="hidden">
 
     <metal:field use-macro="context/@@ploneform-macros/field" />
-    
+
   </div>
 </tal:widgets>
 
@@ -31,7 +31,7 @@
          tal:content="view/label">
       Form title
     </div>
-</tal:out>         
+</tal:out>
     <metal:use use-macro="context/@@ploneform-macros/fields" />
   </div>
 

@@ -20,5 +20,5 @@
   <zope:adapter
      factory=".converters.DynamicVocabularyCollSeqConverter"
      />
-  
+
 </zope:configure>

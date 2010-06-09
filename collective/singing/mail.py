@@ -3,7 +3,7 @@ import htmllib
 import quopri
 import StringIO
 import traceback
-import email 
+import email
 
 from email.Header import Header
 from email.MIMEMultipart import MIMEMultipart
@@ -24,7 +24,7 @@ def create_html_mail(subject, html, text=None, from_addr=None, to_addr=None,
     # Use DumbWriters word wrapping to ensure that no text line
     # is longer than plain_text_maxcols characters.
     plain_text_maxcols = 72
-    
+
     html = html.encode(encoding)
     if text is None:
         # Produce an approximate textual rendering of the HTML string,
@@ -35,21 +35,21 @@ def create_html_mail(subject, html, text=None, from_addr=None, to_addr=None,
         parser = htmllib.HTMLParser(formtext)
         parser.feed(html)
         parser.close()
-        
+
         # append the anchorlist at the bottom of a message
-        # to keep the message readable. 
+        # to keep the message readable.
         counter = 0
         anchorlist  = "\n\n" + ("-" * plain_text_maxcols) + "\n\n"
         for item in parser.anchorlist:
             counter += 1
             anchorlist += "[%d] %s\n" % (counter, item)
-        
+
         text = textout.getvalue() + anchorlist
         del textout, formtext, parser, anchorlist
     else:
         text = text.encode(encoding)
-        
-    # if we would like to include images in future, there should 
+
+    # if we would like to include images in future, there should
     # probably be 'related' instead of 'mixed'
     msg = MIMEMultipart('mixed')
     # maybe later :)  msg['From'] = Header("%s <%s>" % (send_from_name, send_from), encoding)
@@ -82,11 +82,11 @@ class Dispatch(object):
       >>> message.set_payload('Hello, Plone users!')
 
     ``Dispatch`` adapts ``email.Message.Message``:
-     
+
       >>> dispatcher = Dispatch(message)
-     
+
     Sending a message without a configured ``IMailDelivery`` will fail:
-     
+
       >>> dispatcher() # doctest: +ELLIPSIS
       Traceback (most recent call last):
       ...
@@ -134,7 +134,7 @@ class Dispatch(object):
       Traceback (most recent call last):
       MyException: This is a test
     """
-    
+
     interface.implements(interfaces.IDispatch)
     component.adapts(email.Message.Message)
 

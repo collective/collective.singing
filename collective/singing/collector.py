@@ -75,7 +75,7 @@ class SubjectsCollectorBase(persistent.Persistent):
 
     def now(self):
         return datetime.datetime.now()
-    
+
     def _vocabulary(self):
         return self.vocabulary()
 
