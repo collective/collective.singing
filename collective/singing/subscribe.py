@@ -13,6 +13,7 @@ import zope.app.catalog.field
 import zope.app.catalog.text
 import zope.app.intid.interfaces
 import zope.app.container.btree
+import zope.app.container.interfaces
 
 from collective.singing import interfaces
 import collective.singing.subscribe
