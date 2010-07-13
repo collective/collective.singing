@@ -8,6 +8,11 @@ Version 0.6.15 - Unreleased
   compatibility.
   [maurits]
 
+- strange issue with equality of scheduler objects adressed.
+  This seems to only be an issue in python 2.6.
+  This should probably be released soon since it fixes a lot
+  of bugs in the ForPloneFour branch of dancing.
+  [tmog]
 
 Version 0.6.14 - 2010-04-07
 ---------------------------

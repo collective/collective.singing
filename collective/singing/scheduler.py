@@ -256,6 +256,14 @@ Trigging a manual scheduler (with no delta) always sets it's triggered_last to n
     def __ne__(self, other):
         return not self == other
 
+    def __cmp__(self, other):
+        """ Don't ask me the exact reason why, but sometimes
+        equality between schedulers does not work with only
+        __eq__ defined.
+        This issue has only been observed under python2.6, and
+        is seems to depend on argument order. """
+        return cmp(self.delta, other.delta)
+
 class DailyScheduler(persistent.Persistent, AbstractPeriodicScheduler):
     title = _(u"Daily scheduler")
     delta = datetime.timedelta(days=1)
