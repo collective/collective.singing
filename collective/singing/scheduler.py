@@ -262,6 +262,8 @@ Trigging a manual scheduler (with no delta) always sets it's triggered_last to n
         __eq__ defined.
         This issue has only been observed under python2.6, and
         is seems to depend on argument order. """
+        if not interfaces.IScheduler.providedBy(other):
+            return 1
         return cmp(self.delta, other.delta)
 
 class DailyScheduler(persistent.Persistent, AbstractPeriodicScheduler):
