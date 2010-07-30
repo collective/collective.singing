@@ -88,7 +88,7 @@ msgstr ""
 
 #: ./interfaces.py:226
 msgid "Subscribeable"
-msgstr ""
+msgstr "Anmeldung möglich"
 
 #: ./browser/subscribe.py:132
 msgid "Thanks for your subscription; we sent you a message for confirmation."
@@ -100,11 +100,11 @@ msgstr "Vielen Dank, wir haben Ihnen eine E-Mail gesendet."
 
 #: ./browser/subscribe.py:229
 msgid "The address you're already subscribed with"
-msgstr "Geben Sie Ihre E-Mail Adresse ein, die Sie verwendet haben um sich an einem Themenbereich anzumelden."
+msgstr "Geben Sie Ihre E-Mail Adresse ein, die Sie verwendet haben um sich an einem Newsletter anzumelden."
 
 #: ./interfaces.py:249
 msgid "The channel's subscriptions"
-msgstr "Anmeldungen zu diesem Kanal"
+msgstr "Anmeldungen zu diesem Newsletter"
 
 #: ./browser/wizard.py:27
 msgid "There were errors."
@@ -124,7 +124,7 @@ msgstr "Titel"
 
 #: ./interfaces.py:214
 msgid "Unique identifier for this channel across the site."
-msgstr "Eindeutige Bezeichnung für diesen Kanal"
+msgstr "Eindeutige Bezeichnung für diesen Newsletter"
 
 #: ./scheduler.py:264
 msgid "Weekly scheduler"
