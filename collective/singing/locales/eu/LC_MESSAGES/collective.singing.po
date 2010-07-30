@@ -4,7 +4,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
-"POT-Creation-Date: 2009-09-21 16:13+0000\n"
+"POT-Creation-Date: 2010-07-02 12:29+0000\n"
 "PO-Revision-Date: 2009-03-06 16:38+0100\n"
 "Last-Translator: Mikel Larreategi <mlarreategi@codesyntax.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -21,7 +21,7 @@ msgstr ""
 msgid "Address"
 msgstr "Helbidea"
 
-#: ./interfaces.py:232
+#: ./interfaces.py:237
 msgid "Collector (what)"
 msgstr "Informazio-bilduma (zer)"
 
@@ -65,7 +65,7 @@ msgstr "Aurrera"
 msgid "Retrieve a link to your personalized subscription settings"
 msgstr "Zure harpidetza kudeatzeko lotura lortu"
 
-#: ./interfaces.py:226
+#: ./interfaces.py:231
 msgid "Scheduler (when)"
 msgstr "Antolaketa (noiz)"
 
@@ -85,6 +85,10 @@ msgstr "Gaiak"
 msgid "Subjects collector"
 msgstr "Gaien informazio-bilduma"
 
+#: ./interfaces.py:226
+msgid "Subscribeable"
+msgstr ""
+
 #: ./browser/subscribe.py:132
 msgid "Thanks for your subscription; we sent you a message for confirmation."
 msgstr "Eskerrik asko zure harpidetzagatik; harpidetza konfirmatzeko mezu bat bidali dizugu."
@@ -97,7 +101,7 @@ msgstr "Eskerrik asko. Mezu bat bidali dizugu."
 msgid "The address you're already subscribed with"
 msgstr "Harpidetza eginda daukazun helbidea"
 
-#: ./interfaces.py:244
+#: ./interfaces.py:249
 msgid "The channel's subscriptions"
 msgstr "Buletinaren harpidetzak."
 
@@ -105,7 +109,7 @@ msgstr "Buletinaren harpidetzak."
 msgid "There were errors."
 msgstr "Erroreak egon dira"
 
-#: ./subscribe.py:203
+#: ./subscribe.py:204
 msgid "There's already a subscription for ${name}"
 msgstr "Badago ${name}-ren harpidetza bat"
 

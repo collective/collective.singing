@@ -4,7 +4,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
-"POT-Creation-Date: 2009-10-15 08:34+0000\n"
+"POT-Creation-Date: 2010-07-02 12:29+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI +ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -109,7 +109,7 @@ msgstr "Postlistens abonnementer"
 msgid "There were errors."
 msgstr "Det var feil."
 
-#: ./subscribe.py:203
+#: ./subscribe.py:204
 msgid "There's already a subscription for ${name}"
 msgstr "Det er allerede et abonnement for ${name}"
 
@@ -123,7 +123,7 @@ msgstr "Tittel"
 
 #: ./interfaces.py:214
 msgid "Unique identifier for this channel across the site."
-msgstr "Unik identifikator for denne mailinglisten." 
+msgstr "Unik identifikator for denne mailinglisten."
 
 #: ./scheduler.py:264
 msgid "Weekly scheduler"

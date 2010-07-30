@@ -4,7 +4,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: collective.singing trunk\n"
-"POT-Creation-Date: 2009-10-15 08:34+0000\n"
+"POT-Creation-Date: 2010-07-02 12:29+0000\n"
 "PO-Revision-Date: 2010-03-17 13:17+0100\n"
 "Last-Translator: Rob Gietema <rob@fourdigits.nl>\n"
 "Language-Team: Dutch <plone-nl@lists.plone.org>\n"
@@ -110,7 +110,7 @@ msgstr "De inschrijvingen voor dit kanaal"
 msgid "There were errors."
 msgstr "Er is iets misgegaan."
 
-#: ./subscribe.py:203
+#: ./subscribe.py:204
 msgid "There's already a subscription for ${name}"
 msgstr "Er is al een inschrijving voor ${name}"
 

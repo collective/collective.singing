@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: collective.singing\n"
-"POT-Creation-Date: 2009-09-21 16:13+0000\n"
+"POT-Creation-Date: 2010-07-02 12:29+0000\n"
 "PO-Revision-Date: 2008-11-12 17:36+0200\n"
 "Last-Translator: G. Gozadinos <ggozad@qiweb.net>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,7 +18,7 @@ msgstr ""
 msgid "Address"
 msgstr "Διεύθυνση"
 
-#: ./interfaces.py:232
+#: ./interfaces.py:237
 msgid "Collector (what)"
 msgstr "Συλλέκτης (τι)"
 
@@ -62,7 +62,7 @@ msgstr "Προχωρήστε"
 msgid "Retrieve a link to your personalized subscription settings"
 msgstr "Ανακτήστε ένα σύνδεσμο προς τις προσωπικές σας ρυθμίσεις εγγραφής"
 
-#: ./interfaces.py:226
+#: ./interfaces.py:231
 msgid "Scheduler (when)"
 msgstr "Προγραμματισμός (πότε)"
 
@@ -82,6 +82,10 @@ msgstr "Υποκείμενα"
 msgid "Subjects collector"
 msgstr "Συλλέκτης υποκειμένων"
 
+#: ./interfaces.py:226
+msgid "Subscribeable"
+msgstr ""
+
 #: ./browser/subscribe.py:132
 msgid "Thanks for your subscription; we sent you a message for confirmation."
 msgstr "Ευχαριστούμε για την εγγραφή σας, σας στέλνουμε ένα μήνυμα για επιβεβαίωση."
@@ -94,7 +98,7 @@ msgstr "Ευχαριστούμε. Σας στείλαμε μήνυμα."
 msgid "The address you're already subscribed with"
 msgstr "Η διεύθυνση με την οποία είστε ήδη εγγεγραμμένος/η"
 
-#: ./interfaces.py:244
+#: ./interfaces.py:249
 msgid "The channel's subscriptions"
 msgstr "Οι εγγραφές του καναλιού"
 
@@ -102,7 +106,7 @@ msgstr "Οι εγγραφές του καναλιού"
 msgid "There were errors."
 msgstr "Υπήρξαν σφάλματα"
 
-#: ./subscribe.py:203
+#: ./subscribe.py:204
 msgid "There's already a subscription for ${name}"
 msgstr "Υπάρχει ήδη μια εγγραφή του/της ${name}"
 

@@ -6,7 +6,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: collective.singing 0.1\n"
-"POT-Creation-Date: 2009-09-21 16:13+0000\n"
+"POT-Creation-Date: 2010-07-02 12:29+0000\n"
 "PO-Revision-Date: 2008-11-19 17:43+0100\n"
 "Last-Translator: Mathieu Pasquet <kiorky@cryptelium.net>\n"
 "Language-Team: French\n"
@@ -24,7 +24,7 @@ msgstr ""
 msgid "Address"
 msgstr "Adresse"
 
-#: ./interfaces.py:232
+#: ./interfaces.py:237
 msgid "Collector (what)"
 msgstr "Collection (quoi)"
 
@@ -104,7 +104,7 @@ msgstr "Merci. Nous vous avons envoyé un message."
 msgid "The address you're already subscribed with"
 msgstr "L'adresse avec laquelle vous êtes déjà abonné"
 
-#: ./interfaces.py:244
+#: ./interfaces.py:249
 msgid "The channel's subscriptions"
 msgstr "Abonnement aux canaux de diffusion"
 
@@ -112,7 +112,7 @@ msgstr "Abonnement aux canaux de diffusion"
 msgid "There were errors."
 msgstr "Des erreurs sont survenues"
 
-#: ./subscribe.py:203
+#: ./subscribe.py:204
 msgid "There's already a subscription for ${name}"
 msgstr "Il existe déjà un abonnement pour ${name}"
 

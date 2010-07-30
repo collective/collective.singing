@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
-"POT-Creation-Date: 2009-09-21 16:13+0000\n"
+"POT-Creation-Date: 2010-07-02 12:29+0000\n"
 "PO-Revision-Date: \n"
 "Last-Translator: David Picó Vila <david.pico.vila@gmail.com>\n"
 "Language-Team: David Picó Vila <david.pico.vila@gmail.com>\n"
@@ -21,7 +21,7 @@ msgstr ""
 msgid "Address"
 msgstr "Dirección"
 
-#: ./interfaces.py:232
+#: ./interfaces.py:237
 msgid "Collector (what)"
 msgstr "Colector (qué)"
 
@@ -65,7 +65,7 @@ msgstr "Proceder"
 msgid "Retrieve a link to your personalized subscription settings"
 msgstr "Solicita el envío de un enlace a tu página personal de configuración de suscripciones"
 
-#: ./interfaces.py:226
+#: ./interfaces.py:231
 msgid "Scheduler (when)"
 msgstr "Programador (cuándo)"
 
@@ -85,6 +85,10 @@ msgstr ""
 msgid "Subjects collector"
 msgstr ""
 
+#: ./interfaces.py:226
+msgid "Subscribeable"
+msgstr ""
+
 #: ./browser/subscribe.py:132
 msgid "Thanks for your subscription; we sent you a message for confirmation."
 msgstr "Gracias por tu suscripción; te hemos enviado un mensaje para confirmar."
@@ -97,7 +101,7 @@ msgstr "Gracias. Te hemos enviado un mensaje."
 msgid "The address you're already subscribed with"
 msgstr "La dirección con la que estás suscrito"
 
-#: ./interfaces.py:244
+#: ./interfaces.py:249
 msgid "The channel's subscriptions"
 msgstr "Las suscripciones al canal"
 
@@ -105,7 +109,7 @@ msgstr "Las suscripciones al canal"
 msgid "There were errors."
 msgstr "Ha habido errores."
 
-#: ./subscribe.py:203
+#: ./subscribe.py:204
 msgid "There's already a subscription for ${name}"
 msgstr ""
 

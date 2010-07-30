@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2009-09-21 16:13+0000\n"
+"POT-Creation-Date: 2010-07-02 12:29+0000\n"
 "PO-Revision-Date: 2008-05-07 10:21+0100\n"
 "Last-Translator: Radim Novotny <novotny.radim@gmail.com>\n"
 "Language-Team: Corenet <info@corenet.cz>\n"
@@ -19,7 +19,7 @@ msgstr ""
 msgid "Address"
 msgstr "E-mail"
 
-#: ./interfaces.py:232
+#: ./interfaces.py:237
 msgid "Collector (what)"
 msgstr "Sběrač (co)"
 
@@ -63,7 +63,7 @@ msgstr "Další"
 msgid "Retrieve a link to your personalized subscription settings"
 msgstr "Odkaz na osobní stránku nastavení."
 
-#: ./interfaces.py:226
+#: ./interfaces.py:231
 msgid "Scheduler (when)"
 msgstr "Plánovač (kdy)"
 
@@ -83,6 +83,10 @@ msgstr ""
 msgid "Subjects collector"
 msgstr ""
 
+#: ./interfaces.py:226
+msgid "Subscribeable"
+msgstr ""
+
 #: ./browser/subscribe.py:132
 msgid "Thanks for your subscription; we sent you a message for confirmation."
 msgstr "Děkujeme za vaše přihlášení k odběru. Byla vám odeslána zpráva pro protvrzení přihlášení."
@@ -95,7 +99,7 @@ msgstr "Byla vám odeslána zpráva. Děkujeme."
 msgid "The address you're already subscribed with"
 msgstr "E-mail adresa, která byla použita při přhlášení."
 
-#: ./interfaces.py:244
+#: ./interfaces.py:249
 msgid "The channel's subscriptions"
 msgstr "Seznam přihlášení"
 
@@ -103,7 +107,7 @@ msgstr "Seznam přihlášení"
 msgid "There were errors."
 msgstr "Prosím, opravte vyznačené chyby."
 
-#: ./subscribe.py:203
+#: ./subscribe.py:204
 msgid "There's already a subscription for ${name}"
 msgstr ""
 

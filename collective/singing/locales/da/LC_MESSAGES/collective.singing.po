@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
-"POT-Creation-Date: 2009-10-15 08:34+0000\n"
+"POT-Creation-Date: 2010-07-02 12:29+0000\n"
 "PO-Revision-Date: 2009-10-15 10:35+0200\n"
 "Last-Translator: Jakob Bartholdy Bruun <jakob@headnet.dk>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -106,7 +106,7 @@ msgstr "Kanalens abonnenter"
 msgid "There were errors."
 msgstr "Et eller flere af felterne var ikke udfyldt korrekt."
 
-#: ./subscribe.py:203
+#: ./subscribe.py:204
 msgid "There's already a subscription for ${name}"
 msgstr ""
 
