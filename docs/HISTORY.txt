@@ -13,6 +13,8 @@ Version 0.6.15 - Unreleased
   This should probably be released soon since it fixes a lot
   of bugs in the ForPloneFour branch of dancing.
   [tmog]
+  
+- Norwegian translation. [regebro]
 
 Version 0.6.14 - 2010-04-07
 ---------------------------
