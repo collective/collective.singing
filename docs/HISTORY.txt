@@ -1,8 +1,8 @@
 History
 =======
 
-Version 0.6.15 - Unreleased
----------------------------
+0.6.15 (2010-08-01)
+-------------------
 
 - import zope.app.container.interfaces; this helps for Plone 4
   compatibility.
