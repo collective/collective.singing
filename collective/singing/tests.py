@@ -51,7 +51,7 @@ def create_subscriptions():
 
     # As a last step, we'll register the IKeyReference adapter for all
     # persistent objects:
-    from zope.app.keyreference.persistent import KeyReferenceToPersistent
+    from zope.keyreference.persistent import KeyReferenceToPersistent
     from persistent.interfaces import IPersistent
     provideAdapter(KeyReferenceToPersistent, adapts=(IPersistent,))
 
