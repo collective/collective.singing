@@ -73,7 +73,7 @@ go off:
   ...
   TypeError: ...
 
-The ``ManualScheduler`` can be programmed to send out items on a
+The ``TimedScheduler`` can be programmed to send out items on a
 certain date.  For this, it holds a list of tuples of the form
 ``(datetime.datetime, weak reference)``, where the datetime object
 specifies when to send the item out, and the weak reference is an
