@@ -4,8 +4,10 @@ History
 0.6.16 (unreleased)
 -------------------
 
-- Nothing changed yet.
-
+- Moved z3c widget template registration for radio buttons and checkboxes 
+  from ``browser/configure.zcml`` into ``widgets.zcml`` because every version 
+  of z3c.form after 2.3.3 includes these template registrations and double 
+  registration raises ConfigurationConflictError.  [saily] 
 
 0.6.15 (2010-08-01)
 -------------------
