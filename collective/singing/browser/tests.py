@@ -6,7 +6,7 @@ import z3c.form.testing
 import plone.z3cform.tests
 
 from collective.singing import subscribe
-
+from collective.singing.tests import setUp
 
 def setup_defaults():
     # Set up z3c.form defaults
@@ -25,7 +25,7 @@ def test_suite():
 
         doctest.DocFileSuite(
            'subscribe.txt',
-           setUp=testing.setUp, tearDown=testing.tearDown,
+           setUp=setUp, tearDown=testing.tearDown,
            ),
 
         doctest.DocTestSuite(
