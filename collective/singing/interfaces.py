@@ -256,7 +256,7 @@ class IChannel(interface.Interface):
         )
 
     keep_sent_messages = schema.Bool(
-        title=_(u"Check if you want to keep a record of sent messages."),
+        title=_(u"Keep a record of sent messages."),
         description=_(u"This is not currently recommended for large volumes "
                       u"of messages due to storage requirements."),
         default=False,
