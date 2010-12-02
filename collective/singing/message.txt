@@ -31,6 +31,8 @@ Let's define our own subscription and channel classes:
 
   >>> class Channel(object):
   ...     queue = queue
+  ...     keep_sent_messages = True
+  ...
   ...     def __init__(self, name):
   ...         self.name = name
 

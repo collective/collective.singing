@@ -4,6 +4,14 @@ History
 0.7.1 (unreleased)
 -------------------
 
+- Added ``keep_sent_messages`` flag on channels which, if set to
+  ``False`` (the default), suppresses the behavior which would
+  otherwise put sent messages into a persistent queue.
+
+  If sent messages are dropped (as per this flag), an entry is instead
+  written to the log to keep a minimal record of events.
+  [malthe]
+
 0.7.0 (2010-11-04)
 -------------------
 

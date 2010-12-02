@@ -6,13 +6,13 @@ import traceback
 
 import transaction
 import persistent.dict
+import email.Message
 from BTrees.Length import Length
 from ZODB.POSException import ConflictError
 from zope import component
 from zope import interface
 import zope.interface.common.mapping
 import zope.lifecycleevent
-
 import zc.queue.interfaces
 import zc.lockfile
 
@@ -100,6 +100,7 @@ class SizedCompositeQueue(zc.queue.CompositeQueue):
     def __len__(self):
         return self.size
 
+
 class MessageQueues(persistent.dict.PersistentDict):
     interface.implements(interfaces.IMessageQueues)
 
@@ -150,6 +151,7 @@ class MessageQueues(persistent.dict.PersistentDict):
         for name in queue_names:
             self[name] = self[name].__class__()
 
+
 class MessageChanged(zope.lifecycleevent.ObjectModifiedEvent):
     interface.implements(interfaces.IMessageChanged)
 
@@ -157,9 +159,27 @@ class MessageChanged(zope.lifecycleevent.ObjectModifiedEvent):
         super(MessageChanged, self).__init__(object, *descriptions)
         self.old_status = old_status
 
+
 @component.adapter(interfaces.IMessage, interfaces.IMessageChanged)
 def queue_message(message, event):
     # We expect the message to be in *no queue* when we receive this
     # event!
-    queue = message.subscription.channel.queue
-    queue[message.status].put(message)
+    channel = message.subscription.channel
+    queue = channel.queue[message.status]
+
+    # If channel is set to not hold on to sent messages, we log the
+    # e-mail message identifier and recipient to allow some minimum
+    # record-keeping
+    if message.status == 'sent' and not channel.keep_sent_messages:
+        if isinstance(message, email.Message.Message):
+            message_id = message.payload['Message-ID']
+        else:
+            message_id = "N/A"
+
+        logger.info("Message sent to \"%s\" <%s> (Message-ID: %s)." % (
+            interfaces.ISubscriptionLabel(message.subscription),
+            interfaces.ISubscriptionKey(message.subscription),
+            message_id
+            ))
+    else:
+        queue.put(message)

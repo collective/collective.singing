@@ -255,6 +255,14 @@ class IChannel(interface.Interface):
         schema=IMessageQueues,
         )
 
+    keep_sent_messages = schema.Bool(
+        title=_(u"Check if you want to keep a record of sent messages."),
+        description=_(u"This is not currently recommended for large volumes "
+                      u"of messages due to storage requirements."),
+        default=False,
+        )
+
+
 class IMessageAssemble(interface.Interface):
     """An adapter on the channel that's usually invoked by a scheduler
     to render and queue new messages.
@@ -320,6 +328,7 @@ MESSAGE_STATES = [u'new',   # just added
                   u'retry', # error while sending, but retrying
                   ]
 
+
 class IMessage(interface.Interface):
     """Messages are objects ready for sending.
     """
@@ -366,6 +375,7 @@ class IDispatch(interface.Interface):
 
         If this method raises an exception, an 'error' is assumed.
         """
+
 
 class IFormatItem(interface.Interface):
     """A view that formats an item for use in a newsletter.

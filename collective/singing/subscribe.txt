@@ -28,7 +28,7 @@ schema:
   >>> __builtins__['Composer'] = Composer # make persistable
 
   >>> class Channel(object):
-  ...     pass
+  ...     keep_sent_messages = True
 
   >>> __builtins__['Channel'] = Channel # make persistable
 
