@@ -101,6 +101,31 @@ class ISubscriptionCatalogData(interface.Interface):
     key = interface.Attribute(u"Key")
     label = interface.Attribute(u"Label")
 
+
+def _find_field(schema, interface):
+    for name in schema:
+        if interface.providedBy(schema[name]):
+            return schema[name]
+    else:
+        return schema[schema.names()[0]]
+
+
+@interface.implementer(interfaces.ISubscriptionLabel)
+@component.adapter(interfaces.ISubscription)
+def get_subscription_label(subscription):
+    cschema = subscription.channel.composers[subscription.metadata['format']].schema
+    label_field = _find_field(cschema, interfaces.ISubscriptionLabel)
+    return subscription.composer_data[label_field.__name__]
+
+
+@interface.implementer(interfaces.ISubscriptionKey)
+@component.adapter(interfaces.ISubscription)
+def get_subscription_key(subscription):
+    cschema = subscription.channel.composers[subscription.metadata['format']].schema
+    key_field = _find_field(cschema, interfaces.ISubscriptionKey)
+    return subscription.composer_data[key_field.__name__]
+
+
 @interface.implementer(ISubscriptionCatalogData)
 @component.adapter(interfaces.ISubscription)
 def catalog_data(subscription):
@@ -109,22 +134,12 @@ def catalog_data(subscription):
             self.__dict__.update(kwargs)
 
     metadata = subscription.metadata
-    composer_data = subscription.composer_data
-    cschema = subscription.channel.composers[metadata['format']].schema
 
-    def _find_field(schema, interface):
-        for name in schema:
-            if interface.providedBy(cschema[name]):
-                return cschema[name]
-        else:
-            return cschema[cschema.names()[0]]
-
-    key_field = _find_field(cschema, interfaces.ISubscriptionKey)
-    label_field = _find_field(cschema, interfaces.ISubscriptionLabel)
-
-    return Metadata(format=metadata['format'],
-                    key=composer_data[key_field.__name__],
-                    label=composer_data[label_field.__name__])
+    return Metadata(
+        format=metadata['format'],
+        key=interfaces.ISubscriptionKey(subscription),
+        label=interfaces.ISubscriptionLabel(subscription)
+        )
 
 class SubscriptionSearchableText(object):
     component.adapts(interfaces.ISubscription)
