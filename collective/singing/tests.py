@@ -9,16 +9,14 @@ count = 0
 root = None
 
 
+def setUp(test):
+    testing.setUp(test)
 
-def subscription_added(obj, event):
-    global count
-    count += 1
-    root[str(count)] = obj
-    from transaction import commit; commit()
-    subscribe.subscription_added(obj, event)
-
-def create_subscriptions():
     # Register adapters and handlers:
+    # This query interface relies on a zope.app.catalog to
+    # do the job.  Before we can use this catalog, we'll need to register an
+    # IIntIds utility and wire in a couple of adatpers defined in the
+    # subscribe module.  This is what 'create_subscriptions' does for us:
     from zope.component import provideUtility, provideAdapter, provideHandler
     for adapter in (subscribe.catalog_data,
                     subscribe.SubscriptionSearchableText):
@@ -55,7 +53,15 @@ def create_subscriptions():
     from persistent.interfaces import IPersistent
     provideAdapter(KeyReferenceToPersistent, adapts=(IPersistent,))
 
-    return subscribe.Subscriptions()
+    provideAdapter(subscribe.get_subscription_label)
+    provideAdapter(subscribe.get_subscription_key)
+
+def subscription_added(obj, event):
+    global count
+    count += 1
+    root[str(count)] = obj
+    from transaction import commit; commit()
+    subscribe.subscription_added(obj, event)
 
 def test_suite():
     return unittest.TestSuite([
@@ -84,7 +90,7 @@ def test_suite():
 
         doctest.DocFileSuite(
             'subscribe.txt',
-            setUp=testing.setUp, tearDown=testing.tearDown,
+            setUp=setUp, tearDown=testing.tearDown,
         ),
 
         doctest.DocFileSuite(

@@ -29,6 +29,7 @@ schema:
 
   >>> class Channel(object):
   ...     pass
+
   >>> __builtins__['Channel'] = Channel # make persistable
 
   >>> channel = Channel()
@@ -52,13 +53,10 @@ Subscriptions
 -------------
 
 Our subscriptions object has a 'query' method that lets us search
-subscriptions.  This query interface relies on a zope.app.catalog to
-do the job.  Before we can use this catalog, we'll need to register an
-IIntIds utility and wire in a couple of adatpers defined in the
-subscribe module.  This is what 'create_subscriptions' does for us:
+subscriptions.
 
   >>> from collective.singing import tests
-  >>> Channel.subscriptions = subscriptions = tests.create_subscriptions()
+  >>> Channel.subscriptions = subscriptions = subscribe.Subscriptions()
 
 At this point, no objects are in the subscription catalog:
 

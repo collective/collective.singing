@@ -13,13 +13,14 @@ the data it needs to create a message:
   >>> from zope import interface
   >>> from zope import schema
   >>> from collective.singing import interfaces
+  >>> from collective.singing.subscribe import Subscriptions
   >>> import collective.singing.subscribe
   >>> from collective.singing import tests
 
   >>> class Channel(object):
   ...     interface.implements(interfaces.IChannel)
   ...     def __init__(self):
-  ...          self.subscriptions = tests.create_subscriptions()
+  ...          self.subscriptions = Subscriptions()
   ...          self.composers = dict(html=Composer())
   ...          self.collector = Collector()
   >>> __builtins__['Channel'] = Channel # make persistable
