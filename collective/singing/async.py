@@ -24,7 +24,11 @@ class Queue(persistent.Persistent):
             self.finished.append(job)
         return num
 
+class IJob(interface.Interface):
+    title = schema.TextLine(title=u"Title")
+
 class Job(persistent.Persistent):
+    interface.implements(IJob)
     executed = None
     title = u''
 

@@ -4,7 +4,8 @@ History
 0.7.2 (unreleased)
 ------------------
 
-...
+- Add IJob interface and let Job implements it.
+  [toutpt]
 
 0.7.1 (2010-12-03)
 ------------------
