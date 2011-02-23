@@ -1,0 +1,136 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"POT-Creation-Date: 2010-07-02 12:29+0000\n"
+"PO-Revision-Date: 2008-10-07 14:53+0800\n"
+"Last-Translator: adam tang(315ok.org) <yuejun.tang@gmail.com>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0\n"
+"Language-Code: en\n"
+"Language-Name: English\n"
+"Preferred-Encodings: utf-8 latin1\n"
+"Domain: DOMAIN\n"
+
+#: ./browser/subscribe.py:228
+msgid "Address"
+msgstr "邮件地址"
+
+#: ./interfaces.py:237
+msgid "Collector (what)"
+msgstr "收集内容"
+
+#: ./scheduler.py:260
+msgid "Daily scheduler"
+msgstr "每日运行"
+
+#: ./interfaces.py:222
+msgid "Description"
+msgstr "描述"
+
+#: ./browser/subscribe.py:131
+msgid "Fill in the information below to subscribe."
+msgstr "为了预订成功，请填写下面相关信息。"
+
+#: ./browser/subscribe.py:114
+msgid "Filters"
+msgstr "过滤"
+
+#: ./browser/wizard.py:102
+msgid "Finish"
+msgstr "完成"
+
+#: ./browser/subscribe.py:44
+msgid "Format"
+msgstr "格式"
+
+#: ./browser/wizard.py:26
+msgid "Information submitted successfully."
+msgstr "信息提交成功。"
+
+#: ./scheduler.py:268
+msgid "Manual scheduler"
+msgstr "手工调度"
+
+#: ./browser/wizard.py:84
+msgid "Proceed"
+msgstr "处理"
+
+#: ./browser/subscribe.py:220
+msgid "Retrieve a link to your personalized subscription settings"
+msgstr "提取一个链接到个人预订设置"
+
+#: ./interfaces.py:231
+msgid "Scheduler (when)"
+msgstr "调度（何时）"
+
+#: ./browser/subscribe.py:233
+msgid "Send"
+msgstr "发送"
+
+#: ./browser/subscribe.py:77
+msgid "Send my subscription details"
+msgstr "发送我的预订情况到我邮箱"
+
+#: ./collector.py:28
+msgid "Subjects"
+msgstr "主题"
+
+#: ./collector.py:25
+msgid "Subjects collector"
+msgstr "主题收集器"
+
+#: ./interfaces.py:226
+msgid "Subscribeable"
+msgstr "可以预定"
+
+#: ./browser/subscribe.py:132
+msgid "Thanks for your subscription; we sent you a message for confirmation."
+msgstr "感谢您的预订，我们发送了一份确认邮件。"
+
+#: ./browser/subscribe.py:107
+msgid "Thanks.  We sent you a message."
+msgstr "谢谢，我们给您发送了一份邮件"
+
+#: ./browser/subscribe.py:229
+msgid "The address you're already subscribed with"
+msgstr "你采用的地址已经预订过了"
+
+#: ./interfaces.py:249
+msgid "The channel's subscriptions"
+msgstr "该频道的预订者列表"
+
+#: ./browser/wizard.py:27
+msgid "There were errors."
+msgstr "有错"
+
+#: ./subscribe.py:204
+msgid "There's already a subscription for ${name}"
+msgstr "${name}已经有了预订"
+
+#: ./scheduler.py:275
+msgid "Timed scheduler"
+msgstr "时间调度"
+
+#: ./interfaces.py:218
+msgid "Title"
+msgstr "标题"
+
+#: ./interfaces.py:214
+msgid "Unique identifier for this channel across the site."
+msgstr "频道整站唯一标识符"
+
+#: ./scheduler.py:264
+msgid "Weekly scheduler"
+msgstr "每周运行"
+
+#: ./browser/subscribe.py:135
+msgid "You are already subscribed."
+msgstr "你已经预订了。"
+
+#: ./browser/subscribe.py:96
+msgid "Your subscription isn't known to us."
+msgstr "你的预订不可识别。"
+
