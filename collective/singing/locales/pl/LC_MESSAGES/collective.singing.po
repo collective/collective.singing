@@ -1,9 +1,9 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
-"POT-Creation-Date: 2010-07-02 12:29+0000\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: Barbara Struk <barbara.struk@gmail.com>\n"
+"POT-Creation-Date: 2011-06-17 12:00+0000\n"
+"PO-Revision-Date: 2011-06-17 15:58+0100\n"
+"Last-Translator: Piotr Furman <piotr.furman@webservice.pl>\n"
 "Language-Team: Silva i18n team <walco@infrae.com>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -15,6 +15,15 @@ msgstr ""
 "Domain: DOMAIN\n"
 "Generated-By: zope/app/translation_files/extract.py\n"
 
+#: ./interfaces.py:31
+#, fuzzy
+msgid "A schema instance for use in the subscription form"
+msgstr "Schemat do wykorzystania w formularzu subskrypcji"
+
+#: ./interfaces.py:111
+msgid "Active"
+msgstr "Aktywny"
+
 #: ./browser/subscribe.py:228
 msgid "Address"
 msgstr "Adres"
@@ -23,7 +32,19 @@ msgstr "Adres"
 msgid "Collector (what)"
 msgstr "Kolekcjoner"
 
-#: ./scheduler.py:260
+#: ./interfaces.py:176
+msgid "Collector data"
+msgstr "Dane kolekcjonera"
+
+#: ./interfaces.py:245
+msgid "Composer"
+msgstr "Kompozytor"
+
+#: ./interfaces.py:175
+msgid "Composer data"
+msgstr "Dane kompozytora"
+
+#: ./scheduler.py:270
 msgid "Daily scheduler"
 msgstr "Dzienny planista"
 
@@ -44,16 +65,42 @@ msgid "Finish"
 msgstr "Zakończ"
 
 #: ./browser/subscribe.py:44
+#: ./interfaces.py:244
 msgid "Format"
 msgstr "Format"
+
+#: ./interfaces.py:346
+msgid "IMessageChanged is fired automatically when this is set"
+msgstr "Zdarzenie IMessageChanged zostanie wywołane automatycznie po ustawieniu tego stanu"
+
+#: ./interfaces.py:26
+#, fuzzy
+msgid "Include items from this collector even if there are no no items returned by significant siblings."
+msgstr "Dołącz elementy z tego kolekcjonera nawet jeśli nie zostały zwrócone ważne elementy."
 
 #: ./browser/wizard.py:26
 msgid "Information submitted successfully."
 msgstr "Informacja przesłana pomyślnie."
 
-#: ./scheduler.py:268
+#: ./interfaces.py:259
+msgid "Keep a record of sent messages."
+msgstr "Przechowuj listę wysłanych wiadomości"
+
+#: ./interfaces.py:354
+msgid "Last time this message changed its status"
+msgstr "Data ostatniej zmiany stanu"
+
+#: ./scheduler.py:278
 msgid "Manual scheduler"
-msgstr ""
+msgstr "Ręczny planista"
+
+#: ./interfaces.py:177
+msgid "Metadata"
+msgstr "Metadane"
+
+#: ./interfaces.py:362
+msgid "Old status of message"
+msgstr "Poprzedni stan wiadomości"
 
 #: ./browser/wizard.py:84
 msgid "Proceed"
@@ -75,16 +122,36 @@ msgstr "Wyślij"
 msgid "Send my subscription details"
 msgstr "Wyślij szczegóły mojej subskrybcji"
 
+#: ./interfaces.py:25
+msgid "Significant"
+msgstr "Ważne"
+
+#: ./interfaces.py:345
+msgid "State"
+msgstr "Stan"
+
+#: ./interfaces.py:350
+msgid "Status details"
+msgstr "Szczegóły stanu"
+
 #: ./collector.py:28
 msgid "Subjects"
-msgstr ""
+msgstr "Tematy"
 
 #: ./collector.py:25
 msgid "Subjects collector"
-msgstr ""
+msgstr "Kolekcjoner tematów"
 
 #: ./interfaces.py:226
 msgid "Subscribeable"
+msgstr "Możliwość subskrybcji"
+
+#: ./interfaces.py:21
+msgid "Subscriber optional"
+msgstr "Opcjonalna subskrypcja"
+
+#: ./interfaces.py:340
+msgid "Subscription, referenced for bookkeeping purposes only."
 msgstr ""
 
 #: ./browser/subscribe.py:132
@@ -95,36 +162,86 @@ msgstr "Dziękujemy za Twoją subskrybcję; wysłaliśmy Tobie wiadomość z pot
 msgid "Thanks.  We sent you a message."
 msgstr "Dziękujemy. Wysłaliśmy Tobie wiadomość."
 
+#: ./interfaces.py:57
+msgid "The Composer's format, e.g. 'html'"
+msgstr "Format kompozytora, np. 'html'"
+
+#: ./interfaces.py:62
+msgid "The Composer's title, e.g. 'HTML E-Mail'"
+msgstr "Tytuł kompozytora, np. 'E-mail HTML'"
+
 # ?
 #: ./browser/subscribe.py:229
 msgid "The address you're already subscribed with"
 msgstr "Adres, pod którym Twoja subskrybcja już istnieje "
 
+#: ./interfaces.py:161
+msgid "The channel that we're subscribed to"
+msgstr "Kanał, do którego jesteśmy zapisani"
+
+#: ./interfaces.py:243
+msgid "The channel's composers, keyed by format."
+msgstr "Kompozytor kanału, przyporządkowany wg formatu"
+
 #: ./interfaces.py:249
 msgid "The channel's subscriptions"
 msgstr "Subskrybcje kanału"
+
+#: ./interfaces.py:336
+msgid "The message's payload, e.g. the e-mail message."
+msgstr "Dane wiadomości, np. treść wiadomości e-mail."
+
+#: ./interfaces.py:166
+msgid "The subscriber's secret, ideally unique across channels"
+msgstr ""
 
 #: ./browser/wizard.py:27
 msgid "There were errors."
 msgstr "Wystąpiły błędy."
 
-#: ./subscribe.py:204
+#: ./subscribe.py:219
 msgid "There's already a subscription for ${name}"
-msgstr ""
+msgstr "Subskcrypcja dla ${name} jest już aktywna"
 
-#: ./scheduler.py:275
+#: ./interfaces.py:254
+msgid "This channel's message queues, keyed by message status"
+msgstr "Kolejki wiadomości kanału, uporządkowane wg statusu wiadomości"
+
+#: ./interfaces.py:260
+msgid "This is not currently recommended for large volumes of messages due to storage requirements."
+msgstr "Nie jest zalecane dla dużej liczby wiadomości ze względu na wymagania magazynowania."
+
+#: ./scheduler.py:285
 msgid "Timed scheduler"
-msgstr ""
+msgstr "Synchronizowany planista"
 
-#: ./interfaces.py:218
+#: ./interfaces.py:17
 msgid "Title"
 msgstr "Tytuł"
+
+#: ./interfaces.py:201
+msgid "Total number of messages sent through this queue"
+msgstr "Liczba wiadomości wysłanych w tej kolejce"
+
+#: ./interfaces.py:107
+msgid "Triggered the last time"
+msgstr "Data ostatniego uruchomienia"
 
 #: ./interfaces.py:214
 msgid "Unique identifier for this channel across the site."
 msgstr "Unikalny identyfikator tego kanału dla całej witryny"
 
-#: ./scheduler.py:264
+#: ./interfaces.py:32
+#, fuzzy
+msgid "Values are stored via the ICollectorData adapter per subscriber."
+msgstr "Wartości są przechowywane za pomocą adaptera ICollectorData dla subskrybenta."
+
+#: ./interfaces.py:67
+#, fuzzy
+msgid "Values are stored via the IComposerData adapter per subscriber."
+msgstr "Wartości są przechowywane za pomocą adaptera IComposerData dla subskrybenta."
+
+#: ./scheduler.py:274
 msgid "Weekly scheduler"
 msgstr "Tygodniowy planista"
 

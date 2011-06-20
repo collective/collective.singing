@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2010-07-02 12:29+0000\n"
+"POT-Creation-Date: 2011-06-17 12:00+0000\n"
 "PO-Revision-Date: 2008-05-07 10:21+0100\n"
 "Last-Translator: Radim Novotny <novotny.radim@gmail.com>\n"
 "Language-Team: Corenet <info@corenet.cz>\n"
@@ -15,6 +15,14 @@ msgstr ""
 "Domain: DOMAIN\n"
 "Generated-By: zope/app/translation_files/extract.py\n"
 
+#: ./interfaces.py:31
+msgid "A schema instance for use in the subscription form"
+msgstr ""
+
+#: ./interfaces.py:111
+msgid "Active"
+msgstr ""
+
 #: ./browser/subscribe.py:228
 msgid "Address"
 msgstr "E-mail"
@@ -23,7 +31,19 @@ msgstr "E-mail"
 msgid "Collector (what)"
 msgstr "Sběrač (co)"
 
-#: ./scheduler.py:260
+#: ./interfaces.py:176
+msgid "Collector data"
+msgstr ""
+
+#: ./interfaces.py:245
+msgid "Composer"
+msgstr ""
+
+#: ./interfaces.py:175
+msgid "Composer data"
+msgstr ""
+
+#: ./scheduler.py:270
 msgid "Daily scheduler"
 msgstr "Denní plánovač"
 
@@ -44,15 +64,40 @@ msgid "Finish"
 msgstr "Dokončit"
 
 #: ./browser/subscribe.py:44
+#: ./interfaces.py:244
 msgid "Format"
 msgstr "Formát"
+
+#: ./interfaces.py:346
+msgid "IMessageChanged is fired automatically when this is set"
+msgstr ""
+
+#: ./interfaces.py:26
+msgid "Include items from this collector even if there are no no items returned by significant siblings."
+msgstr ""
 
 #: ./browser/wizard.py:26
 msgid "Information submitted successfully."
 msgstr "Nastavení bylo uloženo."
 
-#: ./scheduler.py:268
+#: ./interfaces.py:259
+msgid "Keep a record of sent messages."
+msgstr ""
+
+#: ./interfaces.py:354
+msgid "Last time this message changed its status"
+msgstr ""
+
+#: ./scheduler.py:278
 msgid "Manual scheduler"
+msgstr ""
+
+#: ./interfaces.py:177
+msgid "Metadata"
+msgstr ""
+
+#: ./interfaces.py:362
+msgid "Old status of message"
 msgstr ""
 
 #: ./browser/wizard.py:84
@@ -75,6 +120,18 @@ msgstr "Odeslat"
 msgid "Send my subscription details"
 msgstr "Odeslat mé přihlašovací údaje"
 
+#: ./interfaces.py:25
+msgid "Significant"
+msgstr ""
+
+#: ./interfaces.py:345
+msgid "State"
+msgstr ""
+
+#: ./interfaces.py:350
+msgid "Status details"
+msgstr ""
+
 #: ./collector.py:28
 msgid "Subjects"
 msgstr ""
@@ -87,6 +144,14 @@ msgstr ""
 msgid "Subscribeable"
 msgstr ""
 
+#: ./interfaces.py:21
+msgid "Subscriber optional"
+msgstr ""
+
+#: ./interfaces.py:340
+msgid "Subscription, referenced for bookkeeping purposes only."
+msgstr ""
+
 #: ./browser/subscribe.py:132
 msgid "Thanks for your subscription; we sent you a message for confirmation."
 msgstr "Děkujeme za vaše přihlášení k odběru. Byla vám odeslána zpráva pro protvrzení přihlášení."
@@ -95,35 +160,83 @@ msgstr "Děkujeme za vaše přihlášení k odběru. Byla vám odeslána zpráva
 msgid "Thanks.  We sent you a message."
 msgstr "Byla vám odeslána zpráva. Děkujeme."
 
+#: ./interfaces.py:57
+msgid "The Composer's format, e.g. 'html'"
+msgstr ""
+
+#: ./interfaces.py:62
+msgid "The Composer's title, e.g. 'HTML E-Mail'"
+msgstr ""
+
 #: ./browser/subscribe.py:229
 msgid "The address you're already subscribed with"
 msgstr "E-mail adresa, která byla použita při přhlášení."
+
+#: ./interfaces.py:161
+msgid "The channel that we're subscribed to"
+msgstr ""
+
+#: ./interfaces.py:243
+msgid "The channel's composers, keyed by format."
+msgstr ""
 
 #: ./interfaces.py:249
 msgid "The channel's subscriptions"
 msgstr "Seznam přihlášení"
 
+#: ./interfaces.py:336
+msgid "The message's payload, e.g. the e-mail message."
+msgstr ""
+
+#: ./interfaces.py:166
+msgid "The subscriber's secret, ideally unique across channels"
+msgstr ""
+
 #: ./browser/wizard.py:27
 msgid "There were errors."
 msgstr "Prosím, opravte vyznačené chyby."
 
-#: ./subscribe.py:204
+#: ./subscribe.py:219
 msgid "There's already a subscription for ${name}"
 msgstr ""
 
-#: ./scheduler.py:275
+#: ./interfaces.py:254
+msgid "This channel's message queues, keyed by message status"
+msgstr ""
+
+#: ./interfaces.py:260
+msgid "This is not currently recommended for large volumes of messages due to storage requirements."
+msgstr ""
+
+#: ./scheduler.py:285
 msgid "Timed scheduler"
 msgstr ""
 
-#: ./interfaces.py:218
+#: ./interfaces.py:17
 msgid "Title"
 msgstr "Nadpis"
+
+#: ./interfaces.py:201
+msgid "Total number of messages sent through this queue"
+msgstr ""
+
+#: ./interfaces.py:107
+msgid "Triggered the last time"
+msgstr ""
 
 #: ./interfaces.py:214
 msgid "Unique identifier for this channel across the site."
 msgstr "Unikátní identifikátor tohoto kanálu v celém portálu"
 
-#: ./scheduler.py:264
+#: ./interfaces.py:32
+msgid "Values are stored via the ICollectorData adapter per subscriber."
+msgstr ""
+
+#: ./interfaces.py:67
+msgid "Values are stored via the IComposerData adapter per subscriber."
+msgstr ""
+
+#: ./scheduler.py:274
 msgid "Weekly scheduler"
 msgstr "Týdenní plánovač"
 

@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: collective.singing\n"
-"POT-Creation-Date: 2010-07-02 12:29+0000\n"
+"POT-Creation-Date: 2011-06-17 12:00+0000\n"
 "PO-Revision-Date: 2009-09-01 17:02+0200\n"
 "Last-Translator: Vladimir Iliev <vladimir.iliev@gmail.com>\n"
 "Language-Team: plone i18n\n"
@@ -16,6 +16,14 @@ msgstr ""
 "X-Poedit-Language: Bulgarian\n"
 "X-Poedit-Country: BULGARIA\n"
 
+#: ./interfaces.py:31
+msgid "A schema instance for use in the subscription form"
+msgstr ""
+
+#: ./interfaces.py:111
+msgid "Active"
+msgstr ""
+
 #: ./browser/subscribe.py:228
 msgid "Address"
 msgstr "Адрес"
@@ -24,7 +32,19 @@ msgstr "Адрес"
 msgid "Collector (what)"
 msgstr "Колектор (какво)"
 
-#: ./scheduler.py:260
+#: ./interfaces.py:176
+msgid "Collector data"
+msgstr ""
+
+#: ./interfaces.py:245
+msgid "Composer"
+msgstr ""
+
+#: ./interfaces.py:175
+msgid "Composer data"
+msgstr ""
+
+#: ./scheduler.py:270
 msgid "Daily scheduler"
 msgstr "Ежедневно изпращане"
 
@@ -45,16 +65,41 @@ msgid "Finish"
 msgstr "Край"
 
 #: ./browser/subscribe.py:44
+#: ./interfaces.py:244
 msgid "Format"
 msgstr "Формат"
+
+#: ./interfaces.py:346
+msgid "IMessageChanged is fired automatically when this is set"
+msgstr ""
+
+#: ./interfaces.py:26
+msgid "Include items from this collector even if there are no no items returned by significant siblings."
+msgstr ""
 
 #: ./browser/wizard.py:26
 msgid "Information submitted successfully."
 msgstr "Информацията беше въведена успешно."
 
-#: ./scheduler.py:268
+#: ./interfaces.py:259
+msgid "Keep a record of sent messages."
+msgstr ""
+
+#: ./interfaces.py:354
+msgid "Last time this message changed its status"
+msgstr ""
+
+#: ./scheduler.py:278
 msgid "Manual scheduler"
 msgstr "Ръчно изпращане"
+
+#: ./interfaces.py:177
+msgid "Metadata"
+msgstr ""
+
+#: ./interfaces.py:362
+msgid "Old status of message"
+msgstr ""
 
 #: ./browser/wizard.py:84
 msgid "Proceed"
@@ -76,6 +121,18 @@ msgstr "Изпращане"
 msgid "Send my subscription details"
 msgstr "Изпращане на на информация за моя абонамент"
 
+#: ./interfaces.py:25
+msgid "Significant"
+msgstr ""
+
+#: ./interfaces.py:345
+msgid "State"
+msgstr ""
+
+#: ./interfaces.py:350
+msgid "Status details"
+msgstr ""
+
 #: ./collector.py:28
 msgid "Subjects"
 msgstr "Теми"
@@ -88,6 +145,14 @@ msgstr ""
 msgid "Subscribeable"
 msgstr ""
 
+#: ./interfaces.py:21
+msgid "Subscriber optional"
+msgstr ""
+
+#: ./interfaces.py:340
+msgid "Subscription, referenced for bookkeeping purposes only."
+msgstr ""
+
 #: ./browser/subscribe.py:132
 msgid "Thanks for your subscription; we sent you a message for confirmation."
 msgstr "Благодарим ви че се абонирахте; изпратихме ви съобщение от което да потвърдите."
@@ -96,35 +161,83 @@ msgstr "Благодарим ви че се абонирахте; изпрати
 msgid "Thanks.  We sent you a message."
 msgstr "Благодарим. Изпратихме ви съобщение."
 
+#: ./interfaces.py:57
+msgid "The Composer's format, e.g. 'html'"
+msgstr ""
+
+#: ./interfaces.py:62
+msgid "The Composer's title, e.g. 'HTML E-Mail'"
+msgstr ""
+
 #: ./browser/subscribe.py:229
 msgid "The address you're already subscribed with"
 msgstr "Адреса на който сте абонирани"
+
+#: ./interfaces.py:161
+msgid "The channel that we're subscribed to"
+msgstr ""
+
+#: ./interfaces.py:243
+msgid "The channel's composers, keyed by format."
+msgstr ""
 
 #: ./interfaces.py:249
 msgid "The channel's subscriptions"
 msgstr "Абонаменти за канал"
 
+#: ./interfaces.py:336
+msgid "The message's payload, e.g. the e-mail message."
+msgstr ""
+
+#: ./interfaces.py:166
+msgid "The subscriber's secret, ideally unique across channels"
+msgstr ""
+
 #: ./browser/wizard.py:27
 msgid "There were errors."
 msgstr "Бяха открити грешки."
 
-#: ./subscribe.py:204
+#: ./subscribe.py:219
 msgid "There's already a subscription for ${name}"
 msgstr "Вече има абонамент за ${name}"
 
-#: ./scheduler.py:275
+#: ./interfaces.py:254
+msgid "This channel's message queues, keyed by message status"
+msgstr ""
+
+#: ./interfaces.py:260
+msgid "This is not currently recommended for large volumes of messages due to storage requirements."
+msgstr ""
+
+#: ./scheduler.py:285
 msgid "Timed scheduler"
 msgstr "Периодично изпращане"
 
-#: ./interfaces.py:218
+#: ./interfaces.py:17
 msgid "Title"
 msgstr "Заглавие"
+
+#: ./interfaces.py:201
+msgid "Total number of messages sent through this queue"
+msgstr ""
+
+#: ./interfaces.py:107
+msgid "Triggered the last time"
+msgstr ""
 
 #: ./interfaces.py:214
 msgid "Unique identifier for this channel across the site."
 msgstr "Уникален идентификатор на този канал за сайта."
 
-#: ./scheduler.py:264
+#: ./interfaces.py:32
+msgid "Values are stored via the ICollectorData adapter per subscriber."
+msgstr ""
+
+#: ./interfaces.py:67
+msgid "Values are stored via the IComposerData adapter per subscriber."
+msgstr ""
+
+#: ./scheduler.py:274
 msgid "Weekly scheduler"
 msgstr "Седмично изпращане"
 

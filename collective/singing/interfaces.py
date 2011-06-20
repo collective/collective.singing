@@ -14,23 +14,23 @@ class ICollector(interface.Interface):
     """
 
     title = schema.TextLine(
-        title=u"Title",
+        title=_(u"Title"),
         )
 
     optional = schema.Bool(
-        title=u"Subscriber optional",
+        title=_(u"Subscriber optional"),
         )
 
     significant = schema.Bool(
-        title=u"Significant",
-        description=(u"Include items from this collector even if there are no "
+        title=_(u"Significant"),
+        description=_(u"Include items from this collector even if there are no "
                      "no items returned by significant siblings.")
         )
 
     schema = schema.Object(
-        title=u"A schema instance for use in the subscription form",
-        description=u"Values are stored via the ICollectorData adapter per "
-        "subscriber.",
+        title=_(u"A schema instance for use in the subscription form"),
+        description=_(u"Values are stored via the ICollectorData adapter per "
+        "subscriber."),
         required=False,
         schema=IInterface,
         )
@@ -54,18 +54,18 @@ class IComposer(interface.Interface):
     """
 
     name = schema.TextLine(
-        title=u"The Composer's format, e.g. 'html'",
+        title=_(u"The Composer's format, e.g. 'html'"),
         )
 
 
     title = schema.TextLine(
-        title=u"The Composer's title, e.g. 'HTML E-Mail'",
+        title=_(u"The Composer's title, e.g. 'HTML E-Mail'"),
         )
 
     schema = schema.Object(
-        title=u"A schema instance for use in the subscription form",
-        description=u"Values are stored via the IComposerData adapter per "
-        "subscriber.",
+        title=_(u"A schema instance for use in the subscription form"),
+        description=_(u"Values are stored via the IComposerData adapter per "
+        "subscriber."),
         schema=IInterface,
         )
 
@@ -100,15 +100,15 @@ class IScheduler(interface.Interface):
     """A scheduler triggers the sending of messages periodically.
     """
     title = schema.TextLine(
-        title=u"Title",
+        title=_(u"Title"),
         )
 
     triggered_last = schema.Datetime(
-        title=u"Triggered the last time",
+        title=_(u"Triggered the last time"),
         )
 
     active = schema.Bool(
-        title=u"Active",
+        title=_(u"Active"),
         )
 
     def tick(channel, request):
@@ -158,12 +158,12 @@ class ISubscription(IAnnotatable):
     """
 
     channel = schema.Object(
-        title=u"The channel that we're subscribed to",
+        title=_(u"The channel that we're subscribed to"),
         schema=IInterface, # should be really IChannel
         )
 
     secret = schema.ASCIILine(
-        title=u"The subscriber's secret, ideally unique across channels",
+        title=_(u"The subscriber's secret, ideally unique across channels"),
         description=u"""\
         Might be a hash of the subscriber's e-mail and a secret on the
         server in case we're dealing with an anonymous subscription.
@@ -172,9 +172,9 @@ class ISubscription(IAnnotatable):
         """,
         )
 
-    composer_data = schema.Dict(title=u"Composer data")
-    collector_data = schema.Dict(title=u"Collector data")
-    metadata = schema.Dict(title=u"Metadata")
+    composer_data = schema.Dict(title=_(u"Composer data"))
+    collector_data = schema.Dict(title=_(u"Collector data"))
+    metadata = schema.Dict(title=_(u"Metadata"))
 
 
 class ISubscriptionLabel(interface.Interface):
@@ -198,7 +198,7 @@ class IMessageQueues(IMapping):
     message status.
     """
     messages_sent = schema.Int(
-        title=u"Total number of messages sent through this queue",
+        title=_(u"Total number of messages sent through this queue"),
         )
 
 
@@ -240,9 +240,9 @@ class IChannel(interface.Interface):
         )
 
     composers = schema.Dict(
-        title=u"The channel's composers, keyed by format.",
-        key_type=schema.TextLine(title=u"Format"),
-        value_type=schema.Object(title=u"Composer", schema=IComposer),
+        title=_(u"The channel's composers, keyed by format."),
+        key_type=schema.TextLine(title=_(u"Format")),
+        value_type=schema.Object(title=_(u"Composer"), schema=IComposer),
         )
 
     subscriptions = schema.Object(
@@ -251,7 +251,7 @@ class IChannel(interface.Interface):
         )
 
     queue = schema.Object(
-        title=u"This channel's message queues, keyed by message status",
+        title=_(u"This channel's message queues, keyed by message status"),
         schema=IMessageQueues,
         )
 
@@ -333,25 +333,25 @@ class IMessage(interface.Interface):
     """Messages are objects ready for sending.
     """
     payload = schema.Field(
-        title=u"The message's payload, e.g. the e-mail message.",
+        title=_(u"The message's payload, e.g. the e-mail message."),
         )
 
     subscription = schema.Object(
-        title=u"Subscription, referenced for bookkeeping purposes only.",
+        title=_(u"Subscription, referenced for bookkeeping purposes only."),
         schema=ISubscription,
         )
 
     status = schema.Choice(
-        title=u"State",
-        description=u"IMessageChanged is fired automatically when this is set",
+        title=_(u"State"),
+        description=_(u"IMessageChanged is fired automatically when this is set"),
         values=MESSAGE_STATES)
 
     status_message = schema.Text(
-        title=u"Status details",
+        title=_(u"Status details"),
         required=False)
 
     status_changed = schema.Datetime(
-        title=u"Last time this message changed its status",
+        title=_(u"Last time this message changed its status"),
         )
 
 
@@ -359,7 +359,7 @@ class IMessageChanged(zope.lifecycleevent.interfaces.IObjectModifiedEvent):
     """An object event on the message that signals that the status has
     changed.
     """
-    old_status = schema.TextLine(title=u"Old status of message")
+    old_status = schema.TextLine(title=_(u"Old status of message"))
 
 
 class IDispatch(interface.Interface):
