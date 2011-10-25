@@ -11,7 +11,11 @@ import zope.index.text.interfaces
 import zope.app.catalog.catalog
 import zope.app.catalog.field
 import zope.app.catalog.text
-import zope.app.intid.interfaces
+try:
+    import zope.app.intid.interfaces
+except ImportError:
+    # Plone-4.1.2
+    import zope.intid.interfaces
 import zope.app.container.btree
 import zope.app.container.interfaces
 
@@ -250,8 +254,16 @@ def subscription_added(obj, event):
 def subscription_modified(obj, event):
     _catalog_subscription(obj)
 
-@component.adapter(collective.singing.interfaces.ISubscription,
-                   zope.app.intid.interfaces.IIntIdRemovedEvent)
-def subscription_removed(obj, event):
-    intids = component.getUtility(zope.app.intid.interfaces.IIntIds)
-    subscriptions_data(obj.channel)._catalog.unindex_doc(intids.getId(obj))
+try:
+    @component.adapter(collective.singing.interfaces.ISubscription,
+                    zope.app.intid.interfaces.IIntIdRemovedEvent)
+    def subscription_removed(obj, event):
+        intids = component.getUtility(zope.app.intid.interfaces.IIntIds)
+        subscriptions_data(obj.channel)._catalog.unindex_doc(intids.getId(obj))
+except AttributeError:
+    # Plone-4.1.2
+    @component.adapter(collective.singing.interfaces.ISubscription,
+                    zope.intid.interfaces.IIntIdRemovedEvent)
+    def subscription_removed(obj, event):
+        intids = component.getUtility(zope.app.intid.interfaces.IIntIds)
+        subscriptions_data(obj.channel)._catalog.unindex_doc(intids.getId(obj))
