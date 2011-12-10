@@ -4,6 +4,10 @@ History
 0.7.2 (unreleased)
 ------------------
 
+- Added empty English translation, needed in corner cases with sites
+  that support multiple languages.
+  [maurits]
+
 - Added Italian translations.
   Refs https://bugs.launchpad.net/singing-dancing/+bug/466764
   [andrea-cecchi85]

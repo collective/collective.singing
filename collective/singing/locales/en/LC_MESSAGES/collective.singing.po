@@ -1,0 +1,251 @@
+# Empty English translation, needed in corner cases with sites that
+# support multiple languages.
+msgid ""
+msgstr ""
+"Project-Id-Version: collective.singing trunk\n"
+"POT-Creation-Date: 2011-12-10 02:12+0000\n"
+"PO-Revision-Date: 2011-12-10 02:12 +0000\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0\n"
+"Language-Code: en\n"
+"Language-Name: English\n"
+"Preferred-Encodings: utf-8 latin1\n"
+"Domain: collective.singing\n"
+
+#: ./interfaces.py:31
+msgid "A schema instance for use in the subscription form"
+msgstr ""
+
+#: ./interfaces.py:111
+msgid "Active"
+msgstr ""
+
+#: ./browser/subscribe.py:228
+msgid "Address"
+msgstr ""
+
+#: ./interfaces.py:237
+msgid "Collector (what)"
+msgstr ""
+
+#: ./interfaces.py:176
+msgid "Collector data"
+msgstr ""
+
+#: ./interfaces.py:245
+msgid "Composer"
+msgstr ""
+
+#: ./interfaces.py:175
+msgid "Composer data"
+msgstr ""
+
+#: ./scheduler.py:270
+msgid "Daily scheduler"
+msgstr ""
+
+#: ./interfaces.py:222
+msgid "Description"
+msgstr ""
+
+#: ./browser/subscribe.py:131
+msgid "Fill in the information below to subscribe."
+msgstr ""
+
+#: ./browser/subscribe.py:114
+msgid "Filters"
+msgstr ""
+
+#: ./browser/wizard.py:102
+msgid "Finish"
+msgstr ""
+
+#: ./browser/subscribe.py:44
+#: ./interfaces.py:244
+msgid "Format"
+msgstr ""
+
+#: ./interfaces.py:346
+msgid "IMessageChanged is fired automatically when this is set"
+msgstr ""
+
+#: ./interfaces.py:26
+msgid "Include items from this collector even if there are no no items returned by significant siblings."
+msgstr ""
+
+#: ./browser/wizard.py:26
+msgid "Information submitted successfully."
+msgstr ""
+
+#: ./interfaces.py:259
+msgid "Keep a record of sent messages."
+msgstr ""
+
+#: ./interfaces.py:354
+msgid "Last time this message changed its status"
+msgstr ""
+
+#: ./scheduler.py:278
+msgid "Manual scheduler"
+msgstr ""
+
+#: ./interfaces.py:177
+msgid "Metadata"
+msgstr ""
+
+#: ./interfaces.py:362
+msgid "Old status of message"
+msgstr ""
+
+#: ./browser/wizard.py:84
+msgid "Proceed"
+msgstr ""
+
+#: ./browser/subscribe.py:220
+msgid "Retrieve a link to your personalized subscription settings"
+msgstr ""
+
+#: ./interfaces.py:231
+msgid "Scheduler (when)"
+msgstr ""
+
+#: ./browser/subscribe.py:233
+msgid "Send"
+msgstr ""
+
+#: ./browser/subscribe.py:77
+msgid "Send my subscription details"
+msgstr ""
+
+#: ./interfaces.py:25
+msgid "Significant"
+msgstr ""
+
+#: ./interfaces.py:345
+msgid "State"
+msgstr ""
+
+#: ./interfaces.py:350
+msgid "Status details"
+msgstr ""
+
+#: ./collector.py:28
+msgid "Subjects"
+msgstr ""
+
+#: ./collector.py:25
+msgid "Subjects collector"
+msgstr ""
+
+#: ./interfaces.py:226
+msgid "Subscribeable"
+msgstr ""
+
+#: ./interfaces.py:21
+msgid "Subscriber optional"
+msgstr ""
+
+#: ./interfaces.py:340
+msgid "Subscription, referenced for bookkeeping purposes only."
+msgstr ""
+
+#: ./browser/subscribe.py:132
+msgid "Thanks for your subscription; we sent you a message for confirmation."
+msgstr ""
+
+#: ./browser/subscribe.py:107
+msgid "Thanks.  We sent you a message."
+msgstr ""
+
+#: ./interfaces.py:57
+msgid "The Composer's format, e.g. 'html'"
+msgstr ""
+
+#: ./interfaces.py:62
+msgid "The Composer's title, e.g. 'HTML E-Mail'"
+msgstr ""
+
+#: ./browser/subscribe.py:229
+msgid "The address you're already subscribed with"
+msgstr ""
+
+#: ./interfaces.py:161
+msgid "The channel that we're subscribed to"
+msgstr ""
+
+#: ./interfaces.py:243
+msgid "The channel's composers, keyed by format."
+msgstr ""
+
+#: ./interfaces.py:249
+msgid "The channel's subscriptions"
+msgstr ""
+
+#: ./interfaces.py:336
+msgid "The message's payload, e.g. the e-mail message."
+msgstr ""
+
+#: ./interfaces.py:166
+msgid "The subscriber's secret, ideally unique across channels"
+msgstr ""
+
+#: ./browser/wizard.py:27
+msgid "There were errors."
+msgstr ""
+
+#: ./subscribe.py:223
+msgid "There's already a subscription for ${name}"
+msgstr ""
+
+#: ./interfaces.py:254
+msgid "This channel's message queues, keyed by message status"
+msgstr ""
+
+#: ./interfaces.py:260
+msgid "This is not currently recommended for large volumes of messages due to storage requirements."
+msgstr ""
+
+#: ./scheduler.py:285
+msgid "Timed scheduler"
+msgstr ""
+
+#: ./interfaces.py:17
+msgid "Title"
+msgstr ""
+
+#: ./interfaces.py:201
+msgid "Total number of messages sent through this queue"
+msgstr ""
+
+#: ./interfaces.py:107
+msgid "Triggered the last time"
+msgstr ""
+
+#: ./interfaces.py:214
+msgid "Unique identifier for this channel across the site."
+msgstr ""
+
+#: ./interfaces.py:32
+msgid "Values are stored via the ICollectorData adapter per subscriber."
+msgstr ""
+
+#: ./interfaces.py:67
+msgid "Values are stored via the IComposerData adapter per subscriber."
+msgstr ""
+
+#: ./scheduler.py:274
+msgid "Weekly scheduler"
+msgstr ""
+
+#: ./browser/subscribe.py:135
+msgid "You are already subscribed."
+msgstr ""
+
+#: ./browser/subscribe.py:96
+msgid "Your subscription isn't known to us."
+msgstr ""
+
