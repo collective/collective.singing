@@ -4,6 +4,10 @@ History
 0.7.2 (unreleased)
 ------------------
 
+- Added Italian translations.
+  Refs https://bugs.launchpad.net/singing-dancing/+bug/466764
+  [andrea-cecchi85]
+
 - Add IJob interface and let Job implements it.
   [toutpt]
 
