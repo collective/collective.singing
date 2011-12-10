@@ -6,7 +6,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: collective.singing 0.1\n"
-"POT-Creation-Date: 2011-06-17 12:00+0000\n"
+"POT-Creation-Date: 2011-12-10 02:12+0000\n"
 "PO-Revision-Date: 2008-11-19 17:43+0100\n"
 "Last-Translator: Mathieu Pasquet <kiorky@cryptelium.net>\n"
 "Language-Team: French\n"
@@ -201,7 +201,7 @@ msgstr ""
 msgid "There were errors."
 msgstr "Des erreurs sont survenues"
 
-#: ./subscribe.py:219
+#: ./subscribe.py:223
 msgid "There's already a subscription for ${name}"
 msgstr "Il existe déjà un abonnement pour ${name}"
 

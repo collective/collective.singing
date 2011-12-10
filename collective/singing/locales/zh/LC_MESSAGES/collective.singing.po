@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
-"POT-Creation-Date: 2011-06-20 08:10+0000\n"
+"POT-Creation-Date: 2011-12-10 02:12+0000\n"
 "PO-Revision-Date: 2008-10-07 14:53+0800\n"
 "Last-Translator: adam tang(315ok.org) <yuejun.tang@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -195,7 +195,7 @@ msgstr ""
 msgid "There were errors."
 msgstr "有错"
 
-#: ./subscribe.py:219
+#: ./subscribe.py:223
 msgid "There's already a subscription for ${name}"
 msgstr "${name}已经有了预订"
 

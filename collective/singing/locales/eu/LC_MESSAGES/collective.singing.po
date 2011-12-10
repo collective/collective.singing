@@ -4,7 +4,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
-"POT-Creation-Date: 2011-06-17 12:00+0000\n"
+"POT-Creation-Date: 2011-12-10 02:12+0000\n"
 "PO-Revision-Date: 2009-03-06 16:38+0100\n"
 "Last-Translator: Mikel Larreategi <mlarreategi@codesyntax.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -198,7 +198,7 @@ msgstr ""
 msgid "There were errors."
 msgstr "Erroreak egon dira"
 
-#: ./subscribe.py:219
+#: ./subscribe.py:223
 msgid "There's already a subscription for ${name}"
 msgstr "Badago ${name}-ren harpidetza bat"
 

@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
-"POT-Creation-Date: 2011-06-17 12:00+0000\n"
+"POT-Creation-Date: 2011-12-10 02:12+0000\n"
 "PO-Revision-Date: 2011-06-17 15:58+0100\n"
 "Last-Translator: Piotr Furman <piotr.furman@webservice.pl>\n"
 "Language-Team: Silva i18n team <walco@infrae.com>\n"
@@ -199,7 +199,7 @@ msgstr ""
 msgid "There were errors."
 msgstr "Wystąpiły błędy."
 
-#: ./subscribe.py:219
+#: ./subscribe.py:223
 msgid "There's already a subscription for ${name}"
 msgstr "Subskcrypcja dla ${name} jest już aktywna"
 

@@ -4,7 +4,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
-"POT-Creation-Date: 2011-06-17 12:00+0000\n"
+"POT-Creation-Date: 2011-12-10 02:12+0000\n"
 "PO-Revision-Date: 2009-10-15 16:24-0300\n"
 "Last-Translator: Thiago Tamosauskas <thiago@simplesconsultoria.com.br>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -198,7 +198,7 @@ msgstr ""
 msgid "There were errors."
 msgstr "Ocorreram erros."
 
-#: ./subscribe.py:219
+#: ./subscribe.py:223
 msgid "There's already a subscription for ${name}"
 msgstr "Já existe uma inscrição para ${name}"
 
