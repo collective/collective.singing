@@ -13,7 +13,6 @@ from z3c.form import field
 from z3c.form import form
 import z3c.form.browser.checkbox
 
-from collective.singing import interfaces
 from collective.singing import subscribe
 from collective.singing import MessageFactory as _
 from collective.singing import message
@@ -21,11 +20,13 @@ from collective.singing.browser import utils
 from collective.singing.browser import wizard
 from collective.singing.channel import channel_lookup
 
+
 class Terms(zope.schema.vocabulary.SimpleVocabulary):
     zope.interface.implements(z3c.form.interfaces.ITerms)
 
     def getValue(self, token):
         return self.getTermByToken(token).value
+
 
 class ChooseFormatStep(wizard.Step):
     prefix = 'format'
@@ -45,6 +46,7 @@ class ChooseFormatStep(wizard.Step):
             vocabulary=terms)
 
         return field.Fields(format)
+
 
 class SubscribeStep(wizard.Step):
     prefix = 'composer'
@@ -76,7 +78,7 @@ class SubscribeStep(wizard.Step):
     @button.buttonAndHandler(
         _('Send my subscription details'),
         name='forgot',
-        condition=lambda form:form._show_forgot_button())
+        condition=lambda form: form._show_forgot_button())
     def handle_forgot(self, action):
         data, errors = self.parent.extractData()
         if errors:
@@ -106,6 +108,7 @@ class SubscribeStep(wizard.Step):
             else:
                 self.parent.status = _(u"Thanks.  We sent you a message.")
 
+
 class CollectorDataForm(utils.OverridableTemplate, form.Form):
     """A subform for the collector specific data.
     """
@@ -121,6 +124,7 @@ class CollectorDataForm(utils.OverridableTemplate, form.Form):
             return field.Fields(collector.schema)
         else:
             return field.Fields()
+
 
 class Subscribe(wizard.Wizard):
     """The add subscription wizard.
@@ -202,6 +206,7 @@ class Subscribe(wizard.Wizard):
         composer = self.context.composers[self.format()]
         return subscribe.secret(self.context, composer, data, self.request)
 
+
 class Unsubscribe(utils.OverridableTemplate,
                   zope.publisher.browser.BrowserView):
     def index(self):
@@ -212,6 +217,7 @@ class Unsubscribe(utils.OverridableTemplate,
         for subscription in self.context.subscriptions.query(secret=secret):
             self.context.subscriptions.remove_subscription(subscription)
         return self.template()
+
 
 class ForgotSecret(utils.OverridableTemplate, form.Form):
     ignoreContext = True

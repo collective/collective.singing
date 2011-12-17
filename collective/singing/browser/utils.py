@@ -1,11 +1,3 @@
-import os
-
-from zope import interface
-from zope import component
-import zope.pagetemplate.interfaces
-import z3c.form.interfaces
-import z3c.form.widget
-
 def extract_data_prefixed(subforms):
     data, errors = {}, []
     for form in subforms:
@@ -18,6 +10,7 @@ def extract_data_prefixed(subforms):
         data.update(d)
         errors.extend(subform_errors)
     return data, tuple(errors)
+
 
 class OverridableTemplate(object):
     """Subclasses of this class must set the template they want to use

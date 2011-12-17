@@ -1,6 +1,7 @@
 import zope.i18nmessageid
 import zope.app.i18n
 
+
 def do():
     # We have to do this because Zope 2 decides not to include
     # zope.app.catalog!

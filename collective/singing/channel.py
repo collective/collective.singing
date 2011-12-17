@@ -1,6 +1,7 @@
 from zope import component
 from interfaces import IChannelLookup
 
+
 def channel_lookup(only_subscribeable=False, only_sendable=False):
     """Lookup all channels.
 
@@ -20,10 +21,10 @@ def channel_lookup(only_subscribeable=False, only_sendable=False):
         return [c for c in channels if c.sendable]
     return channels
 
+
 def lookup(name):
     for channel in channel_lookup():
         if channel.name == name:
             return channel
 
     raise ValueError('Unable to lookup channel with name "%s".' % name)
-

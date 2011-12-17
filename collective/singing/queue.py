@@ -1,9 +1,11 @@
 import zc.queue
 from ZODB.POSException import ConflictError
 
+
 class CompositeQueue(zc.queue.CompositeQueue):
     """   """
-    def __init__(self, compositeSize=15, subfactory=zc.queue._queue.BucketQueue):
+    def __init__(self, compositeSize=15,
+                 subfactory=zc.queue._queue.BucketQueue):
         super(CompositeQueue, self).__init__(compositeSize, subfactory)
         self.size = 0
 
@@ -36,10 +38,10 @@ def resolveQueueConflict(oldstate, committedstate, newstate, bucket=False):
     # We only know how to merge _data and the size of the top-level queue.
     # If anything else is different, puke.
     if set(committedstate.keys()) != set(newstate.keys()):
-        raise ConflictError # can't resolve
+        raise ConflictError  # can't resolve
     for key, val in newstate.items():
         if key not in ('_data', 'size')  and val != committedstate[key]:
-            raise ConflictError # can't resolve
+            raise ConflictError  # can't resolve
     # basically, we are ok with anything--willing to merge--
     # unless committedstate and newstate have one or more of the
     # same deletions or additions in comparison to the oldstate.
@@ -67,10 +69,10 @@ def resolveQueueConflict(oldstate, committedstate, newstate, bucket=False):
 
     if new_removed & committed_removed:
         # they both removed (claimed) the same one.  Puke.
-        raise ConflictError # can't resolve
+        raise ConflictError  # can't resolve
     elif new_added & committed_added:
         # they both added the same one.  Puke.
-        raise ConflictError # can't resolve
+        raise ConflictError  # can't resolve
     # Now we do the merge.  We'll merge into the committed state and
     # return it.
     mod_committed = []

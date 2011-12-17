@@ -14,6 +14,7 @@ from plone.memoize import request
 
 logger = logging.getLogger('collective.singing')
 
+
 class UnicodeFormatter(object):
     interface.implements(interfaces.IFormatItem)
 
@@ -23,10 +24,12 @@ class UnicodeFormatter(object):
     def __call__(self):
         return unicode(self.item)
 
+
 @request.cache(get_key=lambda fun, obj, req, format: (obj, format))
 def format_item(obj, request, format):
     logger.info('Formatting item: (%s, %s, %s)' % (obj, request, format))
     return getIFormatAdapter(obj, request, format)()
+
 
 def getIFormatAdapter(obj, request, format):
     """Return item formatter for the specified format.
@@ -42,6 +45,7 @@ def getIFormatAdapter(obj, request, format):
         return formatter
 
     return component.getMultiAdapter((obj, request), interfaces.IFormatItem)
+
 
 class MessageAssemble(object):
     interface.implements(interfaces.IMessageAssemble)
@@ -106,9 +110,11 @@ class MessageAssemble(object):
         # ... and finally render using the right composer. Note
         # that the message is already queued when we render it.
         composer = composers[format]
-        return composer.render(subscription, zip(transformed_items, raw_items), override_vars)
+        return composer.render(subscription, zip(transformed_items, raw_items),
+                               override_vars)
 
-    def __call__(self, request, items=(), use_collector=True, override_vars=None):
+    def __call__(self, request, items=(), use_collector=True,
+                 override_vars=None):
         if override_vars is None:
             override_vars = {}
         queued_messages = 0
@@ -117,7 +123,7 @@ class MessageAssemble(object):
             message = self.render_message(
                 request, subscription, items, use_collector, override_vars)
             if message is not None:
-                queued_messages +=1
+                queued_messages += 1
         return queued_messages
 
 
@@ -130,6 +136,7 @@ def render_message(channel, request, subscription, items, use_collector):
     return interfaces.IMessageAssemble(channel).render_message(
         request, subscription, items, use_collector)
 
+
 @deprecate("""\
 assemble_messages has become IMessageAssemble.__call__ in version 0.6.
 Please update your code to use the IMessageAssemble adapter on
@@ -137,6 +144,7 @@ IChannel instead.
 """)
 def assemble_messages(channel, request, items=(), use_collector=True):
     return interfaces.IMessageAssemble(channel)(request, items, use_collector)
+
 
 class AbstractPeriodicScheduler(object):
 
@@ -207,7 +215,8 @@ of course  be skipped.
       >>> scheduler.tick(None, None)
       datetime.datetime(2009, 3, 22, 17, 0)
 
-Trigging a manual scheduler (with no delta) always sets it's triggered_last to now.
+Trigging a manual scheduler (with no delta) always sets it's
+triggered_last to now.
 
       >>> reset(scheduler)
       >>> scheduler.delta = timedelta()
@@ -266,13 +275,16 @@ Trigging a manual scheduler (with no delta) always sets it's triggered_last to n
             return 1
         return cmp(self.delta, other.delta)
 
+
 class DailyScheduler(persistent.Persistent, AbstractPeriodicScheduler):
     title = _(u"Daily scheduler")
     delta = datetime.timedelta(days=1)
 
+
 class WeeklyScheduler(persistent.Persistent, AbstractPeriodicScheduler):
     title = _(u"Weekly scheduler")
     delta = datetime.timedelta(weeks=1)
+
 
 class ManualScheduler(persistent.Persistent, AbstractPeriodicScheduler):
     title = _(u"Manual scheduler")
@@ -280,6 +292,7 @@ class ManualScheduler(persistent.Persistent, AbstractPeriodicScheduler):
 
     def tick(self, channel, request):
         pass
+
 
 class TimedScheduler(persistent.Persistent, AbstractPeriodicScheduler):
     title = _(u"Timed scheduler")
@@ -306,7 +319,8 @@ class TimedScheduler(persistent.Persistent, AbstractPeriodicScheduler):
                         count += assembler(request, (content(),),
                                            override_vars=override_vars)
                     else:
-                        count += assembler(request, override_vars=override_vars)
+                        count += assembler(request,
+                                           override_vars=override_vars)
         return count
 
     def __eq__(self, other):

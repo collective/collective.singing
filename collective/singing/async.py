@@ -7,8 +7,10 @@ from zope import interface
 from zope import component
 from zope.app.component.hooks import getSiteManager
 
+
 class IQueue(interface.Interface):
     pass
+
 
 class Queue(persistent.Persistent):
     interface.implements(IQueue)
@@ -25,8 +27,10 @@ class Queue(persistent.Persistent):
             self.finished.append(job)
         return num
 
+
 class IJob(interface.Interface):
     title = schema.TextLine(title=u"Title")
+
 
 class Job(persistent.Persistent):
     interface.implements(IJob)
@@ -41,6 +45,7 @@ class Job(persistent.Persistent):
     def __call__(self):
         self.value = self._fun(*self._args, **self._kwargs)
         self.executed = datetime.datetime.now()
+
 
 def get_queue(name):
     queue = component.queryUtility(IQueue, name)

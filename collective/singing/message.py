@@ -4,7 +4,6 @@ import os
 import tempfile
 import traceback
 
-import transaction
 import persistent.dict
 import email.Message
 from BTrees.Length import Length
@@ -25,6 +24,7 @@ logger = logging.getLogger('collective.singing')
 LOCKFILE_NAME = os.path.join(tempfile.gettempdir(),
                              'collective.singing.message.lock')
 
+
 def dispatch(message):
     dispatcher = interfaces.IDispatch(message.payload)
     try:
@@ -44,6 +44,7 @@ def dispatch(message):
     message.status = status
     return message.status, message.status_message
 
+
 class Message(object):
     interface.implements(interfaces.IMessage)
 
@@ -61,6 +62,7 @@ class Message(object):
     def status():
         def get(self):
             return self._status
+
         def set(self, value):
             assert value in interfaces.MESSAGE_STATES, value
             old_status = self.status
@@ -72,7 +74,8 @@ class Message(object):
 
 
 class SizedCompositeQueue(zc.queue.CompositeQueue):
-    def __init__(self, compositeSize=15, subfactory=zc.queue._queue.BucketQueue):
+    def __init__(self, compositeSize=15,
+                 subfactory=zc.queue._queue.BucketQueue):
         super(SizedCompositeQueue, self).__init__(compositeSize, subfactory)
         self.size = 0
 

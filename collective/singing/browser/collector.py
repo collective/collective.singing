@@ -2,6 +2,7 @@ import z3c.form.form
 import z3c.form.field
 from zope.app.pagetemplate import viewpagetemplatefile
 
+
 class EditFilteredSubjectsCollector(z3c.form.form.EditForm):
     template = viewpagetemplatefile.ViewPageTemplateFile('form.pt')
 

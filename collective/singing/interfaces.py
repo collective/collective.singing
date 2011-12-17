@@ -8,6 +8,7 @@ import z3c.form.interfaces
 
 from collective.singing import MessageFactory as _
 
+
 class ICollector(interface.Interface):
     """Collectors are useful for automatic newsletters.  They are
     responsible for assembling a list of items for publishing.
@@ -23,8 +24,8 @@ class ICollector(interface.Interface):
 
     significant = schema.Bool(
         title=_(u"Significant"),
-        description=_(u"Include items from this collector even if there are no "
-                     "no items returned by significant siblings.")
+        description=_(u"Include items from this collector even if there are "
+                      u"no items returned by significant siblings.")
         )
 
     schema = schema.Object(
@@ -56,7 +57,6 @@ class IComposer(interface.Interface):
     name = schema.TextLine(
         title=_(u"The Composer's format, e.g. 'html'"),
         )
-
 
     title = schema.TextLine(
         title=_(u"The Composer's title, e.g. 'HTML E-Mail'"),
@@ -159,7 +159,7 @@ class ISubscription(IAnnotatable):
 
     channel = schema.Object(
         title=_(u"The channel that we're subscribed to"),
-        schema=IInterface, # should be really IChannel
+        schema=IInterface,  # should be really IChannel
         )
 
     secret = schema.ASCIILine(
@@ -277,7 +277,8 @@ class IMessageAssemble(interface.Interface):
 
         Returns the number of queued messages."""
 
-    def render_message(request, subscription, items=(), use_collector=True, override_vars=None):
+    def render_message(request, subscription, items=(), use_collector=True,
+                       override_vars=None):
         """Render and queue messages for an individual subscription.
 
           o ``subscription`` is an ISubscription
@@ -287,6 +288,7 @@ class IMessageAssemble(interface.Interface):
         Returns the IMessage if a message was queued or None to
         indicate that no message was queued.
         """
+
 
 class IChannelLookup(interface.Interface):
     """A utility that looks up all channels in a site.
@@ -322,10 +324,10 @@ class IComposerBasedSecret(interface.Interface):
         """
 
 
-MESSAGE_STATES = [u'new',   # just added
-                  u'sent',  # sent successfully
-                  u'error', # error while sending
-                  u'retry', # error while sending, but retrying
+MESSAGE_STATES = [u'new',    # just added
+                  u'sent',   # sent successfully
+                  u'error',  # error while sending
+                  u'retry',  # error while sending, but retrying
                   ]
 
 
@@ -343,7 +345,8 @@ class IMessage(interface.Interface):
 
     status = schema.Choice(
         title=_(u"State"),
-        description=_(u"IMessageChanged is fired automatically when this is set"),
+        description=_(u"IMessageChanged is fired automatically when this "
+                      u"is set"),
         values=MESSAGE_STATES)
 
     status_message = schema.Text(
@@ -411,6 +414,7 @@ class IDynamicVocabularyCollection(zope.schema.interfaces.ICollection):
 
     (XXX: Mabye this should go into the browser package?)
     """
+
 
 class ICollectorSchema(interface.Interface):
     """An adapter from subscription to the collector data.

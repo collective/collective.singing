@@ -7,11 +7,14 @@ import zope.interface.interface
 import collective.singing.interfaces
 from collective.singing import MessageFactory as _
 
+
 class ISubjectsCollectorBase(collective.singing.interfaces.ICollector):
     pass
 
+
 class IFilteredSubjectsCollectorBase(collective.singing.interfaces.ICollector):
     pass
+
 
 class SubjectsCollectorBase(persistent.Persistent):
     """A template class that allows you to create a simple collector
@@ -92,6 +95,7 @@ class SubjectsCollectorBase(persistent.Persistent):
         """
         raise NotImplementedError()
 
+
 class FilteredSubjectsCollectorBase(SubjectsCollectorBase):
     interface.implements(IFilteredSubjectsCollectorBase)
 
@@ -104,4 +108,3 @@ class FilteredSubjectsCollectorBase(SubjectsCollectorBase):
                  if t.token in self.filtered_items])
         else:
             return self.vocabulary()
-

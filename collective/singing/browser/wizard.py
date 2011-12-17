@@ -10,6 +10,7 @@ import z3c.form.interfaces
 from collective.singing import MessageFactory as _
 from collective.singing.browser import utils
 
+
 class Step(utils.OverridableTemplate, form.Form):
     index = viewpagetemplatefile.ViewPageTemplateFile('wizard-step.pt')
     subforms = ()
@@ -21,6 +22,7 @@ class Step(utils.OverridableTemplate, form.Form):
         super(Step, self).__init__(context, request)
         self.parent = parent
 
+
 class Wizard(utils.OverridableTemplate, form.Form):
 
     success_message = _(u"Information submitted successfully.")
@@ -28,7 +30,7 @@ class Wizard(utils.OverridableTemplate, form.Form):
 
     index = viewpagetemplatefile.ViewPageTemplateFile('wizard.pt')
     finished = False
-    steps = () # Set this to be form classes
+    steps = ()  # Set this to be form classes
     label = u""
     description = u""
     ignoreContext = True
@@ -83,7 +85,7 @@ class Wizard(utils.OverridableTemplate, form.Form):
 
     @button.buttonAndHandler(_(u'Proceed'),
                              name='proceed',
-                             condition=lambda form:not form.is_last_step())
+                             condition=lambda form: not form.is_last_step())
     def handle_proceed(self, action):
         data, errors = self.current_step.extractData()
         if errors:
@@ -101,7 +103,7 @@ class Wizard(utils.OverridableTemplate, form.Form):
 
     @button.buttonAndHandler(_(u'Finish'),
                              name='finish',
-                             condition=lambda form:form.is_last_step())
+                             condition=lambda form: form.is_last_step())
     def handle_finish(self, action):
         data, errors = self.current_step.extractData()
         if errors:

@@ -61,12 +61,15 @@ def setUp(test):
     provideAdapter(subscribe.get_subscription_label)
     provideAdapter(subscribe.get_subscription_key)
 
+
 def subscription_added(obj, event):
     global count
     count += 1
     root[str(count)] = obj
-    from transaction import commit; commit()
+    from transaction import commit
+    commit()
     subscribe.subscription_added(obj, event)
+
 
 def test_suite():
     return unittest.TestSuite([

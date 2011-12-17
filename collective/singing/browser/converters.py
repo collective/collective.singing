@@ -1,9 +1,7 @@
 from zope import component
-from zope import interface
-from zope import schema
-
 import z3c.form
 from collective.singing.interfaces import IDynamicVocabularyCollection
+
 
 class DynamicVocabularyCollSeqConverter(
     z3c.form.converter.CollectionSequenceDataConverter):

@@ -1,8 +1,5 @@
-import zope.component
-import zope.schema
-import zope.interface
-
 import z3c.form.datamanager
+
 
 class SetToDictField(z3c.form.datamanager.AttributeField):
     """Puts a Set into a Dict field."""

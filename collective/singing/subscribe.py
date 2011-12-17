@@ -24,6 +24,7 @@ from collective.singing import interfaces
 import collective.singing.subscribe
 from collective.singing import MessageFactory as _
 
+
 def secret(channel, composer, data, request):
     """Look up an appropriate secret.
 
@@ -33,7 +34,7 @@ def secret(channel, composer, data, request):
     """
     try:
         rbs = component.getUtility(interfaces.IRequestBasedSecret)
-    except component.ComponentLookupError, e:
+    except component.ComponentLookupError:
         pass
     else:
         secret = rbs(request)
@@ -42,6 +43,7 @@ def secret(channel, composer, data, request):
 
     cbs = interfaces.IComposerBasedSecret(composer)
     return cbs.secret(data)
+
 
 def has_single_format(channel):
     """Returns format of a given channel's single composer, if the
@@ -67,6 +69,7 @@ def has_single_format(channel):
 
     if len(composers) == 1:
         return composers[0]
+
 
 class SimpleSubscription(persistent.Persistent):
     """
@@ -96,8 +99,11 @@ class SimpleSubscription(persistent.Persistent):
         for attr in ('composer_data', 'collector_data', 'metadata'):
             data[attr] = dict_format(getattr(self, attr))
 
-        fmt_str = "<SimpleSubscription to %(channel)r with composerdata: %(composer_data)s, collectordata: %(collector_data)s, and metadata: %(metadata)s>"
+        fmt_str = ("<SimpleSubscription to %(channel)r with composerdata: "
+                   "%(composer_data)s, collectordata: %(collector_data)s, "
+                   "and metadata: %(metadata)s>")
         return fmt_str % data
+
 
 class ISubscriptionCatalogData(interface.Interface):
     """Extract metadata from subscription for use in catalog.
@@ -118,7 +124,8 @@ def _find_field(schema, interface):
 @interface.implementer(interfaces.ISubscriptionLabel)
 @component.adapter(interfaces.ISubscription)
 def get_subscription_label(subscription):
-    cschema = subscription.channel.composers[subscription.metadata['format']].schema
+    cschema = subscription.channel.composers[
+        subscription.metadata['format']].schema
     label_field = _find_field(cschema, interfaces.ISubscriptionLabel)
     return subscription.composer_data[label_field.__name__]
 
@@ -126,7 +133,8 @@ def get_subscription_label(subscription):
 @interface.implementer(interfaces.ISubscriptionKey)
 @component.adapter(interfaces.ISubscription)
 def get_subscription_key(subscription):
-    cschema = subscription.channel.composers[subscription.metadata['format']].schema
+    cschema = subscription.channel.composers[
+        subscription.metadata['format']].schema
     key_field = _find_field(cschema, interfaces.ISubscriptionKey)
     return subscription.composer_data[key_field.__name__]
 
@@ -146,6 +154,7 @@ def catalog_data(subscription):
         label=interfaces.ISubscriptionLabel(subscription)
         )
 
+
 class SubscriptionSearchableText(object):
     component.adapts(interfaces.ISubscription)
     interface.implements(zope.index.text.interfaces.ISearchableText)
@@ -156,6 +165,7 @@ class SubscriptionSearchableText(object):
     def getSearchableText(self):
         return u' '.join(
             unicode(v) for v in self.subscription.composer_data.values())
+
 
 class Subscriptions(zope.app.container.btree.BTreeContainer):
     """An ISubscriptions implementation that's based on ZODB and uses
@@ -230,6 +240,7 @@ class Subscriptions(zope.app.container.btree.BTreeContainer):
         data = ISubscriptionCatalogData(subscription)
         del self[u'%s-%s' % (data.key, data.format)]
 
+
 def subscriptions_data(channel):
     """ Get the actual subscriptions of a channel,
     in case the 'subscriptions' attribute is a property decorated
@@ -238,10 +249,12 @@ def subscriptions_data(channel):
         return channel._subscriptions
     return channel.subscriptions
 
+
 def _catalog_subscription(subscription):
     intids = component.getUtility(intid_interfaces.IIntIds)
     subscriptions_data(subscription.channel)._catalog.index_doc(
         intids.getId(subscription), subscription)
+
 
 @component.adapter(collective.singing.interfaces.ISubscription,
                    zope.app.container.interfaces.IObjectAddedEvent)
@@ -249,6 +262,7 @@ def subscription_added(obj, event):
     intids = component.getUtility(intid_interfaces.IIntIds)
     intids.register(obj)
     _catalog_subscription(obj)
+
 
 @component.adapter(collective.singing.interfaces.ISubscription,
                    zope.lifecycleevent.IObjectModifiedEvent)

@@ -1,6 +1,5 @@
 import formatter
 import htmllib
-import quopri
 import StringIO
 import traceback
 import email
@@ -15,6 +14,7 @@ from zope import component
 import zope.sendmail.interfaces
 
 from collective.singing import interfaces
+
 
 def create_html_mail(subject, html, text=None, from_addr=None, to_addr=None,
                      headers=None, encoding='UTF-8'):
@@ -39,7 +39,7 @@ def create_html_mail(subject, html, text=None, from_addr=None, to_addr=None,
         # append the anchorlist at the bottom of a message
         # to keep the message readable.
         counter = 0
-        anchorlist  = "\n\n" + ("-" * plain_text_maxcols) + "\n\n"
+        anchorlist = "\n\n" + ("-" * plain_text_maxcols) + "\n\n"
         for item in parser.anchorlist:
             counter += 1
             anchorlist += "[%d] %s\n" % (counter, item)
@@ -52,7 +52,8 @@ def create_html_mail(subject, html, text=None, from_addr=None, to_addr=None,
     # if we would like to include images in future, there should
     # probably be 'related' instead of 'mixed'
     msg = MIMEMultipart('mixed')
-    # maybe later :)  msg['From'] = Header("%s <%s>" % (send_from_name, send_from), encoding)
+    # maybe later :)
+    # msg['From'] = Header("%s <%s>" % (send_from_name, send_from), encoding)
     msg['Subject'] = Header(subject, encoding)
     msg['From'] = from_addr
     msg['To'] = to_addr
@@ -65,10 +66,11 @@ def create_html_mail(subject, html, text=None, from_addr=None, to_addr=None,
 
     alternatives = MIMEMultipart('alternative')
     msg.attach(alternatives)
-    alternatives.attach( MIMEText(text, 'plain', _charset=encoding) )
-    alternatives.attach( MIMEText(html, 'html',  _charset=encoding) )
+    alternatives.attach(MIMEText(text, 'plain', _charset=encoding))
+    alternatives.attach(MIMEText(html, 'html',  _charset=encoding))
 
     return msg
+
 
 class Dispatch(object):
     """An IDispatcher registered for ``email.message.Message`` that'll
