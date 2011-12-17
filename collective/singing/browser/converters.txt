@@ -13,9 +13,18 @@ This test is a lot like the one for CollectionSequenceDataConverter in
   >>> from zope.schema.vocabulary import SimpleVocabulary
   >>> import z3c.form.widget
   >>> from z3c.form.testing import TestRequest
-  >>> import z3c.form.term
+  >>> from z3c.form import term
 
-  >>> component.provideAdapter(z3c.form.term.CollectionTerms)
+  >>> component.provideAdapter(term.CollectionTerms)
+
+On more recent z3c.form versions we need two extra adapters:
+
+  >>> if hasattr(term, 'CollectionTermsVocabulary'):
+  ...     # z3c.form 2+
+  ...     component.provideAdapter(term.CollectionTermsVocabulary)
+  >>> if hasattr(term, 'CollectionTermsSource'):
+  ...     # z3c.form 2+
+  ...     component.provideAdapter(term.CollectionTermsSource)
 
   >>> gender = schema.Choice(
   ...     vocabulary = SimpleVocabulary(
