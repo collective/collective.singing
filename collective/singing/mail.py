@@ -130,8 +130,8 @@ class Dispatch(object):
       >>> status, message = dispatcher()
       >>> status
       u'error'
-      >>> print message # doctest: +NORMALIZE_WHITESPACE
-      Traceback (most recent call last):
+      >>> print message # doctest: +ELLIPSIS +NORMALIZE_WHITESPACE
+      Traceback...
       MyException: This is a test
     """
 
