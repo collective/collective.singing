@@ -29,8 +29,14 @@ def setUp(test):
         provideHandler(handler)
 
     # Set up an IIntIds utility:
-    from zope.app.intid import IntIds
-    from zope.app.intid.interfaces import IIntIds
+    try:
+        from zope.intid import IntIds
+        from zope.intid.interfaces import IIntIds
+        IntIds, IIntIds  # pyflakes
+    except ImportError:
+        # BBB Plone 4.0 and earlier.
+        from zope.app.intid import IntIds
+        from zope.app.intid.interfaces import IIntIds
     intids = IntIds()
     provideUtility(intids, IIntIds)
 

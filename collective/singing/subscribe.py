@@ -12,10 +12,11 @@ import zope.app.catalog.catalog
 import zope.app.catalog.field
 import zope.app.catalog.text
 try:
-    import zope.app.intid.interfaces
+    import zope.intid.interfaces as intid_interfaces
+    intid_interfaces  # pyflakes
 except ImportError:
-    # Plone-4.1.2
-    import zope.intid.interfaces
+    # BBB Plone 4.0 and earlier
+    import zope.app.intid.interfaces as intid_interfaces
 import zope.app.container.btree
 import zope.app.container.interfaces
 
@@ -238,14 +239,14 @@ def subscriptions_data(channel):
     return channel.subscriptions
 
 def _catalog_subscription(subscription):
-    intids = component.getUtility(zope.app.intid.interfaces.IIntIds)
+    intids = component.getUtility(intid_interfaces.IIntIds)
     subscriptions_data(subscription.channel)._catalog.index_doc(
         intids.getId(subscription), subscription)
 
 @component.adapter(collective.singing.interfaces.ISubscription,
                    zope.app.container.interfaces.IObjectAddedEvent)
 def subscription_added(obj, event):
-    intids = component.getUtility(zope.app.intid.interfaces.IIntIds)
+    intids = component.getUtility(intid_interfaces.IIntIds)
     intids.register(obj)
     _catalog_subscription(obj)
 
@@ -254,16 +255,9 @@ def subscription_added(obj, event):
 def subscription_modified(obj, event):
     _catalog_subscription(obj)
 
-try:
-    @component.adapter(collective.singing.interfaces.ISubscription,
-                    zope.app.intid.interfaces.IIntIdRemovedEvent)
-    def subscription_removed(obj, event):
-        intids = component.getUtility(zope.app.intid.interfaces.IIntIds)
-        subscriptions_data(obj.channel)._catalog.unindex_doc(intids.getId(obj))
-except AttributeError:
-    # Plone-4.1.2
-    @component.adapter(collective.singing.interfaces.ISubscription,
-                    zope.intid.interfaces.IIntIdRemovedEvent)
-    def subscription_removed(obj, event):
-        intids = component.getUtility(zope.app.intid.interfaces.IIntIds)
-        subscriptions_data(obj.channel)._catalog.unindex_doc(intids.getId(obj))
+
+@component.adapter(collective.singing.interfaces.ISubscription,
+                intid_interfaces.IIntIdRemovedEvent)
+def subscription_removed(obj, event):
+    intids = component.getUtility(intid_interfaces.IIntIds)
+    subscriptions_data(obj.channel)._catalog.unindex_doc(intids.getId(obj))
