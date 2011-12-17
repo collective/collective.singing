@@ -4,7 +4,6 @@ from zope.component import testing
 
 from collective.singing import subscribe
 import queue
-from zc.queue.tests import ConflictResolvingMappingStorage
 count = 0
 root = None
 
