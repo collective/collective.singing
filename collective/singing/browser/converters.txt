@@ -60,12 +60,6 @@ Let's now remove 'm' from the vocabulary and try again:
   >>> converter.toWidgetValue([0, 1])
   ['f']
 
-This is unlike how the standard CollectionSequenceDataConverter behaves:
-
-  >>> from z3c.form import converter
-  >>> converter = converter.CollectionSequenceDataConverter(
-  ...     genders, seq_widget)
-  >>> converter.toWidgetValue([0, 1]) # doctest: +ELLIPSIS
-  Traceback (most recent call last):
-  ...
-  LookupError: 1
+This is unlike how the standard CollectionSequenceDataConverter used
+to behave, at least up until and including z3c.form 1.9.  In 2.4.3 and
+probably earlier a similar improvement has been made.
