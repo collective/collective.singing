@@ -4,6 +4,10 @@ History
 0.7.2 (unreleased)
 ------------------
 
+- Fixed ImportErrors when zope.app.intid is not available but only
+  zope.intid.
+  [maurits]
+
 - Added empty English translation, needed in corner cases with sites
   that support multiple languages.
   [maurits]
