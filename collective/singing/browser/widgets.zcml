@@ -2,28 +2,28 @@
     xmlns:zope="http://namespaces.zope.org/zope"
     xmlns:z3c="http://namespaces.zope.org/z3c"
     xmlns="http://namespaces.zope.org/browser">
-    
-    <!-- 
+
+    <!--
         If you want to use older versions of z3c.form (below 2.3.3) you have to
-        register hidden templates for radio buttons and checkboxes manually. 
-        You have to include these registrations by adding following line to 
+        register hidden templates for radio buttons and checkboxes manually.
+        You have to include these registrations by adding following line to
         your configure.zcml file:
-        
+
         <include package="collective.singing.browser" file="widgets.zcml" />
     -->
-    
+
     <z3c:widgetTemplate
         mode="hidden"
         widget="z3c.form.interfaces.ICheckBoxWidget"
         layer="z3c.form.interfaces.IFormLayer"
         template="checkbox_hidden.pt"
         />
-    
+
     <z3c:widgetTemplate
         mode="hidden"
         widget="z3c.form.interfaces.IRadioWidget"
         layer="z3c.form.interfaces.IFormLayer"
         template="checkbox_hidden.pt"
         />
-    
+
 </zope:configure>

@@ -1,9 +1,9 @@
 <zope:configure
     xmlns:zope="http://namespaces.zope.org/zope"
     xmlns="http://namespaces.zope.org/browser">
-    
+
     <zope:adapter
         factory=".converters.DynamicVocabularyCollSeqConverter"
         />
-    
+
 </zope:configure>
