@@ -214,8 +214,9 @@ into the 'error' queue:
   True
   >>> msg.status
   u'error'
-  >>> print msg.status_message # doctest: +NORMALIZE_WHITESPACE
+  >>> print msg.status_message # doctest: +ELLIPSIS +NORMALIZE_WHITESPACE
   Traceback (most recent call last):
+  ...
   ValueError: I'm sorry!
 
 Our dispatcher can also return 'error' as a status to the same effect:
