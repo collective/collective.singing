@@ -9,6 +9,13 @@ Set up the form machinery:
   >>> from collective.singing.browser.tests import setup_defaults
   >>> setup_defaults()
 
+Create a function to make it a bit easier to test for html snippets by
+cleaning the original html of white space:
+
+  >>> def clean_html(html):
+  ...     return '\n'.join([line.strip() for line in html.splitlines()])
+
+
 Define a wizard with three steps
 --------------------------------
 
@@ -80,35 +87,38 @@ Let's render the form for the first time now:
   >>> from z3c.form.testing import TestRequest
   >>> request = TestRequest()
   >>> wizard = Wizard(None, request)
-  >>> print wizard() # doctest: +NORMALIZE_WHITESPACE
-  <div class="form">
-    <h2>My silly wizard</h2>
-    <form action="http://127.0.0.1" method="post">
-      <input type="hidden" id="form-widgets-step"
-         name="form.widgets.step" class="hidden-widget"
-         value="0" />
-    <div class="row">
-        <div class="field">
-          <label for="one-widgets-age">
-            <span>Age</span>
-          </label>
-          <span class="fieldRequired" title="Required">
-                (Required)
-          </span>
-          <div class="widget">
-            <input type="text" id="one-widgets-age"
-                   name="one.widgets.age"
-                   class="text-widget required int-field" value="" />
-          </div>  
-        </div>
-    </div>
-      <div class="action">
-        <input type="submit" id="form-buttons-proceed"
-               name="form.buttons.proceed"
-               class="submit-widget button-field" value="Proceed" />
-      </div>
-    </form>
-  </div>
+  >>> html = clean_html(wizard())
+  >>> '<div class="form">' in html
+  True
+  >>> '<h2>My silly wizard</h2>' in html
+  True
+  >>> '<form action="http://127.0.0.1" method="post">' in html
+  True
+  >>> option1 = """<input type="hidden" id="form-widgets-step"
+  ... name="form.widgets.step" class="hidden-widget"
+  ... value="0" />"""
+  >>> option2 = """<input id="form-widgets-step" name="form.widgets.step"
+  ... value="0" class="hidden-widget" type="hidden" />"""
+  >>> option1 in html or option2 in html
+  True
+  >>> '<div class="row">' in html
+  True
+  >>> option1 = """<input type="text" id="one-widgets-age"
+  ... name="one.widgets.age"
+  ... class="text-widget required int-field" value="" />"""
+  >>> option2 = """<input id="one-widgets-age" name="one.widgets.age"
+  ... class="text-widget required int-field" value=""
+  ... type="text" />"""
+  >>> option1 in html or option2 in html
+  True
+  >>> option1 = """<input type="submit" id="form-buttons-proceed"
+  ... name="form.buttons.proceed"
+  ... class="submit-widget button-field" value="Proceed" />"""
+  >>> option2 = """<input id="form-buttons-proceed" name="form.buttons.proceed"
+  ... class="submit-widget button-field" value="Proceed"
+  ... type="submit" />"""
+  >>> option1 in html or option2 in html
+  True
 
 
 Submit with an error
@@ -121,47 +131,69 @@ Remember that our first step requires the age.
   ...     'form.buttons.proceed': u'Proceed',
   ... })
   >>> wizard = Wizard(None, request)
-  >>> print wizard() # doctest: +ELLIPSIS +NORMALIZE_WHITESPACE
-  <div class="form">
-  ...There were errors...
-  <input type="hidden" id="form-widgets-step"
-         name="form.widgets.step" class="hidden-widget"
-         value="0" />...Required input is missing...
+  >>> html = clean_html(wizard())
+  >>> '<div class="form">' in html
+  True
+  >>> 'There were errors' in html
+  True
+  >>> option1 = """<input type="hidden" id="form-widgets-step"
+  ... name="form.widgets.step" class="hidden-widget"
+  ... value="0" />"""
+  >>> option2 = """<input id="form-widgets-step" name="form.widgets.step"
+  ... value="0" class="hidden-widget" type="hidden" />"""
+  >>> option1 in html or option2 in html
+  True
+  >>> 'Required input is missing' in html
+  True
+
 
 Submit the first step successfully
 ----------------------------------
 
   >>> request.form['one.widgets.age'] = u'27'
   >>> wizard = Wizard(None, request)
-  >>> print wizard() # doctest: +NORMALIZE_WHITESPACE
-  <div class="form">
-    <h2>My silly wizard</h2>
-    <form action="http://127.0.0.1" method="post">
-      <input type="hidden" id="form-widgets-step"
-         name="form.widgets.step" class="hidden-widget"
-         value="1" />
-      <input type="hidden" id="one-widgets-age"
-         name="one.widgets.age" class="hidden-widget"
-         value="27" />
-    <div class="row">
-        <div class="field">
-          <label for="two-widgets-name">
-            <span>Name</span>
-          </label>
-          <div class="widget">
-            <input type="text" id="two-widgets-name"
-                   name="two.widgets.name"
-                   class="text-widget textline-field" value="" />
-          </div>  
-        </div>
-    </div>
-      <div class="action">
-        <input type="submit" id="form-buttons-proceed"
-               name="form.buttons.proceed"
-               class="submit-widget button-field" value="Proceed" />
-      </div>
-    </form>
-  </div>
+  >>> html = clean_html(wizard())
+  >>> '<div class="form">' in html
+  True
+  >>> '<h2>My silly wizard</h2>' in html
+  True
+  >>> '<form action="http://127.0.0.1" method="post">' in html
+  True
+  >>> option1 = """<input type="hidden" id="form-widgets-step"
+  ... name="form.widgets.step" class="hidden-widget"
+  ... value="1" />"""
+  >>> option2 = """<input id="form-widgets-step" name="form.widgets.step"
+  ... value="1" class="hidden-widget" type="hidden" />"""
+  >>> option1 in html or option2 in html
+  True
+  >>> option1 = """<input type="hidden" id="one-widgets-age"
+  ... name="one.widgets.age" class="hidden-widget"
+  ... value="27" />"""
+  >>> option2 = """<input id="one-widgets-age" name="one.widgets.age"
+  ... value="27" class="hidden-widget" type="hidden" />"""
+  >>> option1 in html or option2 in html
+  True
+  >>> '<div class="row">' in html
+  True
+  >>> option1 = """<input type="text" id="two-widgets-name"
+  ... name="two.widgets.name"
+  ... class="text-widget textline-field" value="" />"""
+  >>> option2 = """<input id="two-widgets-name" name="two.widgets.name"
+  ... class="text-widget textline-field" value=""
+  ... type="text" />"""
+  >>> option1 in html or option2 in html
+  True
+  >>> '<div class="action">' in html
+  True
+  >>> option1 = """<input type="submit" id="form-buttons-proceed"
+  ... name="form.buttons.proceed"
+  ... class="submit-widget button-field" value="Proceed" />"""
+  >>> option2 = """<input id="form-buttons-proceed" name="form.buttons.proceed"
+  ... class="submit-widget button-field" value="Proceed"
+  ... type="submit" />"""
+  >>> option1 in html or option2 in html
+  True
+
 
 Submitting step two
 -------------------
@@ -188,13 +220,16 @@ Note that we're clicking the ``Finish`` button now:
   >>> request.form['subone.widgets.sex'] = u'Male'
   >>> wizard = Wizard(None, request)
   >>> html = wizard()
-  >>> print html # doctest: +NORMALIZE_WHITESPACE +ELLIPSIS
-  <div class="form">
-  ...
-    <input type="hidden" id="form-widgets-step"
-           name="form.widgets.step" class="hidden-widget"
-           value="2" />
-  ...
+  >>> html = clean_html(html)
+  >>> '<div class="form">' in html
+  True
+  >>> option1 = """<input type="hidden" id="form-widgets-step"
+  ... name="form.widgets.step" class="hidden-widget"
+  ... value="2" />"""
+  >>> option2 = """<input id="form-widgets-step" name="form.widgets.step"
+  ... value="2" class="hidden-widget" type="hidden" />"""
+  >>> option1 in html or option2 in html
+  True
   >>> 'Required input is missing' in html
   True
 
