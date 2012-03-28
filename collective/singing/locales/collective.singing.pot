@@ -1,7 +1,10 @@
+# --- PLEASE EDIT THE LINES BELOW CORRECTLY ---
+# SOME DESCRIPTIVE TITLE.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
-"POT-Creation-Date: 2011-12-10 02:12+0000\n"
+"POT-Creation-Date: 2012-03-26 22:02+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI +ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -12,238 +15,238 @@ msgstr ""
 "Language-Code: en\n"
 "Language-Name: English\n"
 "Preferred-Encodings: utf-8 latin1\n"
-"Domain: DOMAIN\n"
+"Domain: collective.singing\n"
 
-#: ./interfaces.py:31
+#: collective.singing/collective/singing/interfaces.py:32
 msgid "A schema instance for use in the subscription form"
 msgstr ""
 
-#: ./interfaces.py:111
+#: collective.singing/collective/singing/interfaces.py:111
 msgid "Active"
 msgstr ""
 
-#: ./browser/subscribe.py:228
+#: collective.singing/collective/singing/browser/subscribe.py:234
 msgid "Address"
 msgstr ""
 
-#: ./interfaces.py:237
+#: collective.singing/collective/singing/interfaces.py:237
 msgid "Collector (what)"
 msgstr ""
 
-#: ./interfaces.py:176
+#: collective.singing/collective/singing/interfaces.py:176
 msgid "Collector data"
 msgstr ""
 
-#: ./interfaces.py:245
+#: collective.singing/collective/singing/interfaces.py:245
 msgid "Composer"
 msgstr ""
 
-#: ./interfaces.py:175
+#: collective.singing/collective/singing/interfaces.py:175
 msgid "Composer data"
 msgstr ""
 
-#: ./scheduler.py:270
+#: collective.singing/collective/singing/scheduler.py:280
 msgid "Daily scheduler"
 msgstr ""
 
-#: ./interfaces.py:222
+#: collective.singing/collective/singing/interfaces.py:222
 msgid "Description"
 msgstr ""
 
-#: ./browser/subscribe.py:131
+#: collective.singing/collective/singing/browser/subscribe.py:135
 msgid "Fill in the information below to subscribe."
 msgstr ""
 
-#: ./browser/subscribe.py:114
+#: collective.singing/collective/singing/browser/subscribe.py:117
 msgid "Filters"
 msgstr ""
 
-#: ./browser/wizard.py:102
+#: collective.singing/collective/singing/browser/wizard.py:104
 msgid "Finish"
 msgstr ""
 
-#: ./browser/subscribe.py:44
-#: ./interfaces.py:244
+#: collective.singing/collective/singing/browser/subscribe.py:45
+#: collective.singing/collective/singing/interfaces.py:244
 msgid "Format"
 msgstr ""
 
-#: ./interfaces.py:346
+#: collective.singing/collective/singing/interfaces.py:348
 msgid "IMessageChanged is fired automatically when this is set"
 msgstr ""
 
-#: ./interfaces.py:26
-msgid "Include items from this collector even if there are no no items returned by significant siblings."
+#: collective.singing/collective/singing/interfaces.py:27
+msgid "Include items from this collector even if there are no items returned by significant siblings."
 msgstr ""
 
-#: ./browser/wizard.py:26
+#: collective.singing/collective/singing/browser/wizard.py:28
 msgid "Information submitted successfully."
 msgstr ""
 
-#: ./interfaces.py:259
+#: collective.singing/collective/singing/interfaces.py:259
 msgid "Keep a record of sent messages."
 msgstr ""
 
-#: ./interfaces.py:354
+#: collective.singing/collective/singing/interfaces.py:357
 msgid "Last time this message changed its status"
 msgstr ""
 
-#: ./scheduler.py:278
+#: collective.singing/collective/singing/scheduler.py:290
 msgid "Manual scheduler"
 msgstr ""
 
-#: ./interfaces.py:177
+#: collective.singing/collective/singing/interfaces.py:177
 msgid "Metadata"
 msgstr ""
 
-#: ./interfaces.py:362
+#: collective.singing/collective/singing/interfaces.py:365
 msgid "Old status of message"
 msgstr ""
 
-#: ./browser/wizard.py:84
+#: collective.singing/collective/singing/browser/wizard.py:86
 msgid "Proceed"
 msgstr ""
 
-#: ./browser/subscribe.py:220
+#: collective.singing/collective/singing/browser/subscribe.py:226
 msgid "Retrieve a link to your personalized subscription settings"
 msgstr ""
 
-#: ./interfaces.py:231
+#: collective.singing/collective/singing/interfaces.py:231
 msgid "Scheduler (when)"
 msgstr ""
 
-#: ./browser/subscribe.py:233
+#: collective.singing/collective/singing/browser/subscribe.py:239
 msgid "Send"
 msgstr ""
 
-#: ./browser/subscribe.py:77
+#: collective.singing/collective/singing/browser/subscribe.py:79
 msgid "Send my subscription details"
 msgstr ""
 
-#: ./interfaces.py:25
+#: collective.singing/collective/singing/interfaces.py:26
 msgid "Significant"
 msgstr ""
 
-#: ./interfaces.py:345
+#: collective.singing/collective/singing/interfaces.py:347
 msgid "State"
 msgstr ""
 
-#: ./interfaces.py:350
+#: collective.singing/collective/singing/interfaces.py:353
 msgid "Status details"
 msgstr ""
 
-#: ./collector.py:28
+#: collective.singing/collective/singing/collector.py:31
 msgid "Subjects"
 msgstr ""
 
-#: ./collector.py:25
+#: collective.singing/collective/singing/collector.py:28
 msgid "Subjects collector"
 msgstr ""
 
-#: ./interfaces.py:226
+#: collective.singing/collective/singing/interfaces.py:226
 msgid "Subscribeable"
 msgstr ""
 
-#: ./interfaces.py:21
+#: collective.singing/collective/singing/interfaces.py:22
 msgid "Subscriber optional"
 msgstr ""
 
-#: ./interfaces.py:340
+#: collective.singing/collective/singing/interfaces.py:342
 msgid "Subscription, referenced for bookkeeping purposes only."
 msgstr ""
 
-#: ./browser/subscribe.py:132
+#: collective.singing/collective/singing/browser/subscribe.py:136
 msgid "Thanks for your subscription; we sent you a message for confirmation."
 msgstr ""
 
-#: ./browser/subscribe.py:107
+#: collective.singing/collective/singing/browser/subscribe.py:109
 msgid "Thanks.  We sent you a message."
 msgstr ""
 
-#: ./interfaces.py:57
+#: collective.singing/collective/singing/interfaces.py:58
 msgid "The Composer's format, e.g. 'html'"
 msgstr ""
 
-#: ./interfaces.py:62
+#: collective.singing/collective/singing/interfaces.py:62
 msgid "The Composer's title, e.g. 'HTML E-Mail'"
 msgstr ""
 
-#: ./browser/subscribe.py:229
+#: collective.singing/collective/singing/browser/subscribe.py:235
 msgid "The address you're already subscribed with"
 msgstr ""
 
-#: ./interfaces.py:161
+#: collective.singing/collective/singing/interfaces.py:161
 msgid "The channel that we're subscribed to"
 msgstr ""
 
-#: ./interfaces.py:243
+#: collective.singing/collective/singing/interfaces.py:243
 msgid "The channel's composers, keyed by format."
 msgstr ""
 
-#: ./interfaces.py:249
+#: collective.singing/collective/singing/interfaces.py:249
 msgid "The channel's subscriptions"
 msgstr ""
 
-#: ./interfaces.py:336
+#: collective.singing/collective/singing/interfaces.py:338
 msgid "The message's payload, e.g. the e-mail message."
 msgstr ""
 
-#: ./interfaces.py:166
+#: collective.singing/collective/singing/interfaces.py:166
 msgid "The subscriber's secret, ideally unique across channels"
 msgstr ""
 
-#: ./browser/wizard.py:27
+#: collective.singing/collective/singing/browser/wizard.py:29
 msgid "There were errors."
 msgstr ""
 
-#: ./subscribe.py:223
+#: collective.singing/collective/singing/subscribe.py:234
 msgid "There's already a subscription for ${name}"
 msgstr ""
 
-#: ./interfaces.py:254
+#: collective.singing/collective/singing/interfaces.py:254
 msgid "This channel's message queues, keyed by message status"
 msgstr ""
 
-#: ./interfaces.py:260
+#: collective.singing/collective/singing/interfaces.py:260
 msgid "This is not currently recommended for large volumes of messages due to storage requirements."
 msgstr ""
 
-#: ./scheduler.py:285
+#: collective.singing/collective/singing/scheduler.py:298
 msgid "Timed scheduler"
 msgstr ""
 
-#: ./interfaces.py:17
+#: collective.singing/collective/singing/interfaces.py:18
 msgid "Title"
 msgstr ""
 
-#: ./interfaces.py:201
+#: collective.singing/collective/singing/interfaces.py:201
 msgid "Total number of messages sent through this queue"
 msgstr ""
 
-#: ./interfaces.py:107
+#: collective.singing/collective/singing/interfaces.py:107
 msgid "Triggered the last time"
 msgstr ""
 
-#: ./interfaces.py:214
+#: collective.singing/collective/singing/interfaces.py:214
 msgid "Unique identifier for this channel across the site."
 msgstr ""
 
-#: ./interfaces.py:32
+#: collective.singing/collective/singing/interfaces.py:33
 msgid "Values are stored via the ICollectorData adapter per subscriber."
 msgstr ""
 
-#: ./interfaces.py:67
+#: collective.singing/collective/singing/interfaces.py:67
 msgid "Values are stored via the IComposerData adapter per subscriber."
 msgstr ""
 
-#: ./scheduler.py:274
+#: collective.singing/collective/singing/scheduler.py:285
 msgid "Weekly scheduler"
 msgstr ""
 
-#: ./browser/subscribe.py:135
+#: collective.singing/collective/singing/browser/subscribe.py:139
 msgid "You are already subscribed."
 msgstr ""
 
-#: ./browser/subscribe.py:96
+#: collective.singing/collective/singing/browser/subscribe.py:98
 msgid "Your subscription isn't known to us."
 msgstr ""
 
