@@ -240,6 +240,10 @@ class Subscriptions(zope.app.container.btree.BTreeContainer):
         data = ISubscriptionCatalogData(subscription)
         del self[u'%s-%s' % (data.key, data.format)]
 
+    def add_subscription_obj(self, subscription):
+        data = ISubscriptionCatalogData(subscription)
+        self[u'%s-%s' % (data.key, data.format)] = subscription
+
 
 def subscriptions_data(channel):
     """ Get the actual subscriptions of a channel,
