@@ -19,6 +19,8 @@ History
 - Add IJob interface and let Job implements it.
   [toutpt]
 
+- Fix for plone 4.3 {kiorky]
+
 0.7.1 (2010-12-03)
 ------------------
 

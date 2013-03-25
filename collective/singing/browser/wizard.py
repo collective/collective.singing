@@ -3,7 +3,10 @@ values in hidden form elements.
 """
 
 from zope import schema
-from zope.app.pagetemplate import viewpagetemplatefile
+try:
+    from zope.app.pagetemplate import viewpagetemplatefile
+except ImportError:
+    from zope.browserpage import viewpagetemplatefile
 from z3c.form import button, field, form
 import z3c.form.interfaces
 

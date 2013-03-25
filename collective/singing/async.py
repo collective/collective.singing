@@ -5,7 +5,10 @@ import persistent.list
 from zope import schema
 from zope import interface
 from zope import component
-from zope.app.component.hooks import getSiteManager
+try:
+    from zope.app.component.hooks import getSiteManager
+except ImportError:
+    from zope.component.hooks import getSiteManager
 
 
 class IQueue(interface.Interface):

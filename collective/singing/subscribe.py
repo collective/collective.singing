@@ -17,8 +17,12 @@ try:
 except ImportError:
     # BBB Plone 4.0 and earlier
     import zope.app.intid.interfaces as intid_interfaces
-import zope.app.container.btree
-import zope.app.container.interfaces
+try:
+    import zope.app.container.btree as zopeappbtree
+    import zope.app.container.interfaces as zopeappcontainerinterfaces
+except ImportError:
+    import zope.container.btree as zopeappbtree
+    import zope.container.interfaces as zopeappcontainerinterfaces
 
 from collective.singing import interfaces
 import collective.singing.subscribe
@@ -167,7 +171,7 @@ class SubscriptionSearchableText(object):
             unicode(v) for v in self.subscription.composer_data.values())
 
 
-class Subscriptions(zope.app.container.btree.BTreeContainer):
+class Subscriptions(zopeappbtree.BTreeContainer):
     """An ISubscriptions implementation that's based on ZODB and uses
     a zope.app.catalog Catalog to provide the query interface.
 
@@ -261,7 +265,7 @@ def _catalog_subscription(subscription):
 
 
 @component.adapter(collective.singing.interfaces.ISubscription,
-                   zope.app.container.interfaces.IObjectAddedEvent)
+                   zopeappcontainerinterfaces.IObjectAddedEvent)
 def subscription_added(obj, event):
     intids = component.getUtility(intid_interfaces.IIntIds)
     intids.register(obj)

@@ -6,7 +6,11 @@ import zope.i18n.interfaces
 import zope.schema.interfaces
 import zope.schema.vocabulary
 import zope.publisher.browser
-from zope.app.pagetemplate import viewpagetemplatefile
+try:
+    from zope.app.pagetemplate import viewpagetemplatefile
+except ImportError:
+    from zope.browserpage import viewpagetemplatefile
+
 import z3c.form.interfaces
 from z3c.form import button
 from z3c.form import field
