@@ -262,6 +262,16 @@ class IChannel(interface.Interface):
         default=False,
         )
 
+    is_external_subscriptions = schema.Bool(
+        title=_(u"Enable external subscriptions."),
+        default=False,
+        )
+
+    external_subscriptions_path = schema.Text(
+        title=_(u"URL path that returns external subscriptions."),
+        default=_(u""),
+        )
+
 
 class IMessageAssemble(interface.Interface):
     """An adapter on the channel that's usually invoked by a scheduler
