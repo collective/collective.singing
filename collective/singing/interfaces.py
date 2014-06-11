@@ -7,6 +7,7 @@ from zope.annotation.interfaces import IAnnotatable
 import z3c.form.interfaces
 
 from collective.singing import MessageFactory as _
+from validation import validate_tal
 
 
 class ICollector(interface.Interface):
@@ -262,15 +263,15 @@ class IChannel(interface.Interface):
         default=False,
         )
 
-    is_external_subscriptions = schema.Bool(
-        title=_(u"Enable external subscriptions."),
-        default=False,
-        )
-
-    external_subscriptions_path = schema.Text(
-        title=_(u"URL path that returns external subscriptions."),
-        default=_(u""),
-        )
+    external_subscriptions_path = schema.ASCIILine(
+        title=_(u"External Subscriptions Path in TAL Expression"),
+        required=False,
+        description=_(u"URL path that returns external subscriptions. "
+                      u"If this field is empty, "
+                      u"it will use the internal subscriptions."),
+        default="",
+        constraint=validate_tal
+    )
 
 
 class IMessageAssemble(interface.Interface):
