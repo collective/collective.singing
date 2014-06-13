@@ -109,6 +109,40 @@ class SimpleSubscription(persistent.Persistent):
         return fmt_str % data
 
 
+class ExternalSubscription(object):
+    """
+      >>> from zope.interface.verify import verifyClass
+      >>> verifyClass(interfaces.ISubscription, ExternalSubscription)
+      True
+    """
+    interface.implements(interfaces.ISubscription)
+
+    def __init__(self, channel, secret,
+                 composer_data, collector_data, metadata):
+        self.channel = channel
+        self.secret = secret
+
+        self.composer_data = {}
+        self.collector_data = {}
+        self.metadata = {}
+        self.composer_data.update(composer_data)
+        self.collector_data.update(collector_data)
+        self.metadata.update(metadata)
+
+    def __repr__(self):
+        def dict_format(data):
+            return pprint.pformat(dict(data)).replace('\n', '')
+
+        data = dict(channel=self.channel)
+        for attr in ('composer_data', 'collector_data', 'metadata'):
+            data[attr] = dict_format(getattr(self, attr))
+
+        fmt_str = ("<ExternalSubscription to %(channel)r with composerdata: "
+                   "%(composer_data)s, collectordata: %(collector_data)s, "
+                   "and metadata: %(metadata)s>")
+        return fmt_str % data
+
+
 class ISubscriptionCatalogData(interface.Interface):
     """Extract metadata from subscription for use in catalog.
     """

@@ -1,6 +1,7 @@
 import datetime
 import logging
-
+import json
+import sets
 import persistent
 
 from zope import interface
@@ -9,6 +10,7 @@ from zope.deprecation.deprecation import deprecate
 
 from collective.singing import interfaces
 from collective.singing import MessageFactory as _
+from collective.singing import subscribe
 
 from plone.memoize import request
 
@@ -62,6 +64,7 @@ class MessageAssemble(object):
         channel = self.channel
         collector = channel.collector
         composers = channel.composers
+        #import pdb; pdb.set_trace()
         if override_vars is None:
             override_vars = {}
 
@@ -118,7 +121,67 @@ class MessageAssemble(object):
         if override_vars is None:
             override_vars = {}
         queued_messages = 0
-        for subscription in self.channel.subscriptions.values():
+        #import pdb; pdb.set_trace()
+        # if the channel use external subscriptions, get the list
+        # from script and generate the subscription object list
+        subscriptions_list = self.channel.subscriptions.values()
+        if getattr(self.channel, 'external_subscriptions_path', '') and \
+                self.channel.external_subscriptions_path:
+
+            external_subscriptions_string = \
+                '{"channel_id": ' \
+                '[{"email": "ivan.teoh@gmail.com", '\
+                '"secret": "secret", ' \
+                '"selected_collectors": ["Newsletter Content (newsletter-content)"], '\
+                '"metadata": {"date": "2012-10-28T21:36:57.799Z", "format": "html"} }]}'
+            external_subscriptions_objects = json.loads(external_subscriptions_string)
+            subscriptions_list = []
+
+            if self.channel.id not in external_subscriptions_objects:
+                return queued_messages
+
+            optional_collectors = self.channel.collectors[self.channel.collector.id].get_optional_collectors()
+            collectors_dict = {}
+            for optional_collector in optional_collectors:
+                collectors_dict[optional_collector.id] = optional_collector
+
+            channel_fields = external_subscriptions_objects[self.channel.id]
+            for channel_field in channel_fields:
+
+                if 'secret' not in channel_fields:
+                    continue
+                secret = channel_fields['secret']
+
+                if 'email' not in channel_field:
+                    continue
+                composer_data = dict([('email', channel_fields['email'])])
+
+                if 'selected_collectors' not in channel_fields:
+                    continue
+                sections_data = channel_fields['selected_collectors']
+                new_section_data = []
+                for section_data in sections_data:
+                    # section data format is "title (id)"
+                    section_id = section_data.split(' ')[-1][1:-1]
+                    if section_id in collectors_dict:
+                        new_section_data.append(collectors_dict[section_id])
+                collector_data = dict([('selected_collectors', sets.Set(new_section_data))])
+
+                if 'metadata' not in channel_fields:
+                    continue
+                # getting metadata from script too
+                # pending: is False after email confirmation
+                # cue:
+                # date: creation date
+                # format: html plaintext
+                # languages:
+                metadata = channel_fields['metadata']
+
+                subscription = subscribe.ExternalSubscription(
+                    self.channel, secret, composer_data, collector_data, metadata)
+                subscriptions_list.append(subscription)
+
+        for subscription in subscriptions_list:
             logger.debug("Rendering message for %r." % subscription)
             message = self.render_message(
                 request, subscription, items, use_collector, override_vars)
