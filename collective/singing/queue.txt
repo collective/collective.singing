@@ -154,9 +154,15 @@ copies of the same queue, from two different connections.
 NOTE: this testing approach has known weaknesses.  See discussion in tests.py.
 
     >>> import transaction
-    >>> from zc.queue.tests import ConflictResolvingMappingStorage
-    >>> from ZODB import DB
-    >>> db = DB(ConflictResolvingMappingStorage('test'))
+    >>> try:
+    ...     # ZODB 3.8
+    ...     from ZODB.DB import DB
+    ...     from ZODB.tests.util import ConflictResolvingMappingStorage
+    ...     db = DB(ConflictResolvingMappingStorage('test'))
+    ... except ImportError:
+    ...     # ZODB 3.9 (ConflictResolvingMappingStorage no longer exists)
+    ...     import ZODB.DB
+    ...     db = ZODB.DB('Data.fs')
     >>> transactionmanager_1 = transaction.TransactionManager()
     >>> transactionmanager_2 = transaction.TransactionManager()
     >>> connection_1 = db.open(transaction_manager=transactionmanager_1)
