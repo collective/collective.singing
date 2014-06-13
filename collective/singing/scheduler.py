@@ -129,7 +129,7 @@ class MessageAssemble(object):
                 self.channel.external_subscriptions_path:
 
             external_subscriptions_string = \
-                '{"channel_id": ' \
+                '{"pine": ' \
                 '[{"email": "ivan.teoh@gmail.com", '\
                 '"secret": "secret", ' \
                 '"selected_collectors": ["Newsletter Content (newsletter-content)"], '\
@@ -148,17 +148,17 @@ class MessageAssemble(object):
             channel_fields = external_subscriptions_objects[self.channel.id]
             for channel_field in channel_fields:
 
-                if 'secret' not in channel_fields:
+                if 'secret' not in channel_field:
                     continue
-                secret = channel_fields['secret']
+                secret = channel_field['secret']
 
                 if 'email' not in channel_field:
                     continue
-                composer_data = dict([('email', channel_fields['email'])])
+                composer_data = dict([('email', channel_field['email'])])
 
-                if 'selected_collectors' not in channel_fields:
+                if 'selected_collectors' not in channel_field:
                     continue
-                sections_data = channel_fields['selected_collectors']
+                sections_data = channel_field['selected_collectors']
                 new_section_data = []
                 for section_data in sections_data:
                     # section data format is "title (id)"
@@ -167,7 +167,7 @@ class MessageAssemble(object):
                         new_section_data.append(collectors_dict[section_id])
                 collector_data = dict([('selected_collectors', sets.Set(new_section_data))])
 
-                if 'metadata' not in channel_fields:
+                if 'metadata' not in channel_field:
                     continue
                 # getting metadata from script too
                 # pending: is False after email confirmation
@@ -175,7 +175,18 @@ class MessageAssemble(object):
                 # date: creation date
                 # format: html plaintext
                 # languages:
-                metadata = channel_fields['metadata']
+                # metadata['date].tzinfo to get timezone info
+                metadata = channel_field['metadata']
+                #import pdb; pdb.set_trace()
+                if 'date' not in metadata:
+                    metadata['date'] = datetime.datetime.now()
+                else:
+                    metadata['date'] = datetime.datetime.strptime(
+                        metadata['date'], '%Y-%m-%dT%H:%M:%S.%fZ'
+                    )
+
+                if 'format' not in metadata:
+                    metadata['format'] = 'html'
 
                 subscription = subscribe.ExternalSubscription(
                     self.channel, secret, composer_data, collector_data, metadata)
