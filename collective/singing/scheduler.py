@@ -3,10 +3,12 @@ import logging
 import json
 import sets
 import persistent
+import urllib2
 
 from zope import interface
 from zope import component
 from zope.deprecation.deprecation import deprecate
+from Products.CMFCore.Expression import Expression, getExprContext
 
 from collective.singing import interfaces
 from collective.singing import MessageFactory as _
@@ -128,46 +130,58 @@ class MessageAssemble(object):
         if getattr(self.channel, 'external_subscriptions_path', '') and \
                 self.channel.external_subscriptions_path:
 
-            external_subscriptions_string = \
-                '{"pine": ' \
-                '[{"email": "ivan.teoh@gmail.com", '\
-                '"secret": "secret", ' \
-                '"selected_collectors": ["Newsletter Content (newsletter-content)"], '\
-                '"metadata": {"date": "2012-10-28T21:36:57.799Z", "format": "html"} }]}'
-            external_subscriptions_objects = json.loads(external_subscriptions_string)
+            #external_subscriptions_string = \
+            #    '{"pine": ' \
+            #    '[{"email": "ivan.teoh@gmail.com", '\
+            #    '"secret": "secret", ' \
+            #    '"selected_collectors": ["Newsletter Content (newsletter-content)"], '\
+            #   '"metadata": {"date": "2012-10-28T21:36:57.799Z", "format": "html"} }]}'
+            # new format
+            # '[{"secret": "wXQwBI5xVRqIPNw2VYL0NfrRtfVpS4DXTfyLXlj6Ahfea3sUqL", 
+            # "creationDate": {"<datetime>": true, "datetime": "2014-06-20T12:56:13-04:00"}, 
+            # "emailAddress": "iva@mail.com", 
+            # "section": ["news", "publications", "forums"]},
+            expression = Expression(self.channel.external_subscriptions_path)
+            expression_context = getExprContext(self.channel, self.channel)
+            val = expression(expression_context)
+            response = urllib2.urlopen(val)
+            external_subscriptions_string = response.read()
+            print external_subscriptions_string
+
+            channel_fields = json.loads(external_subscriptions_string)
             subscriptions_list = []
 
-            if self.channel.id not in external_subscriptions_objects:
-                return queued_messages
+            #if self.channel.id not in external_subscriptions_objects:
+            #    return queued_messages
 
             optional_collectors = self.channel.collectors[self.channel.collector.id].get_optional_collectors()
             collectors_dict = {}
             for optional_collector in optional_collectors:
-                collectors_dict[optional_collector.id] = optional_collector
+                collectors_dict[optional_collector.title] = optional_collector
 
-            channel_fields = external_subscriptions_objects[self.channel.id]
+            #channel_fields = external_subscriptions_objects[self.channel.id]
             for channel_field in channel_fields:
 
                 if 'secret' not in channel_field:
                     continue
                 secret = channel_field['secret']
 
-                if 'email' not in channel_field:
+                if 'emailAddress' not in channel_field:
                     continue
-                composer_data = dict([('email', channel_field['email'])])
+                composer_data = dict([('email', channel_field['emailAddress'])])
 
-                if 'selected_collectors' not in channel_field:
+                if 'section' not in channel_field:
                     continue
-                sections_data = channel_field['selected_collectors']
+                sections_data = channel_field['section']
                 new_section_data = []
                 for section_data in sections_data:
-                    # section data format is "title (id)"
-                    section_id = section_data.split(' ')[-1][1:-1]
-                    if section_id in collectors_dict:
-                        new_section_data.append(collectors_dict[section_id])
+                    # section data format is "title"
+                    #section_id = section_data.split(' ')[-1][1:-1]
+                    if section_data in collectors_dict:
+                        new_section_data.append(collectors_dict[section_data])
                 collector_data = dict([('selected_collectors', sets.Set(new_section_data))])
 
-                if 'metadata' not in channel_field:
+                if 'creationDate' not in channel_field:
                     continue
                 # getting metadata from script too
                 # pending: is False after email confirmation
@@ -176,17 +190,17 @@ class MessageAssemble(object):
                 # format: html plaintext
                 # languages:
                 # metadata['date].tzinfo to get timezone info
-                metadata = channel_field['metadata']
+                metadata = {}
+                date_time = channel_field['creationDate']
                 #import pdb; pdb.set_trace()
-                if 'date' not in metadata:
+                if 'datetime' not in date_time:
                     metadata['date'] = datetime.datetime.now()
                 else:
                     metadata['date'] = datetime.datetime.strptime(
-                        metadata['date'], '%Y-%m-%dT%H:%M:%S.%fZ'
+                        date_time['datetime'], '%Y-%m-%dT%H:%M:%S%z'
                     )
 
-                if 'format' not in metadata:
-                    metadata['format'] = 'html'
+                metadata['format'] = 'html'
 
                 subscription = subscribe.ExternalSubscription(
                     self.channel, secret, composer_data, collector_data, metadata)
