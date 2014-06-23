@@ -9,10 +9,12 @@ from zope import interface
 from zope import component
 from zope.deprecation.deprecation import deprecate
 from Products.CMFCore.Expression import Expression, getExprContext
+from DateTime import DateTime
 
 from collective.singing import interfaces
 from collective.singing import MessageFactory as _
 from collective.singing import subscribe
+from utils import date_hook
 
 from plone.memoize import request
 
@@ -148,7 +150,7 @@ class MessageAssemble(object):
             external_subscriptions_string = response.read()
             print external_subscriptions_string
 
-            channel_fields = json.loads(external_subscriptions_string)
+            channel_fields = json.loads(external_subscriptions_string, object_hook=date_hook)
             subscriptions_list = []
 
             #if self.channel.id not in external_subscriptions_objects:
@@ -191,16 +193,14 @@ class MessageAssemble(object):
                 # languages:
                 # metadata['date].tzinfo to get timezone info
                 metadata = {}
-                date_time = channel_field['creationDate']
-                #import pdb; pdb.set_trace()
-                if 'datetime' not in date_time:
-                    metadata['date'] = datetime.datetime.now()
+                if isinstance(channel_field['creationDate'], DateTime):
+                    metadata['date'] = channel_field['creationDate'].asdatetime()
                 else:
-                    metadata['date'] = datetime.datetime.strptime(
-                        date_time['datetime'], '%Y-%m-%dT%H:%M:%S%z'
-                    )
-
+                    metadata['date'] = datetime.datetime.now()
+                
                 metadata['format'] = 'html'
+
+                logger.info('ExternalSubscription: (%s, %s, %s, %s)' % (secret, composer_data, collector_data, metadata))
 
                 subscription = subscribe.ExternalSubscription(
                     self.channel, secret, composer_data, collector_data, metadata)

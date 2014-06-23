@@ -44,6 +44,7 @@ setup(name='collective.singing',
           'zc.queue',
           'zc.lockfile',
           'plone.z3cform>=0.5.1',
+          'python-dateutil>=1.5',
       ],
 
       entry_points="""
