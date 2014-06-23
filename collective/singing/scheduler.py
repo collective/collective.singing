@@ -154,9 +154,11 @@ class MessageAssemble(object):
             #if self.channel.id not in external_subscriptions_objects:
             #    return queued_messages
             optional_collectors = self.channel.collectors[self.channel.collector.id].get_optional_collectors()
-            collectors_dict = {}
+            collectors_dict_title = {}
+            collectors_dict_id = {}
             for optional_collector in optional_collectors:
-                collectors_dict[optional_collector.title] = optional_collector
+                collectors_dict_title[optional_collector.title] = optional_collector
+                collectors_dict_id[optional_collector.id] = optional_collector
 
             #channel_fields = external_subscriptions_objects[self.channel.id]
             for channel_field in channel_fields:
@@ -178,10 +180,17 @@ class MessageAssemble(object):
                 sections_data = channel_field['section']
                 new_section_data = []
                 for section_data in sections_data:
-                    # section data format is "title"
-                    #section_id = section_data.split(' ')[-1][1:-1]
-                    if section_data in collectors_dict:
-                        new_section_data.append(collectors_dict[section_data])
+                    if section_data.split(' ')[-1][1] == '(' and section_data.split(' ')[-1][-1] == ')':
+                        # use id
+                        # check if title (id)
+                        section_id = section_data.split(' ')[-1][1:-1]
+                        if section_id in collectors_dict_id:
+                            new_section_data.append(collectors_dict_id[section_id])
+                    else:
+                        # use title
+                        # section data format is "title"
+                        if section_data in collectors_dict_title:
+                            new_section_data.append(collectors_dict_title[section_data])
                 collector_data = dict([('selected_collectors', sets.Set(new_section_data))])
 
                 if 'creationDate' not in channel_field:
