@@ -180,7 +180,7 @@ class MessageAssemble(object):
                 sections_data = channel_field['section']
                 new_section_data = []
                 for section_data in sections_data:
-                    if section_data.split(' ')[-1][1] == '(' and section_data.split(' ')[-1][-1] == ')':
+                    if section_data.split(' ')[-1][0] == '(' and section_data.split(' ')[-1][-1] == ')':
                         # use id
                         # check if title (id)
                         section_id = section_data.split(' ')[-1][1:-1]
