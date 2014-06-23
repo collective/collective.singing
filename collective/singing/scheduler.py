@@ -68,7 +68,6 @@ class MessageAssemble(object):
         channel = self.channel
         collector = channel.collector
         composers = channel.composers
-        #import pdb; pdb.set_trace()
         if override_vars is None:
             override_vars = {}
 
@@ -125,7 +124,6 @@ class MessageAssemble(object):
         if override_vars is None:
             override_vars = {}
         queued_messages = 0
-        #import pdb; pdb.set_trace()
         # if the channel use external subscriptions, get the list
         # from script and generate the subscription object list
         subscriptions_list = self.channel.subscriptions.values()
@@ -155,7 +153,6 @@ class MessageAssemble(object):
 
             #if self.channel.id not in external_subscriptions_objects:
             #    return queued_messages
-
             optional_collectors = self.channel.collectors[self.channel.collector.id].get_optional_collectors()
             collectors_dict = {}
             for optional_collector in optional_collectors:
@@ -171,6 +168,10 @@ class MessageAssemble(object):
                 if 'emailAddress' not in channel_field:
                     continue
                 composer_data = dict([('email', channel_field['emailAddress'])])
+
+                if 'externalComposer' in channel_field:
+                    for k, v in channel_field['externalComposer'].items():
+                        composer_data[k] = v
 
                 if 'section' not in channel_field:
                     continue

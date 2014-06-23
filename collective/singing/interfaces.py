@@ -177,6 +177,11 @@ class ISubscription(IAnnotatable):
     collector_data = schema.Dict(title=_(u"Collector data"))
     metadata = schema.Dict(title=_(u"Metadata"))
 
+    external = schema.Bool(
+        title=_(u"External subscription"),
+        default=False
+        )
+
 
 class ISubscriptionLabel(interface.Interface):
     """Marker interface for field on IComposerSchema that labels a

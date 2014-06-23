@@ -94,6 +94,7 @@ class SimpleSubscription(persistent.Persistent):
         self.composer_data.update(composer_data)
         self.collector_data.update(collector_data)
         self.metadata.update(metadata)
+        self.external = False
 
     def __repr__(self):
         def dict_format(data):
@@ -128,6 +129,7 @@ class ExternalSubscription(object):
         self.composer_data.update(composer_data)
         self.collector_data.update(collector_data)
         self.metadata.update(metadata)
+        self.external = True
 
     def __repr__(self):
         def dict_format(data):
