@@ -7,7 +7,7 @@ from zope.annotation.interfaces import IAnnotatable
 import z3c.form.interfaces
 
 from collective.singing import MessageFactory as _
-from validation import validate_tal
+from utils import validate_tal
 
 
 class ICollector(interface.Interface):
