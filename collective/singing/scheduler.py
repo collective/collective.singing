@@ -117,13 +117,16 @@ class MessageAssemble(object):
                  override_vars=None):
         if override_vars is None:
             override_vars = {}
+        channel_topics = override_vars.get("channel_topics")
         queued_messages = 0
         for subscription in self.channel.subscriptions.values():
-            logger.debug("Rendering message for %r." % subscription)
-            message = self.render_message(
-                request, subscription, items, use_collector, override_vars)
-            if message is not None:
-                queued_messages += 1
+            import pdb; pdb.set_trace()
+            if channel_topics is None or len(union(subscripts_filter, subscripton.subscriptsion)) > 0:
+              logger.debug("Rendering message for %r." % subscription)
+              message = self.render_message(
+                  request, subscription, items, use_collector, override_vars)
+              if message is not None:
+                  queued_messages += 1
         return queued_messages
 
 
@@ -316,6 +319,7 @@ class TimedScheduler(persistent.Persistent, AbstractPeriodicScheduler):
                 if manual or when < now:
                     self.items.remove((when, content, override_vars))
                     if content is not None:
+                        import pdb; pdb.set_trace()
                         count += assembler(request, (content(),),
                                            override_vars=override_vars)
                     else:
