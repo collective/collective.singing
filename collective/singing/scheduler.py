@@ -120,7 +120,6 @@ class MessageAssemble(object):
         select_optional_collector = override_vars.get("subscriptions_for_collector")
         queued_messages = 0
         for subscription in self.channel.subscriptions.values():
-            import pdb; pdb.set_trace()
             if select_optional_collector is None or select_optional_collector in subscription.collector_data["selected_collectors"]:
               logger.debug("Rendering message for %r." % subscription)
               message = self.render_message(
