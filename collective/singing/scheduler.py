@@ -117,11 +117,11 @@ class MessageAssemble(object):
                  override_vars=None):
         if override_vars is None:
             override_vars = {}
-        channel_topics = override_vars.get("channel_topics")
+        select_optional_collector = override_vars.get("subscriptions_for_collector")
         queued_messages = 0
         for subscription in self.channel.subscriptions.values():
             import pdb; pdb.set_trace()
-            if channel_topics is None or len(union(subscripts_filter, subscripton.subscriptsion)) > 0:
+            if select_optional_collector is None or select_optional_collector in subscription.collector_data["selected_collectors"]:
               logger.debug("Rendering message for %r." % subscription)
               message = self.render_message(
                   request, subscription, items, use_collector, override_vars)
@@ -319,7 +319,6 @@ class TimedScheduler(persistent.Persistent, AbstractPeriodicScheduler):
                 if manual or when < now:
                     self.items.remove((when, content, override_vars))
                     if content is not None:
-                        import pdb; pdb.set_trace()
                         count += assembler(request, (content(),),
                                            override_vars=override_vars)
                     else:
