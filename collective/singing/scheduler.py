@@ -311,7 +311,6 @@ class TimedScheduler(persistent.Persistent, AbstractPeriodicScheduler):
         now = datetime.datetime.now()
         assembler = interfaces.IMessageAssemble(channel)
         if self.active or manual:
-            self.triggered_last = now
             for when, content, override_vars in tuple(self.items):
                 if manual or when < now:
                     self.items.remove((when, content, override_vars))
@@ -321,6 +320,11 @@ class TimedScheduler(persistent.Persistent, AbstractPeriodicScheduler):
                     else:
                         count += assembler(request,
                                            override_vars=override_vars)
+
+        # no need to cause a db transaction on every single trigger
+        if count > 0:
+          self.triggered_last = now
+          
         return count
 
     def __eq__(self, other):
