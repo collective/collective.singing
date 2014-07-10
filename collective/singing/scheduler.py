@@ -312,27 +312,16 @@ class TimedScheduler(persistent.Persistent, AbstractPeriodicScheduler):
         assembler = interfaces.IMessageAssemble(channel)
         if self.active or manual:
             self.triggered_last = now
-            count += self.assemble_due_items(channel, now, make_all_due=manual)
-
+            for when, content, override_vars in tuple(self.items):
+                if manual or when < now:
+                    self.items.remove((when, content, override_vars))
+                    if content is not None:
+                        count += assembler(request, (content(),),
+                                           override_vars=override_vars)
+                    else:
+                        count += assembler(request,
+                                           override_vars=override_vars)
         return count
-
-
-    def assemble_due_items (self, channel, now=None, make_all_due=False):
-        now = now or datetime.datetime.now()
-
-        count = 0
-        for when, content, override_vars in tuple(self.items):
-          if make_all_due or when < now:
-              self.items.remove((when, content, override_vars))
-              if content is not None:
-                  count += assembler(request, (content(),),
-                                     override_vars=override_vars)
-              else:
-                  count += assembler(request,
-                                     override_vars=override_vars)
-
-        return  count
-
 
     def __eq__(self, other):
         return isinstance(other, TimedScheduler)
