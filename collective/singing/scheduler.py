@@ -120,7 +120,8 @@ class MessageAssemble(object):
         select_optional_collector = override_vars.get("subscriptions_for_collector")
         queued_messages = 0
         for subscription in self.channel.subscriptions.values():
-            if select_optional_collector is None or select_optional_collector in subscription.collector_data["selected_collectors"]:
+            # Not all collector_data have selected_collectors
+            if select_optional_collector is None or ("selected_collectors" in subscription.collector_data and select_optional_collector in subscription.collector_data["selected_collectors"]):
               logger.debug("Rendering message for %r." % subscription)
               message = self.render_message(
                   request, subscription, items, use_collector, override_vars)
