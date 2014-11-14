@@ -120,7 +120,8 @@ class MessageAssemble(object):
         select_optional_collector = override_vars.get("subscriptions_for_collector")
         queued_messages = 0
         for subscription in self.channel.subscriptions.values():
-            subscription_selected_collectors = subscription.collector_data.get("selected_collectors", set())
+            collector_data = getattr(subscription, "collector_data", {"selected_collectors": set()})
+            subscription_selected_collectors = collector_data.get("selected_collectors", set())
             if (select_optional_collector is None or
                   select_optional_collector in subscription_selected_collectors):
               logger.debug("Rendering message for %r." % subscription)
@@ -328,7 +329,7 @@ class TimedScheduler(persistent.Persistent, AbstractPeriodicScheduler):
         # no need to cause a db transaction on every single trigger
         if count > 0:
           self.triggered_last = now
-          
+
         return count
 
     def __eq__(self, other):
