@@ -5,6 +5,9 @@ History
 0.7.2 (unreleased)
 ------------------
 
+- Add ``MANIFEST.in``.
+  [WouterVH]
+
 - Added z3c.autoinclude-entrypoint to mark this as a Plone-plugin. This avoids 
   the need to explicitly load the zcml-slug. 
   [WouterVH]
