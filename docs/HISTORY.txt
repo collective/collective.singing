@@ -1,8 +1,13 @@
 History
 =======
 
+
 0.7.2 (unreleased)
 ------------------
+
+- Added z3c.autoinclude-entrypoint to mark this as a Plone-plugin. This avoids 
+  the need to explicitly load the zcml-slug. 
+  [WouterVH]
 
 - Fixed ImportErrors when zope.app.intid is not available but only
   zope.intid.
@@ -19,7 +24,9 @@ History
 - Add IJob interface and let Job implements it.
   [toutpt]
 
-- Fix for plone 4.3 {kiorky]
+- Fix for plone 4.3 
+  [kiorky].
+
 
 0.7.1 (2010-12-03)
 ------------------
@@ -32,6 +39,7 @@ History
   written to the log to keep a minimal record of events.
   [malthe]
 
+
 0.7.0 (2010-11-04)
 -------------------
 
@@ -39,6 +47,7 @@ History
   from ``browser/configure.zcml`` into ``widgets.zcml`` because every version 
   of z3c.form after 2.3.3 includes these template registrations and double 
   registration raises ConfigurationConflictError.  [saily] 
+
 
 0.6.15 (2010-08-01)
 -------------------
@@ -55,8 +64,9 @@ History
   
 - Norwegian translation. [regebro]
 
-Version 0.6.14 - 2010-04-07
----------------------------
+
+0.6.14 (2010-04-07)
+-------------------
 
 - Update Dutch translation.
   [maurits]
@@ -64,8 +74,9 @@ Version 0.6.14 - 2010-04-07
 - Update French translation
   [toutpt]
 
-Version 0.6.13 - 2009-10-19
----------------------------
+
+0.6.13 (2009-10-19)
+-------------------
 
 - API change! Added boolean "subscribeable" to IChannel.
   [tmog]
@@ -73,8 +84,9 @@ Version 0.6.13 - 2009-10-19
 - Added Brazilian translation 
   [lucmult]
 
-Version 0.6.12 - 2009-06-11
----------------------------
+
+0.6.12 (2009-06-11)
+-------------------
 
 - Optimization for clearing a MessageQueue. We now simple create a fresh
   queue instead of pull()'ing all items (pulling is quite expensive with
@@ -98,8 +110,9 @@ Version 0.6.12 - 2009-06-11
   sending 'full' items from 'send as newsletter'.
   [tmog]
 
-Version 0.6.11 - 2009-03-11
----------------------------
+
+0.6.11 (2009-03-11)
+-------------------
 
 - Added optional keyword argument 'override_vars' to IComposer.render and
   MessageAssemble.__call__ methods. This is to facilitate overriding of
@@ -114,8 +127,9 @@ Version 0.6.11 - 2009-03-11
   and http://pypi.python.org/pypi/collective.dancing#installation
   [nouri]
 
-Version 0.6.10 - 2009-02-01
----------------------------
+
+0.6.10 (2009-02-01)
+-------------------
 
 - Changed eventhandlers for subscriptions indexing to look for
   the Subscriptions object in 'channel._subscriptions' first.
@@ -123,15 +137,17 @@ Version 0.6.10 - 2009-02-01
   that keeps data in '_subscriptions'.
   [tmog]
 
-Version 0.6.9 - 2009-01-20
---------------------------
+
+0.6.9 (2009-01-20)
+------------------
 
 - Pinned zope.app.catalog version to pre 3.6.0 to avoid issue in
   https://bugs.launchpad.net/singing-dancing/+bug/301082
   [tmog]
 
-Version 0.6.8 - 2009-01-02
---------------------------
+
+0.6.8 (2009-01-02)
+------------------
 
 - MessageQueues are now collective.singing.queue.CompositeQueue - an
   optimized version of zc.queue.CompositeQueue. This offers a _much_
@@ -141,8 +157,9 @@ Version 0.6.8 - 2009-01-02
   is not for me. ;-)  
   [tmog]
   
-Version 0.6.7 - 2008-12-03
---------------------------
+
+0.6.7 (2008-12-03)
+------------------
 
 - Part of Czech translation.  
   [naro]
@@ -152,14 +169,16 @@ Version 0.6.7 - 2008-12-03
 
 - Added french translation.
 
-Version 0.6.6 - 2008-11-13
---------------------------
+
+0.6.6 (2008-11-13)
+------------------
 
 - Add the subscriber languages to subscription metadata at
   subscription time.  [nouri]
 
-Version 0.6.5 - 2008-11-05
---------------------------
+
+0.6.5 (2008-11-05)
+------------------
 
 - Used ``i18ndude`` to find all untranslated msgid's. Some line-numbers were
   corrected, but nothing changed in ``collective.singing``.  There were some
@@ -176,8 +195,9 @@ Version 0.6.5 - 2008-11-05
   to request the cue to be used but not to be set when rendering a
   preview. [nouri]
 
-Version 0.6.4 - 2008-10-29
---------------------------
+
+0.6.4 (2008-10-29)
+------------------
 
 - Added optional checking for channel attr 'sendable' to
   channel_lookup. Sending of a content item from the
@@ -190,20 +210,22 @@ Version 0.6.4 - 2008-10-29
   than 'flush'. Also renamed related handlers and method. [russf]
 
 
-Version 0.6.3 - 2008-09-11
---------------------------
+0.6.3 (2008-09-11)
+------------------
 
 - Register the SubscriptionSearchableText adapter so that the fulltext
   index is actually populated. [nouri]
 
-Version 0.6.2 - 2008-09-03
---------------------------
+
+0.6.2 (2008-09-03)
+------------------
 
 - Add 'headers' argument to ``mail.create_html_mail`` to allow the
   injection of more e-mail headers. [nouri]
 
-Version 0.6.1 - 2008-08-28
---------------------------
+
+0.6.1 (2008-08-28)
+------------------
 
 - Add zope.sendmail as a dependency so that we get the latest and
   greates release. [nouri]
@@ -216,8 +238,9 @@ Version 0.6.1 - 2008-08-28
 - Using HTMLParser.anchorlist to append all links found in 
   a message at the bottom of the text/plain message. [saily]
 
-Version 0.6.0 - 2008-08-21
---------------------------
+
+0.6.0 (2008-08-21)
+------------------
 
 - Moved 'singing.scheduler.assemble_messages' and 'render_message'
   into their own IMessageAssemble adapter (on channel).  This allows
@@ -226,14 +249,16 @@ Version 0.6.0 - 2008-08-21
   small flag that allows to ignore the subscriber's 'cue' completely.
   [nouri]
 
-Version 0.5.0 - 2008-07-29
---------------------------
+
+0.5.0 (2008-07-29)
+------------------
 
 - Start depending on plone.z3cform>=0.3dev
   [nouri]
 
-Version 0.4 - 2008-07-23
-------------------------
+
+0.4 (2008-07-23)
+----------------
 
 - Added optional checking for channel attr 'subscribeable' to
   channel_lookup. Subscription validaton and the subscribe portlet use
@@ -256,8 +281,9 @@ Version 0.4 - 2008-07-23
 - Added Polish translation by Barbara Struk
   [naro]
 
-Version 0.3
------------
+
+0.3 (2008-06-03)
+----------------
 
 - Use zc.lockfile instead of the excessive use of transaction.commit()
   to lock the queue processing.
@@ -270,8 +296,8 @@ Version 0.3
 - added Czech translation
   [naro]
   
-Version 0.2
------------
+0.2 (2008-05-06)
+----------------
 
 - Commit after pulling a message from the queue.
   [nouri]
@@ -281,7 +307,7 @@ Version 0.2
   when rewriting links.
   [tmog]
 
-- updated pot and danish translation
+- updated pot and danish translation.
   [bartholdy]
 
 - Add button to subscribe form to "Send my subscription details",
