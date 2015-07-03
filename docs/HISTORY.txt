@@ -11,6 +11,9 @@ History
 - Scheduler filter to send only to a channel option.
   [arterrey]
 
+- Cleanup flake8, changelog.
+  [WouterVH]
+
 
 0.7.2 (2015-01-05)
 ------------------
