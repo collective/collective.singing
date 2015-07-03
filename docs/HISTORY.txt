@@ -5,7 +5,11 @@ History
 0.7.3 (unreleased)
 ------------------
 
-- Nothing changed yet.
+- Made the last_trigger for the timed scheduler only record when there are newsletters sent.
+  [arterrey]
+
+- Scheduler filter to send only to a channel option.
+  [arterrey]
 
 
 0.7.2 (2015-01-05)
