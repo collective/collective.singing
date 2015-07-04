@@ -117,13 +117,18 @@ class MessageAssemble(object):
                  override_vars=None):
         if override_vars is None:
             override_vars = {}
+        select_optional_collector = override_vars.get("subscriptions_for_collector")
         queued_messages = 0
         for subscription in self.channel.subscriptions.values():
-            logger.debug("Rendering message for %r." % subscription)
-            message = self.render_message(
-                request, subscription, items, use_collector, override_vars)
-            if message is not None:
-                queued_messages += 1
+            collector_data = getattr(subscription, "collector_data", {"selected_collectors": set()})
+            subscription_selected_collectors = collector_data.get("selected_collectors", set())
+            if (select_optional_collector is None or
+                  select_optional_collector in subscription_selected_collectors):
+              logger.debug("Rendering message for %r." % subscription)
+              message = self.render_message(
+                  request, subscription, items, use_collector, override_vars)
+              if message is not None:
+                  queued_messages += 1
         return queued_messages
 
 
@@ -311,7 +316,6 @@ class TimedScheduler(persistent.Persistent, AbstractPeriodicScheduler):
         now = datetime.datetime.now()
         assembler = interfaces.IMessageAssemble(channel)
         if self.active or manual:
-            self.triggered_last = now
             for when, content, override_vars in tuple(self.items):
                 if manual or when < now:
                     self.items.remove((when, content, override_vars))
@@ -321,6 +325,11 @@ class TimedScheduler(persistent.Persistent, AbstractPeriodicScheduler):
                     else:
                         count += assembler(request,
                                            override_vars=override_vars)
+
+        # no need to cause a db transaction on every single trigger
+        if count > 0:
+          self.triggered_last = now
+
         return count
 
     def __eq__(self, other):
