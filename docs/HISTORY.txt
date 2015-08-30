@@ -2,7 +2,7 @@ History
 =======
 
 
-0.7.3 (unreleased)
+0.7.3 (2015-08-31)
 ------------------
 
 - Made the last_trigger for the timed scheduler only record when there are newsletters sent.
@@ -21,8 +21,8 @@ History
 - Add ``MANIFEST.in``.
   [WouterVH]
 
-- Added z3c.autoinclude-entrypoint to mark this as a Plone-plugin. This avoids 
-  the need to explicitly load the zcml-slug. 
+- Added z3c.autoinclude-entrypoint to mark this as a Plone-plugin. This avoids
+  the need to explicitly load the zcml-slug.
   [WouterVH]
 
 - Fixed ImportErrors when zope.app.intid is not available but only
@@ -40,7 +40,7 @@ History
 - Add IJob interface and let Job implements it.
   [toutpt]
 
-- Fix for plone 4.3 
+- Fix for plone 4.3
   [kiorky].
 
 
@@ -59,10 +59,10 @@ History
 0.7.0 (2010-11-04)
 -------------------
 
-- Moved z3c widget template registration for radio buttons and checkboxes 
-  from ``browser/configure.zcml`` into ``widgets.zcml`` because every version 
-  of z3c.form after 2.3.3 includes these template registrations and double 
-  registration raises ConfigurationConflictError.  [saily] 
+- Moved z3c widget template registration for radio buttons and checkboxes
+  from ``browser/configure.zcml`` into ``widgets.zcml`` because every version
+  of z3c.form after 2.3.3 includes these template registrations and double
+  registration raises ConfigurationConflictError.  [saily]
 
 
 0.6.15 (2010-08-01)
@@ -77,7 +77,7 @@ History
   This should probably be released soon since it fixes a lot
   of bugs in the ForPloneFour branch of dancing.
   [tmog]
-  
+
 - Norwegian translation. [regebro]
 
 
@@ -97,7 +97,7 @@ History
 - API change! Added boolean "subscribeable" to IChannel.
   [tmog]
 
-- Added Brazilian translation 
+- Added Brazilian translation
   [lucmult]
 
 
@@ -118,7 +118,7 @@ History
   trickered_last by a product of that delta. This means the periodic
   schedulers now no longer suffer from the time "drift" that resulted
   from always saving the precise triggering time to their triggered_last
-  attribute. 
+  attribute.
   [tmog]
 
 - Added caching of item formatting via plone.memoize.request.
@@ -170,14 +170,14 @@ History
   faster __len__ and  faster access to last queue element.
   Tests are stolen from zc.queue with added length checking everywhere.
   This maybe belongs directly in zc.queue, but adding stuff in zc namespace
-  is not for me. ;-)  
+  is not for me. ;-)
   [tmog]
-  
+
 
 0.6.7 (2008-12-03)
 ------------------
 
-- Part of Czech translation.  
+- Part of Czech translation.
   [naro]
 
 - Some refactoring in order to allow for more customized subscription forms.
@@ -198,7 +198,7 @@ History
 
 - Used ``i18ndude`` to find all untranslated msgid's. Some line-numbers were
   corrected, but nothing changed in ``collective.singing``.  There were some
-  updates in collective.dancing, so all guy's please help updating 
+  updates in collective.dancing, so all guy's please help updating
   collective.dancing's po files.  [saily]
 
 - Add ``async`` module that allows to queue jobs for asynchronous
@@ -251,7 +251,7 @@ History
 - Use DumbWriters word wrapping to ensure that no text line
   is longer than plain_text_maxcols characters. [saily]
 
-- Using HTMLParser.anchorlist to append all links found in 
+- Using HTMLParser.anchorlist to append all links found in
   a message at the bottom of the text/plain message. [saily]
 
 
@@ -308,10 +308,10 @@ History
 - Use email.Header module for message header formatting
   Refactored mail.py to create messages MIMEMultipart based
   [naro]
-  
+
 - added Czech translation
   [naro]
-  
+
 0.2 (2008-05-06)
 ----------------
 
