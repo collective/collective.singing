@@ -42,7 +42,7 @@ setup(
         'zope.app.keyreference==3.6.1',
         'zope.app.catalog',
         'zope.app.i18n',
-        'zc.queue',
+        'zc.queue<2.0.0a1',
         'zc.lockfile',
         'plone.z3cform>=0.5.1',
     ],
