@@ -278,6 +278,9 @@ triggered_last to now.
         is seems to depend on argument order. """
         if not interfaces.IScheduler.providedBy(other):
             return 1
+        # TimedScheduler.delta is None
+        if self.delta is None or other.delta is None:
+            return 1
         return cmp(self.delta, other.delta)
 
 
