@@ -1,7 +1,9 @@
 import os
-from setuptools import setup, find_packages
+from setuptools import find_packages
+from setuptools import setup
 
 version = '0.7.3'
+
 
 def read(*pathnames):
     return open(os.path.join(os.path.dirname(__file__), *pathnames)).read()
@@ -13,18 +15,18 @@ setup(
     long_description='\n'.join([
         read('docs', 'README.txt'),
         read('docs', 'HISTORY.txt'),
-        ]),
+    ]),
     classifiers=[
-      "Framework :: Plone",
-      'Framework :: Plone :: 3.2',
-      'Framework :: Plone :: 3.3',
-      'Framework :: Plone :: 4.0',
-      'Framework :: Plone :: 4.1',
-      "Framework :: Zope2",
-      "Framework :: Zope3",
-      "Programming Language :: Python",
-      "Topic :: Software Development :: Libraries :: Python Modules",
-      ],
+        "Framework :: Plone",
+        "Framework :: Plone :: 3.2",
+        "Framework :: Plone :: 3.3",
+        "Framework :: Plone :: 4.0",
+        "Framework :: Plone :: 4.1",
+        "Framework :: Zope2",
+        "Framework :: Zope3",
+        "Programming Language :: Python",
+        "Topic :: Software Development :: Libraries :: Python Modules",
+    ],
     keywords='zope plone notification newsletter',
     author='Daniel Nouri, Thomas Clement Mogensen and contributors',
     author_email='singing-dancing@googlegroups.com',
@@ -52,4 +54,4 @@ setup(
     [z3c.autoinclude.plugin]
     target = plone
     """,
-    )
+)
