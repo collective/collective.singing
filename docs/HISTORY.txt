@@ -1,6 +1,13 @@
 History
 =======
 
+0.7.5 (Unreleased)
+------------------
+
+- Update README file to use github repo instead of svn.
+  [ivanteoh]
+
+
 0.7.4 (2015-11-03)
 ------------------
 

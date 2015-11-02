@@ -1,4 +1,4 @@
 collective.singing
 ==================
 
-New repository for singing &amp; dancing
+New repository for singing & dancing.
