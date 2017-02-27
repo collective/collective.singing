@@ -219,7 +219,8 @@ class IChannel(interface.Interface):
         )
 
     description = schema.Text(
-        title=_(u"Description")
+        title=_(u"Description"),
+        required=False
         )
 
     subscribeable = schema.Bool(
