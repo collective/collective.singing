@@ -4,6 +4,10 @@ History
 0.7.5 (Unreleased)
 ------------------
 
+- make channel description an optional field so users can leave it empty
+  if no description is needed
+  [fRiSi]
+
 - Update README file to use github repo instead of svn.
   [ivanteoh]
 
