@@ -1,7 +1,7 @@
 History
 =======
 
-0.7.5 (Unreleased)
+0.7.5 (2017-03-03)
 ------------------
 
 - make channel description an optional field so users can leave it empty
