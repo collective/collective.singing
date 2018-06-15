@@ -177,7 +177,8 @@ class Subscribe(wizard.Wizard):
         secret = self._secret(comp_data, self.request)
         metadata = dict(format=self.format(),
                         date=datetime.datetime.now(),
-                        pending=True)
+                        pending=True,
+                        unsubscribed=None)
 
         # We assume here that the language of the request is the
         # desired language of the subscription:
@@ -213,6 +214,7 @@ class Subscribe(wizard.Wizard):
 
 class Unsubscribe(utils.OverridableTemplate,
                   zope.publisher.browser.BrowserView):
+
     def index(self):
         return u"<p>You have been unsubscribed.</p>"
 

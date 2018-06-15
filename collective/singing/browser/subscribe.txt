@@ -64,13 +64,13 @@ subscriptions (for the same format):
   ...
   ...     def secret(self, data):
   ...         return data['email']
-  ... 
+  ...
   ...     def render_confirmation(self, subscription):
   ...         email = subscription.composer_data['email']
   ...         return Message(
   ...             u"This is a message to %s to confirm their subscription." %
   ...             (email,))
-  ... 
+  ...
   ...     def render_forgot_secret(self, subscription):
   ...         email = subscription.composer_data['email']
   ...         return Message(
@@ -97,10 +97,10 @@ to send:
   >>> class Dispatch(object):
   ...     interface.implements(interfaces.IDispatch)
   ...     component.adapts(unicode)
-  ... 
+  ...
   ...     def __init__(self, message):
   ...         self.message = message
-  ... 
+  ...
   ...     def __call__(self):
   ...         print "This is your dispatcher speaking: ",
   ...         print self.message
@@ -204,7 +204,8 @@ We're now subscribed to the channel:
     collectordata: {'colour': 'red'},
     and metadata: {'date': datetime.datetime(...),
                    'format': 'html',
-                   'pending': True}>]
+                   'pending': True,
+                   'unsubscribed': None}>]
 
   >>> 'Thanks for your subscription' in html
   True
@@ -228,12 +229,12 @@ define such an adapter:
   >>> class MyUserPreferredLanguages(object):
   ...     component.adapts(IRequest)
   ...     interface.implements(IUserPreferredLanguages)
-  ... 
+  ...
   ...     def __init__(self, request):
   ...         pass
   ...     def getPreferredLanguages(self):
   ...         return ['ba', 'bm']
-  ... 
+  ...
   >>> component.provideAdapter(MyUserPreferredLanguages)
 
   >>> request.form['composer.widgets.email'] = u'hanno@testingunderground.com'
@@ -258,7 +259,7 @@ we'll define another composer:
   >>> __builtins__['PlainTextEmailComposer'] = PlainTextEmailComposer
 
   >>> channel.composers['plaintext'] = PlainTextEmailComposer()
-    
+
   >>> request = TestRequest()
   >>> subscribe = Subscribe(channel, request)
   >>> html = subscribe()
@@ -313,7 +314,8 @@ pending:
   >>> pprint(dict(html.metadata)) # doctest: +ELLIPSIS
   {'date': datetime.datetime(...),
    'format': 'html',
-   'pending': True}
+   'pending': True,
+   'unsubscribed': None}
 
 Forgot secret
 -------------

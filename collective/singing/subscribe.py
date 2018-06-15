@@ -96,6 +96,7 @@ class SimpleSubscription(persistent.Persistent):
         self.metadata.update(metadata)
 
     def __repr__(self):
+
         def dict_format(data):
             return pprint.pformat(dict(data)).replace('\n', '')
 
@@ -146,7 +147,9 @@ def get_subscription_key(subscription):
 @interface.implementer(ISubscriptionCatalogData)
 @component.adapter(interfaces.ISubscription)
 def catalog_data(subscription):
+
     class Metadata(object):
+
         def __init__(self, **kwargs):
             self.__dict__.update(kwargs)
 
@@ -227,26 +230,39 @@ class Subscriptions(zopeappbtree.BTreeContainer):
             query[key] = value
         return self._catalog.searchResults(**query)
 
-    def add_subscription(
-        self, channel, secret, composerd, collectord, metadata):
+    def add_subscription(self, channel, secret, composerd, collectord,
+                         metadata):
+        """adds a new subscription and replaces unsubscribed ones
+        """
         subscription = self.subscription_factory(
             channel, secret, composerd, collectord, metadata)
-
-        data = ISubscriptionCatalogData(subscription)
-        contained_name = u'%s-%s' % (data.key, data.format)
-        if contained_name in self:
-            raise ValueError(_("There's already a subscription for ${name}",
-                               mapping=dict(name=contained_name)))
-        self[contained_name] = subscription
-        return self[contained_name]
+        return self.add_subscription_obj(subscription)
 
     def remove_subscription(self, subscription):
+        """really removes a subscription. if you want to mark it as unsubscribed
+        do not use this method
+        """
         data = ISubscriptionCatalogData(subscription)
         del self[u'%s-%s' % (data.key, data.format)]
 
     def add_subscription_obj(self, subscription):
+        """adds a new subscription and replaces unsubscribed ones
+        """
         data = ISubscriptionCatalogData(subscription)
-        self[u'%s-%s' % (data.key, data.format)] = subscription
+        contained_name = u'%s-%s' % (data.key, data.format)
+
+        # check if email is already subscribed
+        existing = self.get(contained_name, None)
+        if existing is not None:
+            if existing.metadata.get('unsubscribed', None) is not None:
+                # existing one got unsubscribed, we can delete and replace it
+                self.remove_subscription(existing)
+            else:
+                raise ValueError(_(
+                    "There's already a subscription for ${name}",
+                    mapping=dict(name=contained_name)))
+        self[contained_name] = subscription
+        return self[contained_name]
 
 
 def subscriptions_data(channel):

@@ -66,7 +66,10 @@ class MessageAssemble(object):
             override_vars = {}
 
         subscription_metadata = subscription.metadata
-        if subscription_metadata.get('pending'):
+        pending = subscription_metadata.get('pending')
+        unsubscribed = (
+            subscription_metadata.get('unsubscribed', None) is not None)
+        if (pending or unsubscribed):
             return None
 
         # Collect items for subscription
@@ -340,5 +343,6 @@ class TimedScheduler(persistent.Persistent, AbstractPeriodicScheduler):
 
     def __ne__(self, other):
         return not self == other
+
 
 schedulers = (WeeklyScheduler, DailyScheduler, ManualScheduler, TimedScheduler)

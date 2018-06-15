@@ -16,7 +16,7 @@ implementations:
   True
   >>> verify.verifyClass(interfaces.IScheduler, scheduler.ManualScheduler)
   True
-  
+
 Schedulers have an overwritten ``__eq__`` special method for comparison:
 
   >>> scheduler.DailyScheduler() == scheduler.DailyScheduler()
@@ -30,7 +30,7 @@ Schedulers implement a ``tick`` method that'll call
   >>> from zope.publisher.browser import TestRequest
   >>> request = TestRequest()
 
-Our request needs to be annotatable. 
+Our request needs to be annotatable.
 
   >>> from zope.annotation.attribute import AttributeAnnotations
   >>> from zope import component
@@ -90,10 +90,10 @@ happens:
   >>> class MessageAssemble(object):
   ...     interface.implements(interfaces.IMessageAssemble)
   ...     component.adapts(interfaces.IChannel)
-  ... 
+  ...
   ...     def __init__(self, channel):
   ...         self.channel = channel
-  ... 
+  ...
   ...     def __call__(self, request, items=(), use_collector=True, override_vars=None):
   ...         if override_vars is None: override_vars={}
   ...         print "Sending out %r." % (items,)
@@ -167,7 +167,7 @@ At this point, we'll provide our own ``IChannel``, ``IComposer`` and
 
   >>> class Composer(object):
   ...     def render(self, subscription, items=(), override_vars=None):
-  ...	      if override_vars is None: override_vars={}
+  ...         if override_vars is None: override_vars={}
   ...         formatted = tuple([item[0] for item in items])
   ...         print "Rendering message with %r for %r" % (
   ...             formatted, subscription)
@@ -192,6 +192,14 @@ If our subscription were in pending state, nothing would happen:
   >>> interfaces.IMessageAssemble(channel)(request)
   0
   >>> subscription.metadata['pending'] = False
+
+If the user has unsubscribed, nothing would happen either:
+
+  >>> subscription.metadata['unsubscribed'] = '2018-06-11'
+  >>> interfaces.IMessageAssemble(channel)(request)
+  0
+  >>> subscription.metadata['unsubscribed'] = None
+
 
 If our subscription were for a format that's unknown, an error is
 raised:
@@ -229,7 +237,7 @@ for our ``my-format`` composer to render both strings and Subscription
 objects to unicode:
 
   >>> from zope.publisher.interfaces.browser import IBrowserRequest
-  
+
   >>> component.provideAdapter(scheduler.UnicodeFormatter,
   ...                          adapts=(str, IBrowserRequest))
   >>> component.provideAdapter(scheduler.UnicodeFormatter,
@@ -263,12 +271,12 @@ out:
   >>> class Grappa4LifeTransform(object):
   ...     interface.implements(interfaces.ITransform)
   ...     component.adapts(str)
-  ... 
+  ...
   ...     sub = u'life'
   ...     stitute = u'Grappa'
   ...     def __init__(self, context):
   ...         self.context = context
-  ... 
+  ...
   ...     def __call__(self, text, subscription):
   ...         return text.replace(self.sub, self.stitute)
 
@@ -307,7 +315,7 @@ We can supply our own items to assemble_messages:
   1
 
 ... and choose not to include the collector items:
-  
+
   >>> interfaces.IMessageAssemble(channel)(request, items, use_collector=False)
   Rendering message with (u'Vincenzo', u'likes', u'Grappa', u'and', u'singing') for <Subscription 'daniel'>
   1
