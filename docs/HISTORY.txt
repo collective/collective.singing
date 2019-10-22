@@ -4,11 +4,7 @@ History
 0.7.6 (unreleased)
 ------------------
 
-- subscriptions can be marked as `unsubscribed` instead of deleted now.
-  when assembling message skip unsubscribed ones the same way as pending
-  subscriptions
-  (see https://github.com/collective/collective.dancing/issues/15)
-  [fRiSi]
+- support removing subscriptions that changed their email-address [fRiSi]
 
 
 0.7.5 (2017-03-03)

@@ -242,7 +242,17 @@ class Subscriptions(zopeappbtree.BTreeContainer):
 
     def remove_subscription(self, subscription):
         data = ISubscriptionCatalogData(subscription)
-        del self[u'%s-%s' % (data.key, data.format)]
+        key = u'%s-%s' % (data.key, data.format)
+        if not self.has_key(key):
+            # email address of the subscription got changed
+            # search for it
+            for subscription_key, value in self.items():
+                mail_ok = value.composer_data['email'] == data.key
+                format_ok = value.metadata['format'] == data.format
+                if mail_ok and format_ok:
+                    key = subscription_key
+                    break
+        del self[key]
 
     def add_subscription_obj(self, subscription):
         data = ISubscriptionCatalogData(subscription)
