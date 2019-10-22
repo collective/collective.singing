@@ -2,7 +2,7 @@ import os
 from setuptools import find_packages
 from setuptools import setup
 
-version = '0.7.6.dev0'
+version = '0.7.6'
 
 
 def read(*pathnames):

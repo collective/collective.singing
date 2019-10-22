@@ -1,7 +1,7 @@
 History
 =======
 
-0.7.6 (unreleased)
+0.7.6 (2019-10-22)
 ------------------
 
 - support removing subscriptions that changed their email-address [fRiSi]
